@@ -9,7 +9,18 @@
 				<recipe-form user-id="edit.user._id" recipe="edit.recipe"></recipe-form>
 
 				<h2>Delete Recipe</h2>
-				<button class="btn btn-danger" ng-click="edit.deleteRecipe()"><i class="fa fa-trash"></i> Delete Recipe</button>
+				<div class="form-group">
+					<label for="confirmDelete">To permanently delete this recipe, please type its name below:</label>
+					<input id="confirmDelete"
+						   type="text"
+						   class="form-control"
+						   placeholder="Recipe to delete"
+						   ng-model="edit.deleteConfirm">
+				</div>
+				<button class="btn btn-danger"
+						ng-click="edit.deleteRecipe()"
+						ng-disabled="edit.recipe.name !== edit.deleteConfirm">
+					<i class="fa fa-trash"></i> Delete Recipe</button>
 			</div>
 
 			<!-- not authorized to edit -->
