@@ -488,7 +488,7 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | PUT /api/recipe/:id - update a recipe TODO: only author of recipe can update
+	 | PUT /api/recipe/:id - update a recipe
 	 |--------------------------------------------------------------------------
 	 */
 	app.put('/api/recipe/:id', ensureAuthenticated, function(req, res) {
@@ -496,6 +496,10 @@ module.exports = function(app, config) {
 			if (!recipe) {
 				return res.status(400).send({ message: 'Recipe not found' });
 			}
+			if (recipe.userId !== req.user) {
+				return res.status(401).send({ message: 'Not authorized' });
+			}
+
 			recipe.title = req.body.title || recipe.title;
 			recipe.isPublic = req.body.isPublic;
 
@@ -507,11 +511,15 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | DELETE /api/recipe/:id (delete recipe) TODO: only author of recipe can update
+	 | DELETE /api/recipe/:id (delete recipe)
 	 |--------------------------------------------------------------------------
 	 */
 	app.delete('/api/recipe/:id', ensureAuthenticated, function(req, res) {
 		Recipe.findById(req.params.id, function(err, recipe) {
+			if (recipe.userId !== req.user) {
+				return res.status(401).send({ message: 'Not authorized' });
+			}
+
 			recipe.remove(function(err) {
 				res.status(200).end();
 			});
