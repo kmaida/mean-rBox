@@ -23,8 +23,9 @@
 	display: none !important;
 }
 
-/*-- ng-click: cursor --*/
+/*-- a, ng-click: cursor --*/
 
+a,
 [ng-click],
 [data-ng-click] {
 	cursor: pointer;

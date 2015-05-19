@@ -491,6 +491,21 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
+	 | GET /api/recipe/:id - get recipe detail
+	 |--------------------------------------------------------------------------
+	 */
+	app.get('/api/recipe/:id', ensureAuthenticated, function(req, res) {
+		Recipe.findById(req.params.id, function(err, recipe) {
+			if (!recipe) {
+				return res.status(400).send({ message: 'Recipe not found' });
+			}
+
+			res.send(recipe);
+		});
+	});
+
+	/*
+	 |--------------------------------------------------------------------------
 	 | PUT /api/recipe/:id - update a recipe
 	 |--------------------------------------------------------------------------
 	 */
@@ -514,7 +529,7 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | DELETE /api/recipe/:id (delete recipe)
+	 | DELETE /api/recipe/:id - delete recipe
 	 |--------------------------------------------------------------------------
 	 */
 	app.delete('/api/recipe/:id', ensureAuthenticated, function(req, res) {

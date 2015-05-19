@@ -15,7 +15,9 @@
 			</div>
 
 			<ul ng-if="(myRecipes.recipes | filter:myRecipes.query).length">
-				<li ng-repeat="recipe in myRecipes.recipes | filter:myRecipes.query | orderBy:'name'">{{recipe.name}}</li>
+				<li ng-repeat="recipe in myRecipes.recipes | filter:myRecipes.query | orderBy:'name'">
+					<a ng-href="/recipe/{{recipe._id}}">{{recipe.name}}</a>
+				</li>
 			</ul>
 
 			<div ng-if="!(myRecipes.recipes | filter:myRecipes.query).length" class="alert alert-warning">
