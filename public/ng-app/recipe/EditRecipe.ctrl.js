@@ -48,7 +48,7 @@
 			console.log('recipe deleted!');
 		}
 		edit.deleteRecipe = function() {
-			recipeData.deleteRecipe(recipeSlug).then(_deleteSuccess);
+			recipeData.deleteRecipe(edit.recipe._id).then(_deleteSuccess);
 		}
 	}
 })();

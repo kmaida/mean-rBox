@@ -52,24 +52,24 @@
 		/**
 		 * Update a recipe
 		 *
-		 * @param slug {string} recipe slug
+		 * @param id {string} recipe ID (in case slug has changed)
 		 * @param recipeData {object}
 		 * @returns {promise}
 		 */
-		this.updateRecipe = function(slug, recipeData) {
+		this.updateRecipe = function(id, recipeData) {
 			return $http
-				.put('/api/recipe/' + slug, recipeData);
+				.put('/api/recipe/' + id, recipeData);
 		};
 
 		/**
 		 * Delete a recipe
 		 *
-		 * @param slug {string} recipe slug
+		 * @param id {string} recipe ID
 		 * @returns {promise}
 		 */
-		this.deleteRecipe = function(slug) {
+		this.deleteRecipe = function(id) {
 			return $http
-				.delete('/api/recipe/' + slug);
+				.delete('/api/recipe/' + id);
 		};
 
 		/**
