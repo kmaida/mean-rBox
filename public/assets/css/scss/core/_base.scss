@@ -1,5 +1,5 @@
 /*--------------------
-	   BASICS
+  BASICS / NORMALIZE
 --------------------*/
 
 /*-- Clearfix --*/
@@ -43,6 +43,12 @@
 .touch p a {
 	margin: 0 -.5em;
 	padding: 0 .5em;
+}
+
+/*-- Forms --*/
+
+.input-group-btn .btn {
+	height: 34px;
 }
 
 /*--------------------
