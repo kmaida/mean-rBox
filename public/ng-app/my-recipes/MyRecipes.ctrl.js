@@ -32,7 +32,6 @@
 		 * @private
 		 */
 		function _recipesSuccess(data) {
-			console.log('recipes:', data);
 			myRecipes.recipes = data;
 		}
 		recipeData.getMyRecipes().then(_recipesSuccess);

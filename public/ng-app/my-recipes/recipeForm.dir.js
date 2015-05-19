@@ -9,24 +9,34 @@
 
 	function recipeForm(recipeData) {
 
-		recipeFormCtrl.$inject = ['$scope'];
+		recipeFormCtrl.$inject = ['$timeout'];
 
-		function recipeFormCtrl($scope) {
+		function recipeFormCtrl($timeout) {
 			var rf = this;
-			var _isCreate = !!rf.recipe;
+			var _isEdit = !!rf.recipe;
 
 			rf.recipeData = {};
 			rf.recipeData.userId = rf.userId;
 
 			/**
+			 * Recipe created or saved successfully
+			 *
+			 * @param data
+			 * @private
+			 */
+			function _recipeSaved(data) {
+				console.log('recipe saved!');
+			}
+
+			/**
 			 * Save recipe
 			 */
 			rf.saveRecipe = function() {
-				//if (_isCreate) {
-					recipeData.createRecipe(rf.recipeData).then();
-				//} else {
-					//recipeData.saveRecipe(rf.recipe._id, rf.recipeData).then();
-				//}
+				if (!_isEdit) {
+					recipeData.createRecipe(rf.recipeData).then(_recipeSaved);
+				} else {
+					recipeData.saveRecipe(rf.recipe._id, rf.recipeData).then(_recipeSaved);
+				}
 			};
 		}
 

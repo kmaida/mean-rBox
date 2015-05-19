@@ -505,7 +505,7 @@ module.exports = function(app, config) {
 				return res.status(401).send({ message: 'Not authorized' });
 			}
 
-			recipe.title = req.body.title || recipe.title;
+			recipe.name = req.body.name || recipe.name;
 			recipe.isPublic = req.body.isPublic;
 
 			recipe.save(function(err) {
@@ -521,6 +521,9 @@ module.exports = function(app, config) {
 	 */
 	app.delete('/api/recipe/:id', ensureAuthenticated, function(req, res) {
 		Recipe.findById(req.params.id, function(err, recipe) {
+			if (!recipe) {
+				return res.status(400).send({ message: 'Recipe not found' });
+			}
 			if (recipe.userId !== req.user) {
 				return res.status(401).send({ message: 'Not authorized' });
 			}
