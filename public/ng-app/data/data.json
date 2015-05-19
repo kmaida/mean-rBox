@@ -1,6 +1,6 @@
 {
-  "title": "reStart-mean",
-  "summary": "MEAN stack app",
+  "title": "rBox",
+  "summary": "MEAN stack recipe box app",
   "sampleContent": [
     { "fruit": "apples", "color": "red" },
     { "fruit": "bananas", "color": "yellow" },

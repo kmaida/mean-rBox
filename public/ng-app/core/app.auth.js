@@ -9,15 +9,14 @@
 	authConfig.$inject = ['$authProvider'];
 
 	function authConfig($authProvider) {
-		$authProvider.loginUrl = 'http://restart-mean.kmaida.net/auth/login';
-		//$authProvider.signupUrl = 'http://restart-mean.kmaida.net/auth/signup';
+		$authProvider.loginUrl = 'http://rbox.kmaida.io/auth/login';
 
 		$authProvider.facebook({
-			clientId: '343789249146966'	// provide your own client ID
+			clientId: '360173197505650'
 		});
 
 		$authProvider.google({
-			clientId: '479651367330-trvf8efoo415ie0usfhm4i59410vk3j9.apps.googleusercontent.com'	// provide your own client ID
+			clientId: '362136322942-k45h52q3uq56dc1gas1f52c0ulhg5190.apps.googleusercontent.com'
 		});
 
 		$authProvider.twitter({
@@ -25,7 +24,7 @@
 		});
 
 		$authProvider.github({
-			clientId: '8096e95c2eba33b81adb'	// provide your own client ID
+			clientId: '9ff097299c86e524b10f'
 		});
 	}
 
