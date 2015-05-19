@@ -5,13 +5,11 @@
 		.module('rBox')
 		.directive('recipeForm', recipeForm);
 
-	recipeForm.$inject = ['recipeData'];
+	recipeForm.$inject = ['recipeData', '$location', '$timeout'];
 
-	function recipeForm(recipeData) {
+	function recipeForm(recipeData, $location, $timeout) {
 
-		recipeFormCtrl.$inject = ['$timeout'];
-
-		function recipeFormCtrl($timeout) {
+		function recipeFormCtrl() {
 			var rf = this;
 			var _isEdit = !!rf.recipe;
 
@@ -25,7 +23,9 @@
 			 * @private
 			 */
 			function _recipeSaved(data) {
-				console.log('recipe saved!');
+				var recipeId = data._id;
+
+				console.log('recipe saved! ID:', recipeId);
 			}
 
 			/**
