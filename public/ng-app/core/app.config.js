@@ -25,6 +25,10 @@
 				templateUrl: 'ng-app/recipe/Recipe.view.html',
 				secure: true
 			})
+			.when('/recipe/:id/edit', {
+				templateUrl: 'ng-app/recipe/EditRecipe.view.html',
+				secure: true
+			})
 			.when('/account', {
 				templateUrl: 'ng-app/account/Account.view.html',
 				secure: true

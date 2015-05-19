@@ -3,13 +3,13 @@
 
 	angular
 		.module('rBox')
-		.controller('RecipeCtrl', RecipeCtrl);
+		.controller('EditRecipeCtrl', EditRecipeCtrl);
 
-	RecipeCtrl.$inject = ['$auth', '$routeParams', 'recipeData', 'userData'];
+	EditRecipeCtrl.$inject = ['$auth', '$routeParams', 'recipeData', 'userData'];
 
-	function RecipeCtrl($auth, $routeParams, recipeData, userData) {
+	function EditRecipeCtrl($auth, $routeParams, recipeData, userData) {
 		// controllerAs ViewModel
-		var recipe = this;
+		var edit = this;
 
 		// TODO: use slugify for URLs instead of MongoDB IDs
 		var recipeId = $routeParams.id;
@@ -19,12 +19,12 @@
 		 *
 		 * @returns {boolean}
 		 */
-		recipe.isAuthenticated = function() {
+		edit.isAuthenticated = function() {
 			return $auth.isAuthenticated();
 		};
 
 		function _getUserSuccess(data) {
-			recipe.user = data;
+			edit.user = data;
 		}
 		userData.getUser().then(_getUserSuccess);
 
@@ -35,8 +35,21 @@
 		 * @private
 		 */
 		function _recipeSuccess(data) {
-			recipe.recipe = data;
+			edit.recipe = data;
 		}
 		recipeData.getRecipe(recipeId).then(_recipeSuccess);
+
+		/**
+		 * Successful promise after deleting recipe
+		 *
+		 * @param data
+		 * @private
+		 */
+		function _deleteSuccess(data) {
+			console.log('recipe deleted!');
+		}
+		edit.deleteRecipe = function() {
+			recipeData.deleteRecipe(recipeId).then(_deleteSuccess);
+		}
 	}
 })();

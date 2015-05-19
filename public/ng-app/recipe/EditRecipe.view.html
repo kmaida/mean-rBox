@@ -1,0 +1,23 @@
+<article id="content-wrapper" class="content-wrapper editRecipe-wrapper" view-switch>
+	<section id="content-main" class="content-main editRecipe-content clearfix" ng-controller="EditRecipeCtrl as edit" ng-cloak>
+
+		<div ng-if="edit.isAuthenticated() && edit.recipe">
+			<h1 class="content-heading">{{edit.recipe.name}}<small ng-if="edit.user._id === edit.recipe.userId"> <a ng-href="/recipe/{{edit.recipe._id}}/edit"><i class="fa fa-pencil-square-o"></i></a></small></h1>
+
+			<div ng-if="edit.user._id === edit.recipe.userId">
+				<h2>Edit Recipe</h2>
+				<recipe-form user-id="edit.user._id" recipe="edit.recipe"></recipe-form>
+
+				<h2>Delete Recipe</h2>
+				<button class="btn btn-danger" ng-click="edit.deleteRecipe()"><i class="fa fa-trash"></i> Delete Recipe</button>
+			</div>
+
+			<!-- not authorized to edit -->
+			<div ng-if="edit.user._id !== edit.recipe.userId" class="alert alert-danger">
+				<i class="fa fa-warning"></i> You cannot edit someone else's recipe!
+			</div>
+		</div>
+
+		<!-- TODO: Add check for if recipe call has gone through and if it has and there is no recipe, show error -->
+	</section>
+</article>

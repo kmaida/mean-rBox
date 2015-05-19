@@ -57,8 +57,7 @@
 		 */
 		this.updateRecipe = function(id, recipeData) {
 			return $http
-				.put('/api/recipe/' + id, recipeData)
-				.then(_getRes);
+				.put('/api/recipe/' + id, recipeData);
 		};
 
 		/**

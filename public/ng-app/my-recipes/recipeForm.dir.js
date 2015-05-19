@@ -13,19 +13,27 @@
 			var rf = this;
 			var _isEdit = !!rf.recipe;
 
-			rf.recipeData = {};
-			rf.recipeData.userId = rf.userId;
+			if (_isEdit) {
+				rf.recipeData = rf.recipe;
+			} else {
+				rf.recipeData = {};
+				rf.recipeData.userId = rf.userId;
+			}
 
 			/**
 			 * Recipe created or saved successfully
 			 *
-			 * @param data
+			 * @param res
 			 * @private
 			 */
-			function _recipeSaved(data) {
-				var recipeId = data._id;
+			function _recipeSaved(res) {
+				console.log('saved');
 
-				console.log('recipe saved! ID:', recipeId);
+				if (!_isEdit) {
+					var recipeId = res.data._id;
+
+					console.log('new recipe ID:', recipeId);
+				}
 			}
 
 			/**
@@ -35,7 +43,7 @@
 				if (!_isEdit) {
 					recipeData.createRecipe(rf.recipeData).then(_recipeSaved);
 				} else {
-					recipeData.saveRecipe(rf.recipe._id, rf.recipeData).then(_recipeSaved);
+					recipeData.updateRecipe(rf.recipe._id, rf.recipeData).then(_recipeSaved);
 				}
 			};
 		}
