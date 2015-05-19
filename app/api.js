@@ -430,7 +430,7 @@ module.exports = function(app, config) {
 	 |--------------------------------------------------------------------------
 	 */
 	app.post('/api/recipe/new', ensureAuthenticated, function(req, res) {
-		Recipe.findOne({ name: req.body.name }, function(err, existingRecipe) {
+		Recipe.findOne({slug: req.body.slug}, function(err, existingRecipe) {
 			if (existingRecipe) {
 				return res.status(409).send({message: 'You already have a recipe with that name'});
 			}
@@ -438,6 +438,7 @@ module.exports = function(app, config) {
 			var recipe = new Recipe({
 				userId: req.user || req.body.userId,
 				name: req.body.name,
+				slug: req.body.slug,
 				isPublic: req.body.isPublic
 			});
 
@@ -491,11 +492,11 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | GET /api/recipe/:id - get recipe detail
+	 | GET /api/recipe/:slug - get recipe detail
 	 |--------------------------------------------------------------------------
 	 */
-	app.get('/api/recipe/:id', ensureAuthenticated, function(req, res) {
-		Recipe.findById(req.params.id, function(err, recipe) {
+	app.get('/api/recipe/:slug', ensureAuthenticated, function(req, res) {
+		Recipe.findOne({slug: req.params.slug}, function(err, recipe) {
 			if (!recipe) {
 				return res.status(400).send({ message: 'Recipe not found' });
 			}
@@ -506,11 +507,11 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | PUT /api/recipe/:id - update a recipe
+	 | PUT /api/recipe/:slug - update a recipe
 	 |--------------------------------------------------------------------------
 	 */
-	app.put('/api/recipe/:id', ensureAuthenticated, function(req, res) {
-		Recipe.findById(req.params.id, function(err, recipe) {
+	app.put('/api/recipe/:slug', ensureAuthenticated, function(req, res) {
+		Recipe.findOne({slug: req.params.slug}, req.params.id, function(err, recipe) {
 			if (!recipe) {
 				return res.status(400).send({ message: 'Recipe not found' });
 			}
@@ -519,6 +520,7 @@ module.exports = function(app, config) {
 			}
 
 			recipe.name = req.body.name || recipe.name;
+			recipe.slug = req.body.slug || recipe.slug;
 			recipe.isPublic = req.body.isPublic;
 
 			recipe.save(function(err) {
@@ -529,11 +531,11 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | DELETE /api/recipe/:id - delete recipe
+	 | DELETE /api/recipe/:slug - delete recipe
 	 |--------------------------------------------------------------------------
 	 */
-	app.delete('/api/recipe/:id', ensureAuthenticated, function(req, res) {
-		Recipe.findById(req.params.id, function(err, recipe) {
+	app.delete('/api/recipe/:slug', ensureAuthenticated, function(req, res) {
+		Recipe.findOne(req.params.slug, function(err, recipe) {
 			if (!recipe) {
 				return res.status(400).send({ message: 'Recipe not found' });
 			}

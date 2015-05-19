@@ -2,7 +2,7 @@
 	<section id="content-main" class="content-main editRecipe-content clearfix" ng-controller="EditRecipeCtrl as edit" ng-cloak>
 
 		<div ng-if="edit.isAuthenticated() && edit.recipe">
-			<h1 class="content-heading">{{edit.recipe.name}}<small ng-if="edit.user._id === edit.recipe.userId"> <a ng-href="/recipe/{{edit.recipe._id}}/edit"><i class="fa fa-pencil-square-o"></i></a></small></h1>
+			<h1 class="content-heading">{{edit.recipe.name}}</h1>
 
 			<div ng-if="edit.user._id === edit.recipe.userId">
 				<h2>Edit Recipe</h2>

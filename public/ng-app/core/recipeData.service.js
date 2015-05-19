@@ -28,11 +28,12 @@
 		/**
 		 * Get recipe
 		 *
+		 * @param slug {string} recipe slug
 		 * @returns {promise}
 		 */
-		this.getRecipe = function(id) {
+		this.getRecipe = function(slug) {
 			return $http
-				.get('/api/recipe/' + id)
+				.get('/api/recipe/' + slug)
 				.then(_getRes);
 		};
 
@@ -51,24 +52,24 @@
 		/**
 		 * Update a recipe
 		 *
-		 * @param id {string} recipe ID
+		 * @param slug {string} recipe slug
 		 * @param recipeData {object}
 		 * @returns {promise}
 		 */
-		this.updateRecipe = function(id, recipeData) {
+		this.updateRecipe = function(slug, recipeData) {
 			return $http
-				.put('/api/recipe/' + id, recipeData);
+				.put('/api/recipe/' + slug, recipeData);
 		};
 
 		/**
 		 * Delete a recipe
 		 *
-		 * @param id {string} recipe ID
+		 * @param slug {string} recipe slug
 		 * @returns {promise}
 		 */
-		this.deleteRecipe = function(id) {
+		this.deleteRecipe = function(slug) {
 			return $http
-				.delete('/api/recipe/' + id);
+				.delete('/api/recipe/' + slug);
 		};
 
 		/**

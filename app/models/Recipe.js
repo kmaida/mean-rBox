@@ -10,6 +10,7 @@ var config = require('../config');
 var recipeSchema = new mongoose.Schema({
 	userId: String,
 	name: String,
+	slug: String,
 	isPublic: Boolean
 });
 

@@ -11,8 +11,7 @@
 		// controllerAs ViewModel
 		var edit = this;
 
-		// TODO: use slugify for URLs instead of MongoDB IDs
-		var recipeId = $routeParams.id;
+		var recipeSlug = $routeParams.slug;
 
 		/**
 		 * Is the user authenticated?
@@ -37,7 +36,7 @@
 		function _recipeSuccess(data) {
 			edit.recipe = data;
 		}
-		recipeData.getRecipe(recipeId).then(_recipeSuccess);
+		recipeData.getRecipe(recipeSlug).then(_recipeSuccess);
 
 		/**
 		 * Successful promise after deleting recipe
@@ -49,7 +48,7 @@
 			console.log('recipe deleted!');
 		}
 		edit.deleteRecipe = function() {
-			recipeData.deleteRecipe(recipeId).then(_deleteSuccess);
+			recipeData.deleteRecipe(recipeSlug).then(_deleteSuccess);
 		}
 	}
 })();

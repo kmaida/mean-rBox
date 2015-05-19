@@ -21,11 +21,11 @@
 				templateUrl: 'ng-app/my-recipes/MyRecipes.view.html',
 				secure: true
 			})
-			.when('/recipe/:id', {
+			.when('/recipe/:slug', {
 				templateUrl: 'ng-app/recipe/Recipe.view.html',
 				secure: true
 			})
-			.when('/recipe/:id/edit', {
+			.when('/recipe/:slug/edit', {
 				templateUrl: 'ng-app/recipe/EditRecipe.view.html',
 				secure: true
 			})

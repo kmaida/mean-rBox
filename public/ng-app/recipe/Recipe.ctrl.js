@@ -12,7 +12,7 @@
 		var recipe = this;
 
 		// TODO: use slugify for URLs instead of MongoDB IDs
-		var recipeId = $routeParams.id;
+		var recipeSlug = $routeParams.slug;
 
 		/**
 		 * Is the user authenticated?
@@ -37,6 +37,6 @@
 		function _recipeSuccess(data) {
 			recipe.recipe = data;
 		}
-		recipeData.getRecipe(recipeId).then(_recipeSuccess);
+		recipeData.getRecipe(recipeSlug).then(_recipeSuccess);
 	}
 })();

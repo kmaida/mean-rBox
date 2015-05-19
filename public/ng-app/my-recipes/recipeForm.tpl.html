@@ -1,6 +1,6 @@
 <form name="recipeForm" ng-submit="rf.saveRecipe()" novalidate>
 	<div class="form-group">
-		<label for="recipeName">Recipe Name:</label>
+		<label for="recipeName">Recipe Name</label>
 		<input id="recipeName"
 			   name="name"
 			   type="text"
@@ -11,6 +11,9 @@
 
 	<div class="form-group">
 		<label>Public</label>
+		<p>
+			<small>Indicate whether this recipe should appear in the public listing. Users with a direct link will still be able to view recipes.</small>
+		</p>
 		<div class="radio">
 			<label class="radio-inline">
 				<input type="radio"
