@@ -9,17 +9,20 @@
 	<nav ng-if="header.isAuthenticated()" id="nav" class="nav" role="navigation">
 		<ul class="nav-list">
 			<li>
-				<a ng-class="{active: header.indexIsActive('/')}" ng-href="/"><i class="fa fa-home"></i> Home</a>
+				<a ng-class="{active: header.indexIsActive('/')}" ng-href="/"><i class="fa fa-home fa-fw"></i> Home</a>
 			</li>
 			<li>
-				<a ng-class="{active: header.navIsActive('/account')}" ng-href="/account"><i class="fa fa-user"></i> My Account</a>
+				<a ng-class="{active: header.navIsActive('/my-recipes')}" ng-href="/my-recipes"><i class="fa fa-cutlery fa-fw"></i> My Recipes</a>
+			</li>
+			<li>
+				<a ng-class="{active: header.navIsActive('/account')}" ng-href="/account"><i class="fa fa-user fa-fw"></i> My Account</a>
 			</li>
 			<li ng-if="header.adminUser">
-				<a ng-class="{active: header.navIsActive('/admin')}" ng-href="/admin"><i class="fa fa-wrench"></i>
+				<a ng-class="{active: header.navIsActive('/admin')}" ng-href="/admin"><i class="fa fa-wrench fa-fw"></i>
 					Admin</a>
 			</li>
 			<li>
-				<a ng-click="header.logout()"><i class="fa fa-sign-out"></i> Logout</a>
+				<a ng-click="header.logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 			</li>
 		</ul>
 	</nav>

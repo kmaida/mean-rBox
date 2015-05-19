@@ -1,0 +1,15 @@
+<article id="content-wrapper" class="content-wrapper myRecipes-wrapper">
+	<section id="content-main" class="content-main myRecipes-content clearfix" ng-controller="MyRecipesCtrl as myRecipes" ng-cloak>
+
+		<div ng-if="myRecipes.isAuthenticated()">
+			<h1 class="content-heading">My Recipes</h1>
+
+			<recipe-form ng-if="myRecipes.user" user-id="{{myRecipes.user._id}}"></recipe-form>
+
+			<ul>
+				<li ng-repeat="recipe in myRecipes.recipes">{{recipe.name}}</li>
+			</ul>
+		</div>
+
+	</section>
+</article>

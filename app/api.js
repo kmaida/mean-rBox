@@ -430,16 +430,13 @@ module.exports = function(app, config) {
 	 |--------------------------------------------------------------------------
 	 */
 	app.post('/api/recipe/new', ensureAuthenticated, function(req, res) {
-		Recipe.findOne({ title: req.body.title }, function(err, existingRecipe) {
-
-			console.log('user:', req.user);
-
+		Recipe.findOne({ name: req.body.name }, function(err, existingRecipe) {
 			if (existingRecipe) {
 				return res.status(409).send({message: 'You already have a recipe with that name'});
 			}
 
 			var recipe = new Recipe({
-				userId: req.user,
+				userId: req.user || req.body.userId,
 				name: req.body.name,
 				isPublic: req.body.isPublic
 			});
@@ -452,11 +449,15 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | GET /api/recipes/:userId - get user's recipes
+	 | GET /api/recipes/me - get user's recipes
 	 |--------------------------------------------------------------------------
 	 */
 	app.get('/api/recipes/me', ensureAuthenticated, function(req, res) {
 		Recipe.find({userId: req.user}, function(err, recipes) {
+			if (!recipes) {
+				return res.status(400).send({message: 'No recipes found'});
+			}
+
 			var recipeArr = [];
 
 			recipes.forEach(function(recipe) {
@@ -474,6 +475,10 @@ module.exports = function(app, config) {
 	 */
 	app.get('/api/recipes', ensureAuthenticated, function(req, res) {
 		Recipe.find({}, function(err, recipes) {
+			if (!recipes) {
+				return res.status(400).send({ message: 'No recipes found' });
+			}
+
 			var recipeArr = [];
 
 			recipes.forEach(function(recipe) {

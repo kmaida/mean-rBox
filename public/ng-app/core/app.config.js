@@ -17,6 +17,10 @@
 			.when('/login', {
 				templateUrl: 'ng-app/login/Login.view.html'
 			})
+			.when('/my-recipes', {
+				templateUrl: 'ng-app/my-recipes/MyRecipes.view.html',
+				secure: true
+			})
 			.when('/account', {
 				templateUrl: 'ng-app/account/Account.view.html',
 				secure: true
