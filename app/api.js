@@ -3,6 +3,7 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 var qs = require('querystring');
 var User = require('./models/User');
+var Recipe = require('./models/Recipe');
 
 module.exports = function(app, config) {
 
@@ -423,4 +424,97 @@ module.exports = function(app, config) {
 		});
 	});
 
+	/*
+	 |--------------------------------------------------------------------------
+	 | POST /api/recipe - create a recipe
+	 |--------------------------------------------------------------------------
+	 */
+	app.post('/api/recipe/new', ensureAuthenticated, function(req, res) {
+		Recipe.findOne({ title: req.body.title }, function(err, existingRecipe) {
+
+			console.log('user:', req.user);
+
+			if (existingRecipe) {
+				return res.status(409).send({message: 'You already have a recipe with that name'});
+			}
+
+			var recipe = new Recipe({
+				userId: req.user,
+				name: req.body.name,
+				isPublic: req.body.isPublic
+			});
+
+			recipe.save(function() {
+				res.send(recipe);
+			});
+		});
+	});
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | GET /api/recipes/:userId - get user's recipes
+	 |--------------------------------------------------------------------------
+	 */
+	app.get('/api/recipes/me', ensureAuthenticated, function(req, res) {
+		Recipe.find({userId: req.user}, function(err, recipes) {
+			var recipeArr = [];
+
+			recipes.forEach(function(recipe) {
+				recipeArr.push(recipe);
+			});
+
+			res.send(recipeArr);
+		});
+	});
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | GET /api/recipes - get all public recipes
+	 |--------------------------------------------------------------------------
+	 */
+	app.get('/api/recipes', ensureAuthenticated, function(req, res) {
+		Recipe.find({}, function(err, recipes) {
+			var recipeArr = [];
+
+			recipes.forEach(function(recipe) {
+				if (recipe.isPublic) {
+					recipeArr.push(recipe);
+				}
+			});
+
+			res.send(recipeArr);
+		});
+	});
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | PUT /api/recipe/:id - update a recipe TODO: only author of recipe can update
+	 |--------------------------------------------------------------------------
+	 */
+	app.put('/api/recipe/:id', ensureAuthenticated, function(req, res) {
+		Recipe.findById(req.params.id, function(err, recipe) {
+			if (!recipe) {
+				return res.status(400).send({ message: 'Recipe not found' });
+			}
+			recipe.title = req.body.title || recipe.title;
+			recipe.isPublic = req.body.isPublic;
+
+			recipe.save(function(err) {
+				res.status(200).end();
+			});
+		});
+	});
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | DELETE /api/recipe/:id (delete recipe) TODO: only author of recipe can update
+	 |--------------------------------------------------------------------------
+	 */
+	app.delete('/api/recipe/:id', ensureAuthenticated, function(req, res) {
+		Recipe.findById(req.params.id, function(err, recipe) {
+			recipe.remove(function(err) {
+				res.status(200).end();
+			});
+		});
+	});
 };
