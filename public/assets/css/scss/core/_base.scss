@@ -23,6 +23,13 @@
 	display: none !important;
 }
 
+/*-- ng-click: cursor --*/
+
+[ng-click],
+[data-ng-click] {
+	cursor: pointer;
+}
+
 /*-- Image Replacement --*/
 
 .ir {

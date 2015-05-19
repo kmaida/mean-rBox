@@ -474,7 +474,7 @@ module.exports = function(app, config) {
 	 |--------------------------------------------------------------------------
 	 */
 	app.get('/api/recipes', ensureAuthenticated, function(req, res) {
-		Recipe.find({}, function(err, recipes) {
+		Recipe.find({isPublic: true}, function(err, recipes) {
 			if (!recipes) {
 				return res.status(400).send({ message: 'No recipes found' });
 			}
@@ -482,9 +482,7 @@ module.exports = function(app, config) {
 			var recipeArr = [];
 
 			recipes.forEach(function(recipe) {
-				if (recipe.isPublic) {
-					recipeArr.push(recipe);
-				}
+				recipeArr.push(recipe);
 			});
 
 			res.send(recipeArr);
