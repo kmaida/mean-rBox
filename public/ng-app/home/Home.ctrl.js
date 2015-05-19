@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('HomeCtrl', HomeCtrl);
 
-	HomeCtrl.$inject = ['$auth', 'localData'];
+	HomeCtrl.$inject = ['$auth', 'localData', 'recipeData'];
 
-	function HomeCtrl($auth, localData) {
+	function HomeCtrl($auth, localData, recipeData) {
 		// controllerAs ViewModel
 		var home = this;
 
@@ -29,10 +29,11 @@
 		function _localDataSuccess(data) {
 			home.localData = data;
 		}
-
 		localData.getJSON().then(_localDataSuccess);
 
-		// Simple SCE example
-		home.stringOfHTML = '<strong>Some bold text</strong> bound as HTML with a <a href="#">link</a>!';
+		function _publicRecipesSuccess(data) {
+			home.publicRecipes = data;
+		}
+		recipeData.getPublicRecipes().then(_publicRecipesSuccess);
 	}
 })();
