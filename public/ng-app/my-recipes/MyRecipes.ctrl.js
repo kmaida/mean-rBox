@@ -5,13 +5,32 @@
 		.module('rBox')
 		.controller('MyRecipesCtrl', MyRecipesCtrl);
 
-	MyRecipesCtrl.$inject = ['Page', '$auth', 'recipeData', 'userData'];
+	MyRecipesCtrl.$inject = ['Page', '$auth', 'recipeData', 'userData', '$location'];
 
-	function MyRecipesCtrl(Page, $auth, recipeData, userData) {
+	function MyRecipesCtrl(Page, $auth, recipeData, userData, $location) {
 		// controllerAs ViewModel
 		var myRecipes = this;
+		var _tab = $location.search().view;
 
 		Page.setTitle('My Recipes');
+
+		myRecipes.tabs = [
+			{
+				name: 'My Recipe Box',
+				query: 'recipe-box'
+			},
+			{
+				name: 'Add New Recipe',
+				query: 'add-recipe'
+			}
+		];
+
+		myRecipes.currentTab = _tab ? _tab : 'recipe-box';
+
+		myRecipes.changeTab = function(query) {
+			$location.search('view', query);
+			myRecipes.currentTab = query;
+		};
 
 		/**
 		 * Is the user authenticated?

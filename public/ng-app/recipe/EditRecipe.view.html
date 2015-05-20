@@ -12,12 +12,14 @@
 					</li>
 				</ul>
 
-				<div ng-if="edit.currentTab === 'edit'">
+				<!-- Edit Recipe -->
+				<section ng-if="edit.currentTab === 'edit'" class="editRecipe">
 					<h2><i class="fa fa-pencil-square-o fa-fw"></i>Edit Recipe</h2>
 					<recipe-form user-id="edit.user._id" recipe="edit.recipe"></recipe-form>
-				</div>
+				</section>
 
-				<div ng-if="edit.currentTab === 'delete'">
+				<!-- Delete Recipe -->
+				<section ng-if="edit.currentTab === 'delete'" class="deleteRecipe">
 					<h2><i class="fa fa-trash fa-fw"></i>Delete Recipe</h2>
 
 					<p class="lead">To permanently delete this recipe, please type its name below.</p>
@@ -35,7 +37,7 @@
 							ng-disabled="edit.originalName !== edit.deleteConfirm">
 						<i class="fa"
 						   ng-class="{'fa-trash': !edit.deleted, 'fa-check': edit.deleted === true, 'fa-ban': edit.deleted === 'error'}"></i> {{edit.deleteBtnText}}</button>
-				</div>
+				</section>
 			</div>
 
 			<!-- not authorized to edit -->

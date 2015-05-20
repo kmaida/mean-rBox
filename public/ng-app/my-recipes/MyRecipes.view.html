@@ -4,28 +4,44 @@
 		<div ng-if="myRecipes.isAuthenticated()">
 			<h1 class="content-heading">My Recipes</h1>
 
-			<div ng-if="myRecipes.recipes.length" class="form-group form-inline">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-search"></i></span>
-					<input id="query" type="text" class="form-control" ng-model="myRecipes.query" placeholder="Search my recipes" />
-						<span class="input-group-btn">
-							<button class="btn btn-default" ng-disabled="!myRecipes.query" ng-click="myRecipes.query=''">&times;</button>
-						</span>
-				</div>
-			</div>
-
-			<ul ng-if="(myRecipes.recipes | filter:myRecipes.query).length">
-				<li ng-repeat="recipe in myRecipes.recipes | filter:myRecipes.query | orderBy:'name'">
-					<a ng-href="/recipe/{{recipe.slug}}">{{recipe.name}}</a>
+			<ul class="nav nav-tabs myRecipesTabs">
+				<li role="presentation" ng-repeat="tab in myRecipes.tabs" ng-class="{active: myRecipes.currentTab === tab.query}">
+					<a ng-click="myRecipes.changeTab(tab.query)">{{tab.name}}</a>
 				</li>
 			</ul>
 
-			<div ng-if="myRecipes.recipes && !(myRecipes.recipes | filter:myRecipes.query).length" class="alert alert-warning">
-				<i class="fa fa-warning"></i> No recipes{{myRecipes.query ? ' match your search query' : ''}}.
-			</div>
+			<!-- My Recipe Box -->
+			<section ng-if="myRecipes.currentTab === 'recipe-box'" class="recipeBox">
+				<h2><i class="fa fa-archive fa-fw"></i>My Recipe Box</h2>
 
-			<h2>Add a new recipe</h2>
-			<recipe-form ng-if="myRecipes.user" user-id="{{myRecipes.user._id}}"></recipe-form>
+				<p class="lead">View your personal recipes.</p>
+
+				<div ng-if="myRecipes.recipes.length" class="form-group form-inline">
+					<div class="input-group">
+						<span class="input-group-addon"><i class="fa fa-search"></i></span>
+						<input id="query" type="text" class="form-control" ng-model="myRecipes.query" placeholder="Search my recipes" />
+							<span class="input-group-btn">
+								<button class="btn btn-default" ng-disabled="!myRecipes.query" ng-click="myRecipes.query=''">&times;</button>
+							</span>
+					</div>
+				</div>
+
+				<ul ng-if="(myRecipes.recipes | filter:myRecipes.query).length">
+					<li ng-repeat="recipe in myRecipes.recipes | filter:myRecipes.query | orderBy:'name'">
+						<a ng-href="/recipe/{{recipe.slug}}">{{recipe.name}}</a>
+					</li>
+				</ul>
+
+				<div ng-if="myRecipes.recipes && !(myRecipes.recipes | filter:myRecipes.query).length" class="alert alert-warning">
+					<i class="fa fa-warning"></i> No recipes{{myRecipes.query ? ' match your search query' : ''}}.
+				</div>
+			</section>
+
+			<!-- Add New Recipe -->
+			<section ng-if="myRecipes.currentTab === 'add-recipe'" class="addRecipe">
+				<h2><i class="fa fa-book fa-fw"></i>Add New Recipe</h2>
+				<recipe-form ng-if="myRecipes.user" user-id="{{myRecipes.user._id}}"></recipe-form>
+			</section>
 		</div>
 
 	</section>
