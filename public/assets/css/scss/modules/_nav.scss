@@ -71,6 +71,11 @@
 
 	.active {
 		font-weight: bold;
+
+		@include mq($mq-large) {
+			font-weight: normal;
+			border-bottom: 1px solid $color-gray-rgba;
+		}
 	}
 	&-list {
 		list-style: none;
