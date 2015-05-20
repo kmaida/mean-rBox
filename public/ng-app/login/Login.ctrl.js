@@ -72,7 +72,6 @@
 		 */
 		login.logout = function() {
 			$auth.logout('/login');
-			login.isAuthenticated = false;
 		};
 	}
 })();
