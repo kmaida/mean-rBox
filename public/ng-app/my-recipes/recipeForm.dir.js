@@ -5,9 +5,9 @@
 		.module('rBox')
 		.directive('recipeForm', recipeForm);
 
-	recipeForm.$inject = ['recipeData', 'Slug', '$location', '$timeout'];
+	recipeForm.$inject = ['recipeData', 'Recipe', 'Slug', '$location', '$timeout'];
 
-	function recipeForm(recipeData, Slug, $location, $timeout) {
+	function recipeForm(recipeData, Recipe, Slug, $location, $timeout) {
 
 		function recipeFormCtrl() {
 			var rf = this;
@@ -16,6 +16,45 @@
 
 			rf.recipeData = _isEdit ? rf.recipe : {};
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
+			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
+
+			// dietary options list
+			rf.dietary = Recipe.dietary;
+
+			/**
+			 * Add new ingredient
+			 */
+			rf.addIngredient = function() {
+				var _newIng = {
+					id: rf.recipeData.ingredients.length + 1
+				};
+
+				rf.recipeData.ingredients.push(_newIng);
+			};
+
+			/**
+			 * Remove ingredient
+			 *
+			 * @param i {index}
+			 */
+			rf.removeIngredient = function(i) {
+				rf.recipeData.ingredients.splice(i, 1);
+			};
+
+			/**
+			 * Clean empty items out of array before saving
+			 * Ingredients or Directions
+			 *
+			 * @param array {Array}
+			 * @private
+			 */
+			function _cleanEmpties(array) {
+				angular.forEach(array, function(obj, i) {
+					if (!!obj.ingredient === false) {
+						array.splice(i, 1);
+					}
+				});
+			}
 
 			/**
 			 * Reset save button
@@ -74,9 +113,13 @@
 			 * Save recipe
 			 */
 			rf.saveRecipe = function() {
-				rf.recipeData.slug = Slug.slugify(rf.recipeData.name);
 				rf.saveBtnText = _isEdit ? 'Updating...' : 'Saving...';
 
+				// prep data for saving
+				rf.recipeData.slug = Slug.slugify(rf.recipeData.name);
+				_cleanEmpties(rf.recipeData.ingredients);
+
+				// call API
 				if (!_isEdit) {
 					recipeData.createRecipe(rf.recipeData).then(_recipeSaved, _recipeSaveError);
 				} else {

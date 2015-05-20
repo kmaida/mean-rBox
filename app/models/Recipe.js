@@ -11,7 +11,14 @@ var recipeSchema = new mongoose.Schema({
 	userId: String,
 	name: String,
 	slug: String,
-	isPublic: Boolean
+	isPublic: Boolean,
+	dietary: String,
+	tags: Array,
+	ingredients: Array,
+	directions: Array,
+	servings: Number,
+	prepTime: String,
+	cookTime: String
 });
 
 var Recipe = mongoose.model('Recipe', recipeSchema);

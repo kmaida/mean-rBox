@@ -502,7 +502,14 @@ module.exports = function(app, config) {
 				userId: req.user || req.body.userId,
 				name: req.body.name,
 				slug: req.body.slug,
-				isPublic: req.body.isPublic
+				isPublic: req.body.isPublic,
+				dietary: req.body.dietary,
+				tags: req.body.tags,
+				ingredients: req.body.ingredients,
+				directions: req.body.directions,
+				servings: req.body.servings,
+				prepTime: req.body.prepTime,
+				cookTime: req.body.cookTime
 			});
 
 			recipe.save(function() {
@@ -529,6 +536,13 @@ module.exports = function(app, config) {
 			recipe.name = req.body.name || recipe.name;
 			recipe.slug = req.body.slug || recipe.slug;
 			recipe.isPublic = req.body.isPublic;
+			recipe.dietary = req.body.dietary || recipe.dietary;
+			recipe.tags = req.body.tags || recipe.tags;
+			recipe.ingredients = req.body.ingredients || recipe.ingredients;
+			recipe.directions = req.body.directions || recipe.directions;
+			recipe.servings = req.body.servings || recipe.servings;
+			recipe.prepTime = req.body.prepTime || recipe.prepTime;
+			recipe.cookTime = req.body.cookTime || recipe.cookTime;
 
 			recipe.save(function(err) {
 				res.status(200).end();

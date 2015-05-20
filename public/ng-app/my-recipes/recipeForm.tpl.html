@@ -1,4 +1,4 @@
-<form name="recipeForm" ng-submit="rf.saveRecipe()" novalidate>
+<form name="recipeForm" novalidate>
 	<p class="req"><strong>*</strong> <small><em>required</em></small></p>
 
 	<div class="form-group">
@@ -9,6 +9,34 @@
 			   ng-model="rf.recipeData.name"
 			   class="form-control"
 			   required>
+	</div>
+
+	<div class="form-group">
+		<label>Ingredients</label>
+
+		<div class="form-inline" ng-repeat="ing in rf.recipeData.ingredients track by $index">
+			<input id="ingredientAmt-{{$index}}"
+				   name="ingredientAmt-{{$index}}"
+				   type="text"
+				   placeholder="1 c"
+				   ng-model="ing.amt"
+				   class="form-control">
+
+			<input id="ingredient-{{$index}}"
+				   name="ingredient-{{$index}}"
+				   type="text"
+				   placeholder="flour"
+				   ng-model="ing.ingredient"
+				   class="form-control">
+
+			<button class="btn btn-danger" ng-click="rf.removeIngredient($index)">
+				<i class="fa fa-trash"></i>
+			</button>
+		</div>
+
+		<button class="btn btn-info" ng-click="rf.addIngredient()">
+			<i class="fa fa-plus"></i> Add Ingredient
+		</button>
 	</div>
 
 	<div class="form-group">
@@ -34,9 +62,23 @@
 		</div>
 	</div>
 
+	<div class="form-group">
+		<label for="dietary">Special Diet</label>
+		<p>
+			<small>Indicate a primary dietary concern that this recipe addresses, if any.</small>
+		</p>
+		<select id="dietary"
+				name="dietary"
+				class="form-control"
+				ng-options="item as item for item in rf.dietary"
+				ng-model="rf.recipeData.dietary">
+		</select>
+	</div>
+
 	<button class="btn"
 			ng-class="{'btn-primary': !rf.saved, 'btn-success': rf.saved === true, 'btn-danger': rf.saved === 'error'}"
-			ng-disabled="recipeForm.$invalid">
+			ng-disabled="recipeForm.$invalid"
+			ng-click="rf.saveRecipe()">
 		<i class="fa"
 		   ng-class="{'fa-download': !rf.saved, 'fa-check': rf.saved === true, 'fa-ban': rf.saved === 'error'}"></i> {{rf.saveBtnText}}
 	</button>

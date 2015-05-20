@@ -36,6 +36,7 @@
 		function _recipeSuccess(data) {
 			recipe.recipe = data;
 			Page.setTitle(recipe.recipe.name);
+			console.log(recipe.recipe);
 		}
 
 		/**
