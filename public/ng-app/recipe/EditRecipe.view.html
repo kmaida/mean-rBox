@@ -2,7 +2,7 @@
 	<section id="content-main" class="content-main editRecipe-content clearfix" ng-cloak>
 
 		<div ng-if="edit.isAuthenticated() && edit.recipe && edit.recipe !== 'error'">
-			<h1 class="content-heading">{{::edit.recipe.name}}</h1>
+			<h1 class="content-heading">Edit {{::edit.recipe.name}}</h1>
 
 			<div ng-if="edit.user._id === edit.recipe.userId">
 
@@ -13,18 +13,20 @@
 				</ul>
 
 				<div ng-if="edit.currentTab === 'edit'">
-					<h2>Edit Recipe</h2>
+					<h2><i class="fa fa-pencil-square-o fa-fw"></i>Edit Recipe</h2>
 					<recipe-form user-id="edit.user._id" recipe="edit.recipe"></recipe-form>
 				</div>
 
 				<div ng-if="edit.currentTab === 'delete'">
-					<h2>Delete Recipe</h2>
+					<h2><i class="fa fa-trash fa-fw"></i>Delete Recipe</h2>
+
+					<p class="lead">To permanently delete this recipe, please type its name below.</p>
+
 					<div class="form-group">
-						<label for="confirmDelete">To permanently delete this recipe, please type its name below:</label>
+						<label for="confirmDelete">Recipe Name</label>
 						<input id="confirmDelete"
 							   type="text"
 							   class="form-control"
-							   placeholder="Recipe to delete"
 							   ng-model="edit.deleteConfirm">
 					</div>
 					<button class="btn"
