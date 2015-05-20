@@ -5,11 +5,13 @@
 		.module('rBox')
 		.controller('MyRecipesCtrl', MyRecipesCtrl);
 
-	MyRecipesCtrl.$inject = ['$auth', 'recipeData', 'userData'];
+	MyRecipesCtrl.$inject = ['Page', '$auth', 'recipeData', 'userData'];
 
-	function MyRecipesCtrl($auth, recipeData, userData) {
+	function MyRecipesCtrl(Page, $auth, recipeData, userData) {
 		// controllerAs ViewModel
 		var myRecipes = this;
+
+		Page.setTitle('My Recipes');
 
 		/**
 		 * Is the user authenticated?

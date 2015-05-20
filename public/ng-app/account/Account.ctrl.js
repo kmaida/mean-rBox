@@ -5,13 +5,15 @@
 		.module('rBox')
 		.controller('AccountCtrl', AccountCtrl);
 
-	AccountCtrl.$inject = ['$scope', '$auth', 'userData', '$timeout', 'OAUTH', 'User'];
+	AccountCtrl.$inject = ['$scope', 'Page', '$auth', 'userData', '$timeout', 'OAUTH', 'User'];
 
-	function AccountCtrl($scope, $auth, userData, $timeout, OAUTH, User) {
+	function AccountCtrl($scope, Page, $auth, userData, $timeout, OAUTH, User) {
 		// controllerAs ViewModel
 		var account = this;
 
-		// All available login services
+		Page.setTitle('My Account');
+
+		// all available login services
 		account.logins = OAUTH.LOGINS;
 
 		/**

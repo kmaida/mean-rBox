@@ -5,12 +5,14 @@
 		.module('rBox')
 		.controller('EditRecipeCtrl', EditRecipeCtrl);
 
-	EditRecipeCtrl.$inject = ['$auth', '$routeParams', 'recipeData', 'userData'];
+	EditRecipeCtrl.$inject = ['Page', '$auth', '$routeParams', 'recipeData', 'userData'];
 
-	function EditRecipeCtrl($auth, $routeParams, recipeData, userData) {
+	function EditRecipeCtrl(Page, $auth, $routeParams, recipeData, userData) {
 		// controllerAs ViewModel
 		var edit = this;
 		var recipeSlug = $routeParams.slug;
+
+		Page.setTitle('Edit Recipe');
 
 		/**
 		 * Is the user authenticated?
@@ -34,6 +36,7 @@
 		 */
 		function _recipeSuccess(data) {
 			edit.recipe = data;
+			Page.setTitle('Edit ' + edit.recipe.name);
 		}
 
 		/**
@@ -43,8 +46,9 @@
 		 */
 		function _recipeError() {
 			edit.recipe = 'error';
+			Page.setTitle('Recipe Not Found');
 		}
-		recipeData.getRecipe(recipeSlug).then(_recipeSuccess);
+		recipeData.getRecipe(recipeSlug).then(_recipeSuccess, _recipeError);
 
 		/**
 		 * Successful promise after deleting recipe

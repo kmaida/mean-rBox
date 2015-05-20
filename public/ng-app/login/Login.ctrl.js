@@ -5,11 +5,13 @@
 		.module('rBox')
 		.controller('LoginCtrl', LoginCtrl);
 
-	LoginCtrl.$inject = ['$auth', 'OAUTH', '$rootScope', '$location', 'localData'];
+	LoginCtrl.$inject = ['Page', '$auth', 'OAUTH', '$rootScope', '$location', 'localData'];
 
-	function LoginCtrl($auth, OAUTH, $rootScope, $location, localData) {
+	function LoginCtrl(Page, $auth, OAUTH, $rootScope, $location, localData) {
 		// controllerAs ViewModel
 		var login = this;
+
+		Page.setTitle('Login');
 
 		/**
 		 * Check if user is authenticated

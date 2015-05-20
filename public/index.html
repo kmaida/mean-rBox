@@ -1,10 +1,10 @@
 <!DOCTYPE HTML>
 <!--[if lte IE 8]><html lang="en" class="no-js oldIE ie no-angular"><![endif]-->
-<!--[if IE 9]><html lang="en" class="no-js ie9 ie" ng-app="rBox"><![endif]-->
-<!--[if gt IE 9|!IE]><!--><html class="no-js" ng-app="rBox"><!-- <![endif]-->
+<!--[if IE 9]><html lang="en" class="no-js ie9 ie" ng-app="rBox" ng-controller="PageCtrl as page" ng-cloak><![endif]-->
+<!--[if gt IE 9|!IE]><!--><html class="no-js" ng-app="rBox" ng-controller="PageCtrl as page" ng-cloak><!-- <![endif]-->
 	<head>
 		<meta charset="utf-8">
-		<title>rBox</title>
+		<title>rBox | {{page.pageTitle.title()}}</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">

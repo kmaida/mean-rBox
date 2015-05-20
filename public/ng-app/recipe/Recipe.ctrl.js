@@ -5,13 +5,14 @@
 		.module('rBox')
 		.controller('RecipeCtrl', RecipeCtrl);
 
-	RecipeCtrl.$inject = ['$auth', '$routeParams', 'recipeData', 'userData'];
+	RecipeCtrl.$inject = ['Page', '$auth', '$routeParams', 'recipeData', 'userData'];
 
-	function RecipeCtrl($auth, $routeParams, recipeData, userData) {
+	function RecipeCtrl(Page, $auth, $routeParams, recipeData, userData) {
 		// controllerAs ViewModel
 		var recipe = this;
-
 		var recipeSlug = $routeParams.slug;
+
+		Page.setTitle('Recipe');
 
 		/**
 		 * Successful promise returning user's data
@@ -34,6 +35,7 @@
 		 */
 		function _recipeSuccess(data) {
 			recipe.recipe = data;
+			Page.setTitle(recipe.recipe.name);
 		}
 
 		/**
@@ -43,6 +45,7 @@
 		 */
 		function _recipeError() {
 			recipe.recipe = 'error';
+			Page.setTitle('Recipe Not Found');
 		}
 		recipeData.getRecipe(recipeSlug).then(_recipeSuccess, _recipeError);
 	}

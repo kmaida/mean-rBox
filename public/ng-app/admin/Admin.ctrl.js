@@ -5,11 +5,13 @@
 		.module('rBox')
 		.controller('AdminCtrl', AdminCtrl);
 
-	AdminCtrl.$inject = ['$auth', 'userData', 'User'];
+	AdminCtrl.$inject = ['Page', '$auth', 'userData', 'User'];
 
-	function AdminCtrl($auth, userData, User) {
+	function AdminCtrl(Page, $auth, userData, User) {
 		// controllerAs ViewModel
 		var admin = this;
+
+		Page.setTitle('Admin');
 
 		/**
 		 * Determines if the user is authenticated
