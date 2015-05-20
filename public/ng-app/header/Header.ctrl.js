@@ -45,14 +45,7 @@
 		_checkUserAdmin();
 		$scope.$on('$locationChangeSuccess', _checkUserAdmin);
 
-		/**
-		 * Is the user authenticated?
-		 *
-		 * @returns {boolean}
-		 */
-		header.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
+		header.isAuthenticated = $auth.isAuthenticated();
 
 		/**
 		 * Currently active nav item when '/' index

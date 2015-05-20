@@ -35,6 +35,15 @@
 		function _recipeSuccess(data) {
 			recipe.recipe = data;
 		}
-		recipeData.getRecipe(recipeSlug).then(_recipeSuccess);
+
+		/**
+		 * Error retrieving recipe
+		 *
+		 * @private
+		 */
+		function _recipeError() {
+			recipe.recipe = 'error';
+		}
+		recipeData.getRecipe(recipeSlug).then(_recipeSuccess, _recipeError);
 	}
 })();

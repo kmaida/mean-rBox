@@ -1,7 +1,7 @@
 <article id="content-wrapper" class="content-wrapper editRecipe-wrapper" view-switch>
 	<section id="content-main" class="content-main editRecipe-content clearfix" ng-controller="EditRecipeCtrl as edit" ng-cloak>
 
-		<div ng-if="edit.isAuthenticated() && edit.recipe">
+		<div ng-if="edit.isAuthenticated && edit.recipe && edit.recipe !== 'error'">
 			<h1 class="content-heading">{{edit.recipe.name}}</h1>
 
 			<div ng-if="edit.user._id === edit.recipe.userId">
@@ -29,6 +29,9 @@
 			</div>
 		</div>
 
-		<!-- TODO: Add check for if recipe call has gone through and if it has and there is no recipe, show error -->
+		<!-- recipe not found -->
+		<div ng-if="edit.recipe && edit.recipe === 'error'" class="alert alert-danger">
+			<i class="fa fa-warning"></i> Recipe not found.
+		</div>
 	</section>
 </article>

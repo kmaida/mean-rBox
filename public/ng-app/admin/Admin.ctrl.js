@@ -11,14 +11,7 @@
 		// controllerAs ViewModel
 		var admin = this;
 
-		/**
-		 * Determines if the user is authenticated
-		 *
-		 * @returns {boolean}
-		 */
-		admin.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
+		admin.isAuthenticated = $auth.isAuthenticated();
 
 		/**
 		 * Function for successful API call getting user list

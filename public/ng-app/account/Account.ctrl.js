@@ -11,17 +11,10 @@
 		// controllerAs ViewModel
 		var account = this;
 
-		// All available login services
+		// all available login services
 		account.logins = OAUTH.LOGINS;
 
-		/**
-		 * Is the user authenticated?
-		 *
-		 * @returns {boolean}
-		 */
-		account.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
+		account.isAuthenticated = $auth.isAuthenticated();
 
 		/**
 		 * Get user's profile information

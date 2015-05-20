@@ -7,6 +7,8 @@ var Recipe = require('./models/Recipe');
 
 module.exports = function(app, config) {
 
+//-------------------------- USERS API
+
 	/*
 	 |--------------------------------------------------------------------------
 	 | Login Required Middleware
@@ -424,27 +426,28 @@ module.exports = function(app, config) {
 		});
 	});
 
+
+
+//-------------------------- RECIPES API
+
 	/*
 	 |--------------------------------------------------------------------------
-	 | POST /api/recipe - create a recipe
+	 | GET /api/recipes - get all public recipes
 	 |--------------------------------------------------------------------------
 	 */
-	app.post('/api/recipe/new', ensureAuthenticated, function(req, res) {
-		Recipe.findOne({slug: req.body.slug}, function(err, existingRecipe) {
-			if (existingRecipe) {
-				return res.status(409).send({message: 'You already have a recipe with that name'});
+	app.get('/api/recipes', function(req, res) {
+		Recipe.find({isPublic: true}, function(err, recipes) {
+			if (!recipes) {
+				return res.status(400).send({ message: 'No recipes found' });
 			}
 
-			var recipe = new Recipe({
-				userId: req.user || req.body.userId,
-				name: req.body.name,
-				slug: req.body.slug,
-				isPublic: req.body.isPublic
+			var recipeArr = [];
+
+			recipes.forEach(function(recipe) {
+				recipeArr.push(recipe);
 			});
 
-			recipe.save(function() {
-				res.send(recipe);
-			});
+			res.send(recipeArr);
 		});
 	});
 
@@ -471,27 +474,6 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | GET /api/recipes - get all public recipes
-	 |--------------------------------------------------------------------------
-	 */
-	app.get('/api/recipes', function(req, res) {
-		Recipe.find({isPublic: true}, function(err, recipes) {
-			if (!recipes) {
-				return res.status(400).send({ message: 'No recipes found' });
-			}
-
-			var recipeArr = [];
-
-			recipes.forEach(function(recipe) {
-				recipeArr.push(recipe);
-			});
-
-			res.send(recipeArr);
-		});
-	});
-
-	/*
-	 |--------------------------------------------------------------------------
 	 | GET /api/recipe/:slug - get recipe detail
 	 |--------------------------------------------------------------------------
 	 */
@@ -502,6 +484,30 @@ module.exports = function(app, config) {
 			}
 
 			res.send(recipe);
+		});
+	});
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | POST /api/recipe - create a recipe
+	 |--------------------------------------------------------------------------
+	 */
+	app.post('/api/recipe/new', ensureAuthenticated, function(req, res) {
+		Recipe.findOne({slug: req.body.slug}, function(err, existingRecipe) {
+			if (existingRecipe) {
+				return res.status(409).send({message: 'You already have a recipe with that name'});
+			}
+
+			var recipe = new Recipe({
+				userId: req.user || req.body.userId,
+				name: req.body.name,
+				slug: req.body.slug,
+				isPublic: req.body.isPublic
+			});
+
+			recipe.save(function() {
+				res.send(recipe);
+			});
 		});
 	});
 

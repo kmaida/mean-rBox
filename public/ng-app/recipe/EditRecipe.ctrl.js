@@ -12,14 +12,7 @@
 		var edit = this;
 		var recipeSlug = $routeParams.slug;
 
-		/**
-		 * Is the user authenticated?
-		 *
-		 * @returns {boolean}
-		 */
-		edit.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
+		edit.isAuthenticated = $auth.isAuthenticated();
 
 		function _getUserSuccess(data) {
 			edit.user = data;
@@ -35,7 +28,16 @@
 		function _recipeSuccess(data) {
 			edit.recipe = data;
 		}
-		recipeData.getRecipe(recipeSlug).then(_recipeSuccess);
+
+		/**
+		 * Error retrieving recipe
+		 *
+		 * @private
+		 */
+		function _recipeError() {
+			edit.recipe = 'error';
+		}
+		recipeData.getRecipe(recipeSlug).then(_recipeSuccess, _recipeError);
 
 		/**
 		 * Successful promise after deleting recipe

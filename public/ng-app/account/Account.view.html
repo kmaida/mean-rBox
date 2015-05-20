@@ -8,7 +8,7 @@
 			<i class="fa fa-warning"></i> There was an error retrieving your information!
 		</div>
 
-		<div ng-if="account.isAuthenticated() && account.showAccount">
+		<div ng-if="account.isAuthenticated && account.showAccount">
 
 			<div ng-if="account.administrator" class="alert alert-info">
 				<i class="fa fa-wrench"></i> <strong>Administrator:</strong> <a ng-href="/admin">View all users</a>
