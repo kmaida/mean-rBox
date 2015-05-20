@@ -45,7 +45,7 @@
 				 * @private
 				 */
 				function _goToNewSlug() {
-					var _path = !_isEdit ? recipe.id : rf.recipeData.slug + '/edit';
+					var _path = !_isEdit ? recipe.slug : rf.recipeData.slug + '/edit';
 
 					$location.path('/recipe/' + _path);
 				}
@@ -74,8 +74,8 @@
 			 * Save recipe
 			 */
 			rf.saveRecipe = function() {
-				rf.saved = true;
 				rf.recipeData.slug = Slug.slugify(rf.recipeData.name);
+				rf.saveBtnText = _isEdit ? 'Updating...' : 'Saving...';
 
 				if (!_isEdit) {
 					recipeData.createRecipe(rf.recipeData).then(_recipeSaved, _recipeSaveError);

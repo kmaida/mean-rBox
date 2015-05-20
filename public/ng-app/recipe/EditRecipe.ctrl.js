@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('EditRecipeCtrl', EditRecipeCtrl);
 
-	EditRecipeCtrl.$inject = ['Page', '$auth', '$routeParams', 'recipeData', 'userData', '$location'];
+	EditRecipeCtrl.$inject = ['Page', '$auth', '$routeParams', 'recipeData', 'userData', '$location', '$timeout'];
 
-	function EditRecipeCtrl(Page, $auth, $routeParams, recipeData, userData, $location) {
+	function EditRecipeCtrl(Page, $auth, $routeParams, recipeData, userData, $location, $timeout) {
 		// controllerAs ViewModel
 		var edit = this;
 		var _recipeSlug = $routeParams.slug;
@@ -71,16 +71,51 @@
 		recipeData.getRecipe(_recipeSlug).then(_recipeSuccess, _recipeError);
 
 		/**
+		 * Reset delete button
+		 *
+		 * @private
+		 */
+		function _resetDeleteBtn() {
+			edit.deleted = false;
+			edit.deleteBtnText = 'Delete Recipe';
+		}
+
+		_resetDeleteBtn();
+
+		/**
 		 * Successful promise after deleting recipe
 		 *
-		 * @param data
+		 * @param data {promise}
 		 * @private
 		 */
 		function _deleteSuccess(data) {
-			console.log('recipe deleted!');
+			edit.deleted = true;
+			edit.deleteBtnText = 'Deleted!';
+
+			function _goToRecipes() {
+				$location.path('/my-recipes');
+				$location.search('view', null);
+			}
+
+			$timeout(_goToRecipes, 1500);
 		}
+
+		/**
+		 * Error deleting recipe
+		 *
+		 * @param err {promise}
+		 * @private
+		 */
+		function _deleteError(err) {
+			edit.deleted = 'error';
+			edit.deleteBtnText = 'Error deleting!';
+
+			$timeout(_resetDeleteBtn, 2500);
+		}
+
 		edit.deleteRecipe = function() {
-			recipeData.deleteRecipe(edit.recipe._id).then(_deleteSuccess);
+			edit.deleteBtnText = 'Deleting...';
+			recipeData.deleteRecipe(edit.recipe._id).then(_deleteSuccess, _deleteError);
 		}
 	}
 })();

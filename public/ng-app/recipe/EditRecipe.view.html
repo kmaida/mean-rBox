@@ -27,10 +27,12 @@
 							   placeholder="Recipe to delete"
 							   ng-model="edit.deleteConfirm">
 					</div>
-					<button class="btn btn-danger"
+					<button class="btn"
+							ng-class="{'btn-danger': !edit.deleted || edit.deleted === 'error', 'btn-success': edit.deleted}"
 							ng-click="edit.deleteRecipe()"
 							ng-disabled="edit.originalName !== edit.deleteConfirm">
-						<i class="fa fa-trash"></i> Delete Recipe</button>
+						<i class="fa"
+						   ng-class="{'fa-trash': !edit.deleted, 'fa-check': edit.deleted === true, 'fa-ban': edit.deleted === 'error'}"></i> {{edit.deleteBtnText}}</button>
 				</div>
 			</div>
 
