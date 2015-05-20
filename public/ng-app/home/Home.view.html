@@ -1,28 +1,26 @@
 <article id="content-wrapper" class="content-wrapper home-wrapper" view-switch>
 	<section id="content-main" class="content-main home-content clearfix" ng-controller="HomeCtrl as home" ng-cloak>
 
-		<div ng-if="home.isAuthenticated()">
-			<h1 class="content-heading">All Recipes</h1>
+		<h1 class="content-heading">All Recipes</h1>
 
-			<div ng-if="home.publicRecipes.length" class="form-group form-inline">
-				<div class="input-group">
-					<span class="input-group-addon"><i class="fa fa-search"></i></span>
-					<input id="query" type="text" class="form-control" ng-model="home.query" placeholder="Search recipes" />
-						<span class="input-group-btn">
-							<button class="btn btn-default" ng-disabled="!home.query" ng-click="home.query=''">&times;</button>
-						</span>
-				</div>
+		<div ng-if="home.publicRecipes.length" class="form-group form-inline">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-search"></i></span>
+				<input id="query" type="text" class="form-control" ng-model="home.query" placeholder="Search recipes" />
+					<span class="input-group-btn">
+						<button class="btn btn-default" ng-disabled="!home.query" ng-click="home.query=''">&times;</button>
+					</span>
 			</div>
+		</div>
 
-			<ul ng-if="(home.publicRecipes | filter:home.query).length">
-				<li ng-repeat="recipe in home.publicRecipes | filter:home.query | orderBy:'name'">
-					<a ng-href="/recipe/{{recipe.slug}}">{{recipe.name}}</a>
-				</li>
-			</ul>
+		<ul ng-if="(home.publicRecipes | filter:home.query).length">
+			<li ng-repeat="recipe in home.publicRecipes | filter:home.query | orderBy:'name'">
+				<a ng-href="/recipe/{{recipe.slug}}">{{recipe.name}}</a>
+			</li>
+		</ul>
 
-			<div ng-if="!(home.publicRecipes | filter:home.query).length" class="alert alert-warning">
-				<i class="fa fa-warning"></i> No recipes{{home.query ? ' match your search query' : ''}}.
-			</div>
+		<div ng-if="home.publicRecipes && !(home.publicRecipes | filter:home.query).length" class="alert alert-warning">
+			<i class="fa fa-warning"></i> No recipes{{home.query ? ' match your search query' : ''}}.
 		</div>
 
 	</section>

@@ -11,6 +11,8 @@
 		// controllerAs ViewModel
 		var login = this;
 
+		login.isAuthenticated = $auth.isAuthenticated();
+
 		/**
 		 * Function to run when local data successful
 		 *
@@ -20,7 +22,6 @@
 		function _localDataSuccess(data) {
 			login.localData = data;
 		}
-
 		localData.getJSON().then(_localDataSuccess);
 
 		login.logins = OAUTH.LOGINS;
@@ -55,6 +56,14 @@
 					login.loggingIn = 'error';
 					login.loginMsg = ''
 				});
-		}
+		};
+
+		/**
+		 * Log the user out of whatever authentication they've signed in with
+		 */
+		login.logout = function() {
+			$auth.logout('/login');
+			login.isAuthenticated = false;
+		};
 	}
 })();

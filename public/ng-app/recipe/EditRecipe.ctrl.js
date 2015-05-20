@@ -10,7 +10,6 @@
 	function EditRecipeCtrl($auth, $routeParams, recipeData, userData) {
 		// controllerAs ViewModel
 		var edit = this;
-
 		var recipeSlug = $routeParams.slug;
 
 		/**

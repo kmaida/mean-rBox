@@ -14,7 +14,6 @@
 		function _localDataSuccess(data) {
 			header.localData = data;
 		}
-
 		localData.getJSON().then(_localDataSuccess);
 
 		/**

@@ -3,11 +3,12 @@
 			 ng-controller="LoginCtrl as login"
 			 ng-cloak>
 
-		<h1 class="login-header-large text-center">{{::login.localData.title}}</h1>
+		<h1 class="content-heading">
+			<span ng-if="login.isAuthenticated === false"><i class="fa fa-sign-in"></i> Login</span>
+			<span ng-if="login.isAuthenticated"><i class="fa fa-sign-out"></i> Logout</span>
+		</h1>
 
-		<div class="jumbotron">
-			<h2 class="login-header-jumbotron"><i class="fa fa-sign-in"></i> Login</h2>
-
+		<div ng-if="login.isAuthenticated === false" class="jumbotron">
 			<p ng-if="!login.loggingIn || login.loggingIn === 'error'">Please login with one of the following services.</p>
 
 			<p ng-if="login.loggingIn === true"><i class="fa fa-cog fa-spin"></i> Logging in...</p>
@@ -23,6 +24,18 @@
 					ng-click="login.authenticate(l.account)"
 					ng-disabled="login.loggingIn === true">
 				<i class="fa fa-{{::l.account}}"></i> Login with {{::l.name}}
+			</button>
+		</div>
+
+		<div ng-if="login.isAuthenticated" class="jumbotron">
+			<div class="alert alert-info">
+				<i class="fa fa-info-circle"></i> You are already logged in.
+			</div>
+
+			<p class="lead"> To sign in with a different account, you must
+				logout first.</p>
+
+			<button class="btn btn-block btn-warning" ng-click="login.logout()"><i class="fa fa-sign-out"></i> Logout
 			</button>
 		</div>
 

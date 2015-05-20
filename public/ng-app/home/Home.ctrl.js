@@ -5,20 +5,11 @@
 		.module('rBox')
 		.controller('HomeCtrl', HomeCtrl);
 
-	HomeCtrl.$inject = ['$auth', 'localData', 'recipeData'];
+	HomeCtrl.$inject = ['localData', 'recipeData'];
 
-	function HomeCtrl($auth, localData, recipeData) {
+	function HomeCtrl(localData, recipeData) {
 		// controllerAs ViewModel
 		var home = this;
-
-		/**
-		 * Determines if the user is authenticated
-		 *
-		 * @returns {boolean}
-		 */
-		home.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
 
 		/**
 		 * Get local data from static JSON

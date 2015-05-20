@@ -11,8 +11,7 @@
 	function appConfig($routeProvider, $locationProvider) {
 		$routeProvider
 			.when('/', {
-				templateUrl: 'ng-app/home/Home.view.html',
-				secure: true
+				templateUrl: 'ng-app/home/Home.view.html'
 			})
 			.when('/login', {
 				templateUrl: 'ng-app/login/Login.view.html'

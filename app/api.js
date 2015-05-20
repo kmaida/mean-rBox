@@ -474,7 +474,7 @@ module.exports = function(app, config) {
 	 | GET /api/recipes - get all public recipes
 	 |--------------------------------------------------------------------------
 	 */
-	app.get('/api/recipes', ensureAuthenticated, function(req, res) {
+	app.get('/api/recipes', function(req, res) {
 		Recipe.find({isPublic: true}, function(err, recipes) {
 			if (!recipes) {
 				return res.status(400).send({ message: 'No recipes found' });
