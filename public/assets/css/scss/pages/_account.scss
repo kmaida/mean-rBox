@@ -2,17 +2,17 @@
    MY ACCOUNT PAGE
 --------------------*/
 
-.account-wrapper .alert {
-	font-size: 13px;
-	margin-bottom: 0;
-}
-
 @include mq($mq-large) {
 	.linkAccounts {
 		&-content {
 			display: flex;
 			flex-wrap: wrap;
 			margin-left: -2%;
+
+			.alert {
+				font-size: 13px;
+				margin-bottom: 0;
+			}
 		}
 		&-account {
 			display: flex;

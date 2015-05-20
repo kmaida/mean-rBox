@@ -5,13 +5,32 @@
 		.module('rBox')
 		.controller('AccountCtrl', AccountCtrl);
 
-	AccountCtrl.$inject = ['$scope', 'Page', '$auth', 'userData', '$timeout', 'OAUTH', 'User'];
+	AccountCtrl.$inject = ['$scope', 'Page', '$auth', 'userData', '$timeout', 'OAUTH', 'User', '$location'];
 
-	function AccountCtrl($scope, Page, $auth, userData, $timeout, OAUTH, User) {
+	function AccountCtrl($scope, Page, $auth, userData, $timeout, OAUTH, User, $location) {
 		// controllerAs ViewModel
 		var account = this;
+		var _tab = $location.search().view;
 
 		Page.setTitle('My Account');
+
+		account.tabs = [
+			{
+				name: 'User Info',
+				query: 'user-info'
+			},
+			{
+				name: 'Manage Logins',
+				query: 'manage-logins'
+			}
+		];
+
+		account.currentTab = _tab ? _tab : 'user-info';
+
+		account.changeTab = function(query) {
+			$location.search('view', query);
+			account.currentTab = query;
+		};
 
 		// all available login services
 		account.logins = OAUTH.LOGINS;

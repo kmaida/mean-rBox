@@ -9,14 +9,20 @@
 
 		<div ng-if="account.isAuthenticated() && account.showAccount">
 
-			<div ng-if="account.administrator" class="alert alert-info">
-				<i class="fa fa-wrench"></i> <strong>Administrator:</strong> <a ng-href="/admin">View all users</a>
-			</div>
+			<ul class="nav nav-tabs accountTabs">
+				<li role="presentation" ng-repeat="tab in account.tabs" ng-class="{active: account.currentTab === tab.query}">
+					<a ng-click="account.changeTab(tab.query)">{{tab.name}}</a>
+				</li>
+			</ul>
 
-			<section class="updateInfo content-section">
+			<section ng-if="account.currentTab === 'user-info'" class="updateInfo content-section">
 				<h2>
-					<i class="fa fa-pencil-square-o"></i> User Info
+					<i class="fa fa-user fa-fw"></i>User Info
 				</h2>
+
+				<div ng-if="account.administrator" class="alert alert-info alert-administrator">
+					<i class="fa fa-wrench"></i> <strong>Administrator:</strong> <a ng-href="/admin">View all users</a>
+				</div>
 
 				<p class="lead">
 					Update your display name.
@@ -40,9 +46,9 @@
 
 			</section>
 
-			<section class="linkAccounts content-section">
+			<section ng-if="account.currentTab === 'manage-logins'" class="linkAccounts content-section">
 				<h2>
-					<i class="fa fa-link"></i> Manage Logins
+					<i class="fa fa-link fa-fw"></i>Manage Logins
 				</h2>
 
 				<p class="lead">
