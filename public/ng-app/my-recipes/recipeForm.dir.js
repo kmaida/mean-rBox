@@ -17,28 +17,32 @@
 			rf.recipeData = _isEdit ? rf.recipe : {};
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
+			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: 1}];
 
 			// dietary options list
 			rf.dietary = Recipe.dietary;
 
 			/**
-			 * Add new ingredient
+			 * Add new item
+			 *
+			 * @param model {object} rf.recipeData model
 			 */
-			rf.addIngredient = function() {
-				var _newIng = {
-					id: rf.recipeData.ingredients.length + 1
+			rf.addItem = function(model) {
+				var _newItem = {
+					id: model.length + 1
 				};
 
-				rf.recipeData.ingredients.push(_newIng);
+				model.push(_newItem);
 			};
 
 			/**
-			 * Remove ingredient
+			 * Remove item
 			 *
+			 * @param model {object} rf.recipeData model
 			 * @param i {index}
 			 */
-			rf.removeIngredient = function(i) {
-				rf.recipeData.ingredients.splice(i, 1);
+			rf.removeItem = function(model, i) {
+				model.splice(i, 1);
 			};
 
 			/**

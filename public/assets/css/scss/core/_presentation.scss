@@ -63,8 +63,8 @@ body {
 
 /*-- Forms --*/
 
-.input-group-btn .btn {
-	height: 34px;
+.btn {
+	min-height: 34px;
 }
 .req {
 	color: $brand-danger;

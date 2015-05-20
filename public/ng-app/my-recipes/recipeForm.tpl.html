@@ -12,31 +12,67 @@
 	</div>
 
 	<div class="form-group">
-		<label>Ingredients</label>
+		<label>Ingredients<span class="req">*</span></label>
 
-		<div class="form-inline" ng-repeat="ing in rf.recipeData.ingredients track by $index">
-			<input id="ingredientAmt-{{$index}}"
-				   name="ingredientAmt-{{$index}}"
-				   type="text"
-				   placeholder="1 c"
-				   ng-model="ing.amt"
-				   class="form-control">
+		<div class="form-inline recipeForm-ingredients-item"
+			 ng-repeat="ing in rf.recipeData.ingredients track by $index">
+			<div class="input-group">
+				<label for="ingredientAmt-{{$index}}" class="input-group-addon">Amount</label>
+				<input id="ingredientAmt-{{$index}}"
+					   name="ingredientAmt-{{$index}}"
+					   type="text"
+					   placeholder="1 c, 1/4 tsp, pinch"
+					   ng-model="ing.amt"
+					   class="form-control">
+			</div>
 
-			<input id="ingredient-{{$index}}"
-				   name="ingredient-{{$index}}"
-				   type="text"
-				   placeholder="flour"
-				   ng-model="ing.ingredient"
-				   class="form-control">
+			<div class="input-group">
+				<label for="ingredient-{{$index}}" class="input-group-addon">Ingredient</label>
+				<input id="ingredient-{{$index}}"
+					   name="ingredient-{{$index}}"
+					   type="text"
+					   placeholder="flour"
+					   ng-model="ing.ingredient"
+					   class="form-control">
+			</div>
 
-			<button class="btn btn-danger" ng-click="rf.removeIngredient($index)">
+			<button class="btn btn-danger" ng-click="rf.removeItem(rf.recipeData.ingredients, $index)">
 				<i class="fa fa-trash"></i>
 			</button>
 		</div>
 
-		<button class="btn btn-info" ng-click="rf.addIngredient()">
-			<i class="fa fa-plus"></i> Add Ingredient
-		</button>
+		<p>
+			<button class="btn btn-info" ng-click="rf.addItem(rf.recipeData.ingredients)">
+				<i class="fa fa-plus"></i> Add Ingredient
+			</button>
+		</p>
+	</div>
+
+	<div class="form-group">
+		<label>Directions<span class="req">*</span></label>
+
+		<div class="recipeForm-directions-step" ng-repeat="step in rf.recipeData.directions track by $index">
+			<div class="input-group">
+				<div class="input-group-addon">{{$index + 1}}.</div>
+				<input id="directions-{{$index}}"
+					   name="directions-{{$index}}"
+					   type="text"
+					   placeholder="Written instructions"
+					   ng-model="step.step"
+					   class="form-control">
+				<div class="input-group-btn">
+					<button class="btn btn-danger" ng-click="rf.removeItem(rf.recipeData.directions, $index)">
+						<i class="fa fa-trash"></i>
+					</button>
+				</div>
+			</div>
+		</div>
+
+		<p>
+			<button class="btn btn-info" ng-click="rf.addItem(rf.recipeData.directions)">
+				<i class="fa fa-plus"></i> Add Step
+			</button>
+		</p>
 	</div>
 
 	<div class="form-group">
@@ -77,7 +113,7 @@
 
 	<button class="btn"
 			ng-class="{'btn-primary': !rf.saved, 'btn-success': rf.saved === true, 'btn-danger': rf.saved === 'error'}"
-			ng-disabled="recipeForm.$invalid"
+			ng-disabled="recipeForm.$invalid || !rf.recipeData.ingredients[0].ingredient || !rf.recipeData.directions[0].step"
 			ng-click="rf.saveRecipe()">
 		<i class="fa"
 		   ng-class="{'fa-download': !rf.saved, 'fa-check': rf.saved === true, 'fa-ban': rf.saved === 'error'}"></i> {{rf.saveBtnText}}
