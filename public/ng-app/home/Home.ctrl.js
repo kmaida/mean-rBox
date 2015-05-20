@@ -22,6 +22,12 @@
 		}
 		localData.getJSON().then(_localDataSuccess);
 
+		/**
+		 * Successful promise returned from getting public recipes
+		 *
+		 * @param data {Array} recipes array
+		 * @private
+		 */
 		function _publicRecipesSuccess(data) {
 			home.publicRecipes = data;
 		}

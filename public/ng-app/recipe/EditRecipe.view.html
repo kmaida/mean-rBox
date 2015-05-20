@@ -1,7 +1,7 @@
 <article id="content-wrapper" class="content-wrapper editRecipe-wrapper" view-switch>
 	<section id="content-main" class="content-main editRecipe-content clearfix" ng-controller="EditRecipeCtrl as edit" ng-cloak>
 
-		<div ng-if="edit.isAuthenticated && edit.recipe && edit.recipe !== 'error'">
+		<div ng-if="edit.isAuthenticated() && edit.recipe && edit.recipe !== 'error'">
 			<h1 class="content-heading">{{edit.recipe.name}}</h1>
 
 			<div ng-if="edit.user._id === edit.recipe.userId">

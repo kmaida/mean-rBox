@@ -11,7 +11,14 @@
 		// controllerAs ViewModel
 		var myRecipes = this;
 
-		myRecipes.isAuthenticated = $auth.isAuthenticated();
+		/**
+		 * Is the user authenticated?
+		 *
+		 * @returns {boolean}
+		 */
+		myRecipes.isAuthenticated = function() {
+			return $auth.isAuthenticated();
+		};
 
 		function _getUserSuccess(data) {
 			myRecipes.user = data;

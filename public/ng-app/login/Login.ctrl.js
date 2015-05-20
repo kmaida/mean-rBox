@@ -11,7 +11,14 @@
 		// controllerAs ViewModel
 		var login = this;
 
-		login.isAuthenticated = $auth.isAuthenticated();
+		/**
+		 * Check if user is authenticated
+		 *
+		 * @returns {boolean}
+		 */
+		login.isAuthenticated = function() {
+			return $auth.isAuthenticated();
+		};
 
 		/**
 		 * Function to run when local data successful

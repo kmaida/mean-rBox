@@ -4,11 +4,11 @@
 			 ng-cloak>
 
 		<h1 class="content-heading">
-			<span ng-if="login.isAuthenticated === false"><i class="fa fa-sign-in"></i> Login</span>
-			<span ng-if="login.isAuthenticated"><i class="fa fa-sign-out"></i> Logout</span>
+			<span ng-if="login.isAuthenticated() === false"><i class="fa fa-sign-in"></i> Login</span>
+			<span ng-if="login.isAuthenticated()"><i class="fa fa-sign-out"></i> Logout</span>
 		</h1>
 
-		<div ng-if="login.isAuthenticated === false" class="jumbotron">
+		<div ng-if="login.isAuthenticated() === false" class="jumbotron">
 			<p ng-if="!login.loggingIn || login.loggingIn === 'error'">Please login with one of the following services.</p>
 
 			<p ng-if="login.loggingIn === true"><i class="fa fa-cog fa-spin"></i> Logging in...</p>
@@ -27,7 +27,7 @@
 			</button>
 		</div>
 
-		<div ng-if="login.isAuthenticated" class="jumbotron">
+		<div ng-if="login.isAuthenticated()" class="jumbotron">
 			<div class="alert alert-info">
 				<i class="fa fa-info-circle"></i> You are already logged in.
 			</div>
