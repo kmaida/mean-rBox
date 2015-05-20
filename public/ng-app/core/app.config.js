@@ -28,18 +28,21 @@
 			.when('/my-recipes', {
 				templateUrl: 'ng-app/my-recipes/MyRecipes.view.html',
 				secure: true,
+				reloadOnSearch: false,
 				controller: 'MyRecipesCtrl',
 				controllerAs: 'myRecipes'
 			})
 			.when('/recipe/:slug/edit', {
 				templateUrl: 'ng-app/recipe/EditRecipe.view.html',
 				secure: true,
+				reloadOnSearch: false,
 				controller: 'EditRecipeCtrl',
 				controllerAs: 'edit'
 			})
 			.when('/account', {
 				templateUrl: 'ng-app/account/Account.view.html',
 				secure: true,
+				reloadOnSearch: false,
 				controller: 'AccountCtrl',
 				controllerAs: 'account'
 			})

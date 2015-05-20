@@ -2,29 +2,40 @@
 	<section id="content-main" class="content-main editRecipe-content clearfix" ng-cloak>
 
 		<div ng-if="edit.isAuthenticated() && edit.recipe && edit.recipe !== 'error'">
-			<h1 class="content-heading">{{edit.recipe.name}}</h1>
+			<h1 class="content-heading">{{::edit.recipe.name}}</h1>
 
 			<div ng-if="edit.user._id === edit.recipe.userId">
-				<h2>Edit Recipe</h2>
-				<recipe-form user-id="edit.user._id" recipe="edit.recipe"></recipe-form>
 
-				<h2>Delete Recipe</h2>
-				<div class="form-group">
-					<label for="confirmDelete">To permanently delete this recipe, please type its name below:</label>
-					<input id="confirmDelete"
-						   type="text"
-						   class="form-control"
-						   placeholder="Recipe to delete"
-						   ng-model="edit.deleteConfirm">
+				<ul class="nav nav-tabs editTabs">
+					<li role="presentation" ng-repeat="tab in edit.tabs" ng-class="{active: edit.currentTab === tab.query}">
+						<a ng-click="edit.changeTab(tab.query)">{{tab.name}}</a>
+					</li>
+				</ul>
+
+				<div ng-if="edit.currentTab === 'edit'">
+					<h2>Edit Recipe</h2>
+					<recipe-form user-id="edit.user._id" recipe="edit.recipe"></recipe-form>
 				</div>
-				<button class="btn btn-danger"
-						ng-click="edit.deleteRecipe()"
-						ng-disabled="edit.recipe.name !== edit.deleteConfirm">
-					<i class="fa fa-trash"></i> Delete Recipe</button>
+
+				<div ng-if="edit.currentTab === 'delete'">
+					<h2>Delete Recipe</h2>
+					<div class="form-group">
+						<label for="confirmDelete">To permanently delete this recipe, please type its name below:</label>
+						<input id="confirmDelete"
+							   type="text"
+							   class="form-control"
+							   placeholder="Recipe to delete"
+							   ng-model="edit.deleteConfirm">
+					</div>
+					<button class="btn btn-danger"
+							ng-click="edit.deleteRecipe()"
+							ng-disabled="edit.originalName !== edit.deleteConfirm">
+						<i class="fa fa-trash"></i> Delete Recipe</button>
+				</div>
 			</div>
 
 			<!-- not authorized to edit -->
-			<div ng-if="edit.user._id !== edit.recipe.userId" class="alert alert-danger">
+			<div ng-if="edit.user && edit.user._id !== edit.recipe.userId" class="alert alert-danger">
 				<i class="fa fa-warning"></i> You cannot edit someone else's recipe!
 			</div>
 		</div>

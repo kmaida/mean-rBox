@@ -1,6 +1,8 @@
 <form name="recipeForm" ng-submit="rf.saveRecipe()" novalidate>
+	<p class="req"><strong>*</strong> <small><em>required</em></small></p>
+
 	<div class="form-group">
-		<label for="recipeName">Recipe Name</label>
+		<label for="recipeName">Recipe Name<span class="req">*</span></label>
 		<input id="recipeName"
 			   name="name"
 			   type="text"
@@ -10,7 +12,7 @@
 	</div>
 
 	<div class="form-group">
-		<label>Public</label>
+		<label>Public<span class="req">*</span></label>
 		<p>
 			<small>Indicate whether this recipe should appear in the public listing. Users with a direct link will still be able to view recipes.</small>
 		</p>
@@ -32,5 +34,10 @@
 		</div>
 	</div>
 
-	<button class="btn btn-primary"><i class="fa fa-download"></i> Save Recipe</button>
+	<button class="btn"
+			ng-class="{'btn-primary': !rf.saved, 'btn-success': rf.saved === true, 'btn-danger': rf.saved === 'error'}"
+			ng-disabled="recipeForm.$invalid">
+		<i class="fa"
+		   ng-class="{'fa-download': !rf.saved, 'fa-check': rf.saved === true, 'fa-ban': rf.saved === 'error'}"></i> {{rf.saveBtnText}}
+	</button>
 </form>
