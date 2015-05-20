@@ -11,27 +11,25 @@
 		// controllerAs ViewModel
 		var recipe = this;
 
-		// TODO: use slugify for URLs instead of MongoDB IDs
 		var recipeSlug = $routeParams.slug;
 
 		/**
-		 * Is the user authenticated?
+		 * Successful promise returning user's data
 		 *
-		 * @returns {boolean}
+		 * @param data {object} user info
+		 * @private
 		 */
-		recipe.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
-
 		function _getUserSuccess(data) {
 			recipe.user = data;
 		}
-		userData.getUser().then(_getUserSuccess);
+		if ($auth.isAuthenticated()) {
+			userData.getUser().then(_getUserSuccess);
+		}
 
 		/**
 		 * Successful promise returning user's recipe data
 		 *
-		 * @param data
+		 * @param data {object} recipe data
 		 * @private
 		 */
 		function _recipeSuccess(data) {

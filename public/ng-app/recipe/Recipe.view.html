@@ -1,8 +1,11 @@
 <article id="content-wrapper" class="content-wrapper recipe-wrapper" view-switch>
 	<section id="content-main" class="content-main recipe-content clearfix" ng-controller="RecipeCtrl as recipe" ng-cloak>
 
-		<div ng-if="recipe.isAuthenticated() && recipe.recipe">
-			<h1 class="content-heading">{{recipe.recipe.name}}<small ng-if="recipe.user._id === recipe.recipe.userId"> <a ng-href="/recipe/{{recipe.recipe.slug}}/edit"><i class="fa fa-pencil-square-o"></i></a></small></h1>
+		<div ng-if="recipe.recipe">
+			<h1 class="content-heading">
+				{{recipe.recipe.name}}
+				<small ng-if="recipe.user && recipe.user._id === recipe.recipe.userId"> <a ng-href="/recipe/{{recipe.recipe.slug}}/edit"><i class="fa fa-pencil-square-o"></i></a></small>
+			</h1>
 		</div>
 
 	</section>

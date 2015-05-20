@@ -495,7 +495,7 @@ module.exports = function(app, config) {
 	 | GET /api/recipe/:slug - get recipe detail
 	 |--------------------------------------------------------------------------
 	 */
-	app.get('/api/recipe/:slug', ensureAuthenticated, function(req, res) {
+	app.get('/api/recipe/:slug', function(req, res) {
 		Recipe.findOne({slug: req.params.slug}, function(err, recipe) {
 			if (!recipe) {
 				return res.status(400).send({ message: 'Recipe not found' });

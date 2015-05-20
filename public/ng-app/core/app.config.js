@@ -21,8 +21,7 @@
 				secure: true
 			})
 			.when('/recipe/:slug', {
-				templateUrl: 'ng-app/recipe/Recipe.view.html',
-				secure: true
+				templateUrl: 'ng-app/recipe/Recipe.view.html'
 			})
 			.when('/recipe/:slug/edit', {
 				templateUrl: 'ng-app/recipe/EditRecipe.view.html',
