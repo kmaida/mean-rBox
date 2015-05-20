@@ -13,6 +13,8 @@
 
 		Page.setTitle('Login');
 
+		login.logins = OAUTH.LOGINS;
+
 		/**
 		 * Check if user is authenticated
 		 *
@@ -33,8 +35,6 @@
 		}
 		localData.getJSON().then(_localDataSuccess);
 
-		login.logins = OAUTH.LOGINS;
-
 		/**
 		 * Authenticate the user via Oauth with the specified provider
 		 *
@@ -47,7 +47,7 @@
 			 * Successfully authenticated
 			 * Go to initially intended authenticated path
 			 *
-			 * @param response {object} promise response
+			 * @param response {promise}
 			 * @private
 			 */
 			function _authSuccess(response) {
@@ -58,13 +58,21 @@
 				}
 			}
 
+			/**
+			 * Error authenticating
+			 *
+			 * @param response {promise}
+			 * @private
+			 */
+			function _authCatch(response) {
+				console.log(response.data);
+				login.loggingIn = 'error';
+				login.loginMsg = '';
+			}
+
 			$auth.authenticate(provider)
 				.then(_authSuccess)
-				.catch(function(response) {
-					console.log(response.data);
-					login.loggingIn = 'error';
-					login.loginMsg = ''
-				});
+				.catch(_authCatch);
 		};
 
 		/**
