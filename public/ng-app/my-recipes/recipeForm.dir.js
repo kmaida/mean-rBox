@@ -13,12 +13,11 @@
 			var rf = this;
 			var _isEdit = !!rf.recipe;
 			var _originalSlug = _isEdit ? rf.recipe.slug : null;
-			var newArr = [{id: 1}];
 
 			rf.recipeData = _isEdit ? rf.recipe : {};
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
-			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : newArr;
-			rf.recipeData.directions = _isEdit ? rf.recipe.directions : newArr;
+			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients :  [{id: 1}];
+			rf.recipeData.directions = _isEdit ? rf.recipe.directions :  [{id: 1}];
 
 			// fetch dietary options list
 			rf.dietary = Recipe.dietary;
