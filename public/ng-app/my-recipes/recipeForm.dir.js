@@ -13,17 +13,19 @@
 			var rf = this;
 			var _isEdit = !!rf.recipe;
 			var _originalSlug = _isEdit ? rf.recipe.slug : null;
+			var newArr = [{id: 1}];
 
 			rf.recipeData = _isEdit ? rf.recipe : {};
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
-			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
-			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: 1}];
+			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : newArr;
+			rf.recipeData.directions = _isEdit ? rf.recipe.directions : newArr;
 
-			// dietary options list
+			// fetch dietary options list
 			rf.dietary = Recipe.dietary;
 
 			/**
 			 * Add new item
+			 * Ingredient or Direction step
 			 *
 			 * @param model {object} rf.recipeData model
 			 */
@@ -37,6 +39,7 @@
 
 			/**
 			 * Remove item
+			 * Ingredient or Direction step
 			 *
 			 * @param model {object} rf.recipeData model
 			 * @param i {index}
@@ -49,13 +52,16 @@
 			 * Clean empty items out of array before saving
 			 * Ingredients or Directions
 			 *
-			 * @param array {Array}
+			 * @param modelName {string} ingredients / directions
 			 * @private
 			 */
-			function _cleanEmpties(array) {
-				angular.forEach(array, function(obj, i) {
-					if (!!obj.ingredient === false) {
-						array.splice(i, 1);
+			function _cleanEmpties(modelName) {
+				var _array = rf.recipeData[modelName];
+				var _check = modelName === 'ingredients' ? 'ingredient' : 'step';
+
+				angular.forEach(_array, function(obj, i) {
+					if (!!obj[_check] === false) {
+						_array.splice(i, 1);
 					}
 				});
 			}
@@ -121,7 +127,8 @@
 
 				// prep data for saving
 				rf.recipeData.slug = Slug.slugify(rf.recipeData.name);
-				_cleanEmpties(rf.recipeData.ingredients);
+				_cleanEmpties('ingredients');
+				_cleanEmpties('directions');
 
 				// call API
 				if (!_isEdit) {
