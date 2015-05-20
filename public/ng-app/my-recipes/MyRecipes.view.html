@@ -20,7 +20,7 @@
 				</li>
 			</ul>
 
-			<div ng-if="!(myRecipes.recipes | filter:myRecipes.query).length" class="alert alert-warning">
+			<div ng-if="myRecipes.recipes && !(myRecipes.recipes | filter:myRecipes.query).length" class="alert alert-warning">
 				<i class="fa fa-warning"></i> No recipes{{myRecipes.query ? ' match your search query' : ''}}.
 			</div>
 
