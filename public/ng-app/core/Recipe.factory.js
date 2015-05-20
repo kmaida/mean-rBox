@@ -12,8 +12,16 @@
 			'gluten-free'
 		];
 
+		var insertChar = [
+			'¼',
+			'½',
+			'¾',
+			'º'
+		];
+
 		return {
-			dietary: dietary
+			dietary: dietary,
+			insertChar: insertChar
 		}
 	}
 })();

@@ -1,7 +1,7 @@
 <form name="recipeForm" novalidate>
 	<p class="req"><strong>*</strong> <small><em>required</em></small></p>
 
-	<div class="form-group">
+	<div class="form-group recipeForm-name">
 		<label for="recipeName">Recipe Name<span class="req">*</span></label>
 		<input id="recipeName"
 			   name="name"
@@ -11,12 +11,23 @@
 			   required>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group recipeForm-description">
+		<label for="recipeDescription">Description<span class="req">*</span></label>
+		<textarea id="recipeDescription"
+				  name="recipeDescription"
+				  class="form-control"
+				  rows="3"
+				  ng-model="rf.recipeData.description"
+				  required></textarea>
+	</div>
+
+	<div class="form-group recipeForm-ingredients">
 		<label>Ingredients<span class="req">*</span></label>
 
 		<div class="form-inline recipeForm-ingredients-item"
 			 ng-repeat="ing in rf.recipeData.ingredients track by $index">
-			<div class="input-group">
+
+			<div class="input-group recipeForm-ingredients-item-amt">
 				<label for="ingredientAmt-{{$index}}" class="input-group-addon">Amount</label>
 				<input id="ingredientAmt-{{$index}}"
 					   name="ingredientAmt-{{$index}}"
@@ -26,7 +37,7 @@
 					   class="form-control">
 			</div>
 
-			<div class="input-group">
+			<div class="input-group recipeForm-ingredients-item-ingredient">
 				<label for="ingredient-{{$index}}" class="input-group-addon">Ingredient</label>
 				<input id="ingredient-{{$index}}"
 					   name="ingredient-{{$index}}"
@@ -36,7 +47,9 @@
 					   class="form-control">
 			</div>
 
-			<button class="btn btn-danger" ng-click="rf.removeItem(rf.recipeData.ingredients, $index)">
+			<button class="btn btn-danger recipeForm-ingredients-item-deleteBtn"
+					ng-click="rf.removeItem(rf.recipeData.ingredients, $index)"
+					ng-disabled="rf.recipeData.ingredients.length === 1">
 				<i class="fa fa-trash"></i>
 			</button>
 		</div>
@@ -48,7 +61,7 @@
 		</p>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group recipeForm-directions">
 		<label>Directions<span class="req">*</span></label>
 
 		<div class="recipeForm-directions-step" ng-repeat="step in rf.recipeData.directions track by $index">
@@ -61,7 +74,9 @@
 					   ng-model="step.step"
 					   class="form-control">
 				<div class="input-group-btn">
-					<button class="btn btn-danger" ng-click="rf.removeItem(rf.recipeData.directions, $index)">
+					<button class="btn btn-danger"
+							ng-click="rf.removeItem(rf.recipeData.directions, $index)"
+							ng-disabled="rf.recipeData.directions.length === 1">
 						<i class="fa fa-trash"></i>
 					</button>
 				</div>
@@ -75,7 +90,7 @@
 		</p>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group recipeForm-public">
 		<label>Public<span class="req">*</span></label>
 		<p>
 			<small>Indicate whether this recipe should appear in the public listing. Users with a direct link will still be able to view recipes.</small>
@@ -98,7 +113,7 @@
 		</div>
 	</div>
 
-	<div class="form-group">
+	<div class="form-group recipeForm-dietary">
 		<label for="dietary">Special Diet</label>
 		<p>
 			<small>Indicate a primary dietary concern that this recipe addresses, if any.</small>

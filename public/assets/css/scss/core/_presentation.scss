@@ -65,6 +65,12 @@ body {
 
 .btn {
 	min-height: 34px;
+
+	&.btn-sm,
+	&.btn-xs,
+	&.btn-lg {
+		min-height: inherit;
+	}
 }
 .req {
 	color: $brand-danger;

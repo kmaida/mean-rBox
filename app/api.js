@@ -502,6 +502,7 @@ module.exports = function(app, config) {
 				userId: req.user || req.body.userId,
 				name: req.body.name,
 				slug: req.body.slug,
+				description: req.body.description,
 				isPublic: req.body.isPublic,
 				dietary: req.body.dietary,
 				tags: req.body.tags,
@@ -535,6 +536,7 @@ module.exports = function(app, config) {
 
 			recipe.name = req.body.name || recipe.name;
 			recipe.slug = req.body.slug || recipe.slug;
+			recipe.description = req.body.description || recipe.description;
 			recipe.isPublic = req.body.isPublic;
 			recipe.dietary = req.body.dietary || recipe.dietary;
 			recipe.tags = req.body.tags || recipe.tags;

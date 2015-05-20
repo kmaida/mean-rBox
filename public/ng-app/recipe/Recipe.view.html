@@ -6,6 +6,28 @@
 				{{recipe.recipe.name}}
 				<small ng-if="recipe.user && recipe.user._id === recipe.recipe.userId"> <a ng-href="/recipe/{{recipe.recipe.slug}}/edit"><i class="fa fa-pencil-square-o"></i></a></small>
 			</h1>
+
+			<p class="lead" ng-bind-html="recipe.recipe.description"></p>
+
+			<section class="recipe-ingredients">
+				<h2>Ingredients</h2>
+
+				<ul>
+					<li ng-repeat="ing in recipe.recipe.ingredients">
+						{{::ing.amt}} {{::ing.ingredient}}
+					</li>
+				</ul>
+			</section>
+
+			<section class="recipe-directions">
+				<h2>Directions</h2>
+
+				<ol>
+					<li ng-repeat="step in recipe.recipe.directions">
+						{{::step.step}}
+					</li>
+				</ol>
+			</section>
 		</div>
 
 		<div ng-if="recipe.recipe === 'error'" class="alert alert-danger">

@@ -7,4 +7,23 @@
 	&-directions-step {
 		margin-bottom: 6px;
 	}
+	&-ingredients-item {
+		&-amt,
+		&-ingredient {
+			margin-bottom: 3px;
+
+			@include mq($mq-large) {
+				margin-bottom: 0;
+			}
+		}
+		&-deleteBtn {
+			i:after {
+				content: ' Delete Ingredient';
+
+				@include mq($mq-large) {
+					content: none;
+				}
+			}
+		}
+	}
 }

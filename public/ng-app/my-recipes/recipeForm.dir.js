@@ -23,6 +23,9 @@
 			// fetch dietary options list
 			rf.dietary = Recipe.dietary;
 
+			// fetch special characters
+			rf.insertChar = Recipe.insertChar;
+
 			/**
 			 * Add new item
 			 * Ingredient or Direction step
