@@ -26,7 +26,7 @@
 				controllerAs: 'recipe'
 			})
 			.when('/recipes/author/:userId', {
-				templateUrl: 'ng-app/recipes/Recipes.view.html',
+				templateUrl: 'ng-app/recipes-author/RecipesAuthor.view.html',
 				controller: 'RecipesAuthorCtrl',
 				controllerAs: 'ra'
 			})
