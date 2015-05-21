@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('HomeCtrl', HomeCtrl);
 
-	HomeCtrl.$inject = ['$scope', 'Page', 'localData', 'recipeData'];
+	HomeCtrl.$inject = ['Page', 'localData', 'recipeData'];
 
-	function HomeCtrl($scope, Page, localData, recipeData) {
+	function HomeCtrl(Page, localData, recipeData) {
 		// controllerAs ViewModel
 		var home = this;
 
@@ -31,7 +31,7 @@
 		 * @private
 		 */
 		function _publicRecipesSuccess(data) {
-			$scope.recipes = data;
+			home.recipes = data;
 		}
 		recipeData.getPublicRecipes()
 			.then(_publicRecipesSuccess);

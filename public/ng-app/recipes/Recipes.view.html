@@ -3,7 +3,6 @@
 
 		<h1 class="content-heading">Recipes by {{ra.author.displayName}}</h1>
 
-		<section ng-include="'/ng-app/core/recipesList.tpl.html'"></section>
-
+		<recipes-list recipes="ra.recipes"></recipes-list>
 	</section>
 </article>
