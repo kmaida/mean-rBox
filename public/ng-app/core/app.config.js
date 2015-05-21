@@ -25,6 +25,11 @@
 				controller: 'RecipeCtrl',
 				controllerAs: 'recipe'
 			})
+			.when('/recipes/author/:userId', {
+				templateUrl: 'ng-app/recipes/Recipes.view.html',
+				controller: 'RecipesAuthorCtrl',
+				controllerAs: 'ra'
+			})
 			.when('/my-recipes', {
 				templateUrl: 'ng-app/my-recipes/MyRecipes.view.html',
 				secure: true,

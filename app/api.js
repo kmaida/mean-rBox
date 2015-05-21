@@ -107,6 +107,7 @@ module.exports = function(app, config) {
 	app.get('/api/user/:id', function(req, res) {
 		User.findById(req.params.id, function(err, user) {
 			var userObj = {
+				userId: req.params.id,
 				picture: user.picture,
 				displayName: user.displayName
 			};
@@ -501,10 +502,10 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | GET /api/recipes/:userId - get list of a user's public recipes
+	 | GET /api/recipes/author/:userId - get list of a user's public recipes
 	 |--------------------------------------------------------------------------
 	 */
-	app.get('/api/recipes/user/:userId', ensureAuthenticated, function(req, res) {
+	app.get('/api/recipes/author/:userId', ensureAuthenticated, function(req, res) {
 		Recipe.find({userId: req.params.userId, isPublic: true}, function(err, recipes) {
 			if (!recipes) {
 				return res.status(400).send({message: 'No public recipes found by this author.'});

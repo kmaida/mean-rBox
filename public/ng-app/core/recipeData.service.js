@@ -100,9 +100,9 @@
 		 * @param userId {string} user ID
 		 * @returns {promise}
 		 */
-		this.getUserRecipes = function(userId) {
+		this.getAuthorRecipes = function(userId) {
 			return $http
-				.get('/api/recipes/user/' + userId)
+				.get('/api/recipes/author/' + userId)
 				.then(_getRes);
 		};
 	}
