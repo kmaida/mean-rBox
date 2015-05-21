@@ -25,9 +25,13 @@
 				query: 'delete'
 			}
 		];
-
 		edit.currentTab = _tab ? _tab : 'edit';
 
+		/**
+		 * Change tab
+		 *
+		 * @param query {string} tab to switch to
+		 */
 		edit.changeTab = function(query) {
 			$location.search('view', query);
 			edit.currentTab = query;

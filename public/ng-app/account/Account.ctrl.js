@@ -24,9 +24,13 @@
 				query: 'manage-logins'
 			}
 		];
-
 		account.currentTab = _tab ? _tab : 'user-info';
 
+		/**
+		 * Change tab
+		 *
+		 * @param query {string} tab to switch to
+		 */
 		account.changeTab = function(query) {
 			$location.search('view', query);
 			account.currentTab = query;

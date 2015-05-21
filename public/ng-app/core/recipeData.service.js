@@ -93,5 +93,17 @@
 				.get('/api/recipes/me')
 				.then(_getRes);
 		};
+
+		/**
+		 * Get a specific user's public recipes
+		 *
+		 * @param userId {string} user ID
+		 * @returns {promise}
+		 */
+		this.getUserRecipes = function(userId) {
+			return $http
+				.get('/api/recipes/user/' + userId)
+				.then(_getRes);
+		};
 	}
 })();

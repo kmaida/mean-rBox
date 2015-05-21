@@ -24,9 +24,13 @@
 				query: 'add-recipe'
 			}
 		];
-
 		myRecipes.currentTab = _tab ? _tab : 'recipe-box';
 
+		/**
+		 * Change tab
+		 *
+		 * @param query {string} tab to switch to
+		 */
 		myRecipes.changeTab = function(query) {
 			$location.search('view', query);
 			myRecipes.currentTab = query;
