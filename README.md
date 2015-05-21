@@ -13,4 +13,6 @@ Recipe box MEAN stack application.
 
 ## To Do
 
-* [ ] Build recipes API
+* [ ] Add image upload
+* [ ] Add categorization
+* [ ] Drag and drop???

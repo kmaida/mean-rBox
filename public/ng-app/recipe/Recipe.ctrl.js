@@ -44,9 +44,10 @@
 		 *
 		 * @private
 		 */
-		function _recipeError() {
+		function _recipeError(err) {
 			recipe.recipe = 'error';
-			Page.setTitle('Recipe Not Found');
+			Page.setTitle('Oops!');
+			recipe.errorMsg = err.data.message;
 		}
 		recipeData.getRecipe(recipeSlug).then(_recipeSuccess, _recipeError);
 	}

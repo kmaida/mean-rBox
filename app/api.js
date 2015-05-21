@@ -438,7 +438,7 @@ module.exports = function(app, config) {
 	app.get('/api/recipes', function(req, res) {
 		Recipe.find({isPublic: true}, function(err, recipes) {
 			if (!recipes) {
-				return res.status(400).send({ message: 'No recipes found' });
+				return res.status(400).send({ message: 'No recipes found.' });
 			}
 
 			var recipeArr = [];
@@ -459,7 +459,7 @@ module.exports = function(app, config) {
 	app.get('/api/recipes/me', ensureAuthenticated, function(req, res) {
 		Recipe.find({userId: req.user}, function(err, recipes) {
 			if (!recipes) {
-				return res.status(400).send({message: 'No recipes found'});
+				return res.status(400).send({message: 'No recipes found.'});
 			}
 
 			var recipeArr = [];
@@ -480,7 +480,10 @@ module.exports = function(app, config) {
 	app.get('/api/recipe/:slug', function(req, res) {
 		Recipe.findOne({slug: req.params.slug}, function(err, recipe) {
 			if (!recipe) {
-				return res.status(400).send({ message: 'Recipe not found' });
+				return res.status(400).send({ message: 'Recipe not found.' });
+			}
+			if (!recipe.isPublic && recipe.userId !== req.user) {
+				return res.status(401).send({ message: 'You are not authorized to view this recipe.' });
 			}
 
 			res.send(recipe);
@@ -495,7 +498,7 @@ module.exports = function(app, config) {
 	app.post('/api/recipe/new', ensureAuthenticated, function(req, res) {
 		Recipe.findOne({slug: req.body.slug}, function(err, existingRecipe) {
 			if (existingRecipe) {
-				return res.status(409).send({message: 'You already have a recipe with that name'});
+				return res.status(409).send({message: 'You already have a recipe with that name.'});
 			}
 
 			var recipe = new Recipe({
@@ -527,11 +530,10 @@ module.exports = function(app, config) {
 	app.put('/api/recipe/:id', ensureAuthenticated, function(req, res) {
 		Recipe.findById(req.params.id, function(err, recipe) {
 			if (!recipe) {
-				return res.status(400).send({ message: 'Recipe not found' });
+				return res.status(400).send({ message: 'Recipe not found.' });
 			}
-
 			if (recipe.userId !== req.user) {
-				return res.status(401).send({ message: 'Not authorized' });
+				return res.status(401).send({ message: 'You cannot edit someone else\'s recipe.' });
 			}
 
 			recipe.name = req.body.name || recipe.name;
@@ -560,10 +562,10 @@ module.exports = function(app, config) {
 	app.delete('/api/recipe/:id', ensureAuthenticated, function(req, res) {
 		Recipe.findById(req.params.id, function(err, recipe) {
 			if (!recipe) {
-				return res.status(400).send({ message: 'Recipe not found' });
+				return res.status(400).send({ message: 'Recipe not found.' });
 			}
 			if (recipe.userId !== req.user) {
-				return res.status(401).send({ message: 'Not authorized' });
+				return res.status(401).send({ message: 'You cannot delete someone else\'s recipe.' });
 			}
 
 			recipe.remove(function(err) {

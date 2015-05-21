@@ -134,9 +134,11 @@
 
 				// call API
 				if (!_isEdit) {
-					recipeData.createRecipe(rf.recipeData).then(_recipeSaved, _recipeSaveError);
+					recipeData.createRecipe(rf.recipeData)
+						.then(_recipeSaved, _recipeSaveError);
 				} else {
-					recipeData.updateRecipe(rf.recipe._id, rf.recipeData).then(_recipeSaved, _recipeSaveError);
+					recipeData.updateRecipe(rf.recipe._id, rf.recipeData)
+						.then(_recipeSaved, _recipeSaveError);
 				}
 			};
 		}
