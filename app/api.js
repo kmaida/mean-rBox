@@ -37,6 +37,21 @@ module.exports = function(app, config) {
 	}
 
 	/**
+	 * Check if the user is authenticated or not
+	 * If authenticated, pass on req.user
+	 *
+	 * @param req
+	 * @param res
+	 * @param next
+	 */
+	function checkAuthenticated(req, res, next) {
+		var token = req.headers.authorization ? req.headers.authorization.split(' ')[1] : null;
+		var payload = token ? jwt.decode(token, config.TOKEN_SECRET) : null;
+		if (payload) { req.user = payload.sub; }
+		next();
+	}
+
+	/**
 	 * Make sure user is authenticated and is authorized as an administrator
 	 *
 	 * @param req
@@ -477,16 +492,16 @@ module.exports = function(app, config) {
 	 | GET /api/recipe/:slug - get recipe detail
 	 |--------------------------------------------------------------------------
 	 */
-	app.get('/api/recipe/:slug', function(req, res) {
+	app.get('/api/recipe/:slug', checkAuthenticated, function(req, res) {
 		Recipe.findOne({slug: req.params.slug}, function(err, recipe) {
 			if (!recipe) {
 				return res.status(400).send({ message: 'Recipe not found.' });
 			}
-			if (!recipe.isPublic && recipe.userId !== req.user) {
+			if (recipe.isPublic || req.user && recipe.userId === req.user) {
+				res.send(recipe);
+			} else {
 				return res.status(401).send({ message: 'You are not authorized to view this recipe.' });
 			}
-
-			res.send(recipe);
 		});
 	});
 

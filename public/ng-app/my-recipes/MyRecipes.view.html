@@ -28,7 +28,7 @@
 
 				<ul ng-if="(myRecipes.recipes | filter:myRecipes.query).length">
 					<li ng-repeat="recipe in myRecipes.recipes | filter:myRecipes.query | orderBy:'name'">
-						<a ng-href="/recipe/{{recipe.slug}}">{{recipe.name}}</a>
+						<a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a>
 					</li>
 				</ul>
 
@@ -40,7 +40,7 @@
 			<!-- Add New Recipe -->
 			<section ng-if="myRecipes.currentTab === 'add-recipe'" class="addRecipe">
 				<h2><i class="fa fa-book fa-fw"></i>Add New Recipe</h2>
-				<recipe-form ng-if="myRecipes.user" user-id="{{myRecipes.user._id}}"></recipe-form>
+				<recipe-form ng-if="myRecipes.user" user-id="{{::myRecipes.user._id}}"></recipe-form>
 			</section>
 		</div>
 
