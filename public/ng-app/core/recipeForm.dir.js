@@ -149,7 +149,7 @@
 				recipe: '=',
 				userId: '@'
 			},
-			templateUrl: 'ng-app/my-recipes/recipeForm.tpl.html',
+			templateUrl: 'ng-app/core/recipeForm.tpl.html',
 			controller: recipeFormCtrl,
 			controllerAs: 'rf',
 			bindToController: true
