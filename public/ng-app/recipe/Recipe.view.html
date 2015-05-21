@@ -8,7 +8,7 @@
 			</h1>
 
 			<p>
-				By: <img ng-if="recipe.author.picture" class="user-picture" ng-src="{{::recipe.author.picture}}"/><a class="user-displayName" ng-href="/recipes/author/{{::recipe.author.userId}}">{{::recipe.author.displayName}}</a>
+				By: <img class="user-picture" ng-src="{{::recipe.author.picture}}"/><a class="user-displayName" ng-href="/recipes/author/{{::recipe.author.id}}">{{::recipe.author.displayName}}</a>
 			</p>
 
 			<p class="lead" ng-bind-html="recipe.recipe.description"></p>
