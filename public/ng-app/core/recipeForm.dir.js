@@ -102,7 +102,7 @@
 				}
 
 				if (!_isEdit || _isEdit && _originalSlug !== rf.recipeData.slug) {
-					$timeout(_goToNewSlug, 2000);
+					$timeout(_goToNewSlug, 1500);
 				} else {
 					$timeout(_resetSaveBtn, 2000);
 				}

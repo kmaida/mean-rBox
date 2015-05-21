@@ -45,7 +45,8 @@
 		function _getUserSuccess(data) {
 			edit.user = data;
 		}
-		userData.getUser().then(_getUserSuccess);
+		userData.getUser()
+			.then(_getUserSuccess);
 
 		/**
 		 * Successful promise returning user's recipe data
