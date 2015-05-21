@@ -5,14 +5,16 @@
 		.module('rBox')
 		.controller('MyRecipesCtrl', MyRecipesCtrl);
 
-	MyRecipesCtrl.$inject = ['Page', '$auth', 'recipeData', 'userData', '$location'];
+	MyRecipesCtrl.$inject = ['$scope', 'Page', '$auth', 'recipeData', 'userData', '$location'];
 
-	function MyRecipesCtrl(Page, $auth, recipeData, userData, $location) {
+	function MyRecipesCtrl($scope, Page, $auth, recipeData, userData, $location) {
 		// controllerAs ViewModel
 		var myRecipes = this;
 		var _tab = $location.search().view;
 
 		Page.setTitle('My Recipes');
+
+		$scope.query = '';
 
 		myRecipes.tabs = [
 			{
@@ -58,7 +60,7 @@
 		 * @private
 		 */
 		function _recipesSuccess(data) {
-			myRecipes.recipes = data;
+			$scope.recipes = data;
 		}
 		recipeData.getMyRecipes()
 			.then(_recipesSuccess);

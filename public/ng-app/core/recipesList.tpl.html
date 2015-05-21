@@ -1,0 +1,21 @@
+<pre>{{query}}</pre>
+
+<div ng-if="recipes.length" class="form-group form-inline">
+	<div class="input-group">
+		<span class="input-group-addon"><i class="fa fa-search"></i></span>
+		<input id="query" type="text" class="form-control" ng-model="query" placeholder="Search recipes" />
+		<span class="input-group-btn">
+			<button class="btn btn-default" ng-disabled="!query" ng-click="query=''">&times;</button>
+		</span>
+	</div>
+</div>
+
+<ul ng-if="(recipes | filter:query).length">
+	<li ng-repeat="recipe in recipes | filter:query | orderBy:'name'">
+		<a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a>
+	</li>
+</ul>
+
+<div ng-if="recipes && !(recipes | filter:query).length" class="alert alert-warning">
+	<i class="fa fa-warning"></i> No recipes{{query ? ' match your search query' : ''}}.
+</div>

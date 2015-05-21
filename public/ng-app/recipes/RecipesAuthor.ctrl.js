@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('RecipesAuthorCtrl', RecipesAuthorCtrl);
 
-	RecipesAuthorCtrl.$inject = ['Page', 'recipeData', 'userData', '$routeParams'];
+	RecipesAuthorCtrl.$inject = ['$scope', 'Page', 'recipeData', 'userData', '$routeParams'];
 
-	function RecipesAuthorCtrl(Page, recipeData, userData, $routeParams) {
+	function RecipesAuthorCtrl($scope, Page, recipeData, userData, $routeParams) {
 		// controllerAs ViewModel
 		var ra = this;
 		var _aid = $routeParams.userId;
@@ -32,7 +32,7 @@
 		 * @private
 		 */
 		function _recipesSuccess(data) {
-			ra.recipes = data;
+			$scope.recipes = data;
 		}
 		recipeData.getAuthorRecipes(_aid)
 			.then(_recipesSuccess);

@@ -16,25 +16,7 @@
 
 				<p class="lead">View your personal recipes.</p>
 
-				<div ng-if="myRecipes.recipes.length" class="form-group form-inline">
-					<div class="input-group">
-						<span class="input-group-addon"><i class="fa fa-search"></i></span>
-						<input id="query" type="text" class="form-control" ng-model="myRecipes.query" placeholder="Search my recipes" />
-							<span class="input-group-btn">
-								<button class="btn btn-default" ng-disabled="!myRecipes.query" ng-click="myRecipes.query=''">&times;</button>
-							</span>
-					</div>
-				</div>
-
-				<ul ng-if="(myRecipes.recipes | filter:myRecipes.query).length">
-					<li ng-repeat="recipe in myRecipes.recipes | filter:myRecipes.query | orderBy:'name'">
-						<a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a>
-					</li>
-				</ul>
-
-				<div ng-if="myRecipes.recipes && !(myRecipes.recipes | filter:myRecipes.query).length" class="alert alert-warning">
-					<i class="fa fa-warning"></i> No recipes{{myRecipes.query ? ' match your search query' : ''}}.
-				</div>
+				<section ng-include="'/ng-app/core/recipesList.tpl.html'"></section>
 			</section>
 
 			<!-- Add New Recipe -->
