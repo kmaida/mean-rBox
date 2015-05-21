@@ -101,6 +101,21 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
+	 | GET /api/user/:id - get public view of user (picture, display name)
+	 |--------------------------------------------------------------------------
+	 */
+	app.get('/api/user/:id', function(req, res) {
+		User.findById(req.params.id, function(err, user) {
+			var userObj = {
+				picture: user.picture,
+				displayName: user.displayName
+			};
+			res.send(userObj);
+		});
+	});
+
+	/*
+	 |--------------------------------------------------------------------------
 	 | GET /api/me
 	 |--------------------------------------------------------------------------
 	 */

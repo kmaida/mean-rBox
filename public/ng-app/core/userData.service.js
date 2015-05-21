@@ -26,6 +26,18 @@
 
 	function userData($http) {
 		/**
+		 * Get recipe author's basic data
+		 *
+		 * @param id {string} MongoDB ID of user
+		 * @returns {promise}
+		 */
+		this.getAuthor = function(id) {
+			return $http
+				.get('/api/user/' + id)
+				.then(_getRes);
+		};
+
+		/**
 		 * Get current user's data
 		 *
 		 * @returns {promise}

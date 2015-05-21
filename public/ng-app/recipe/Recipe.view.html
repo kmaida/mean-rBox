@@ -7,6 +7,10 @@
 				<small ng-if="recipe.user && recipe.user._id === recipe.recipe.userId"> <a ng-href="/recipe/{{::recipe.recipe.slug}}/edit"><i class="fa fa-pencil-square-o"></i></a></small>
 			</h1>
 
+			<p>
+				By: <img ng-if="recipe.author.picture" class="user-picture" ng-src="{{::recipe.author.picture}}"/><span class="user-displayName">{{::recipe.author.displayName}}</span>
+			</p>
+
 			<p class="lead" ng-bind-html="recipe.recipe.description"></p>
 
 			<section class="recipe-ingredients">
