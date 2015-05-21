@@ -483,7 +483,7 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | GET /api/recipes/me - get user's recipes
+	 | GET /api/recipes/me - get my recipes
 	 |--------------------------------------------------------------------------
 	 */
 	app.get('/api/recipes/me', ensureAuthenticated, function(req, res) {
@@ -491,13 +491,28 @@ module.exports = function(app, config) {
 			if (!recipes) {
 				return res.status(400).send({message: 'No recipes found.'});
 			}
-
 			var recipeArr = [];
-
 			recipes.forEach(function(recipe) {
 				recipeArr.push(recipe);
 			});
+			res.send(recipeArr);
+		});
+	});
 
+	/*
+	 |--------------------------------------------------------------------------
+	 | GET /api/recipes/:userId - get list of a user's public recipes
+	 |--------------------------------------------------------------------------
+	 */
+	app.get('/api/recipes/user/:userId', ensureAuthenticated, function(req, res) {
+		Recipe.find({userId: req.params.userId, isPublic: true}, function(err, recipes) {
+			if (!recipes) {
+				return res.status(400).send({message: 'No public recipes found by this author.'});
+			}
+			var recipeArr = [];
+			recipes.forEach(function(recipe) {
+				recipeArr.push(recipe);
+			});
 			res.send(recipeArr);
 		});
 	});
