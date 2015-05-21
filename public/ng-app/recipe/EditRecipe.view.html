@@ -48,7 +48,7 @@
 
 		<!-- recipe not found -->
 		<div ng-if="edit.recipe && edit.recipe === 'error'" class="alert alert-danger">
-			<i class="fa fa-warning"></i> Recipe not found.
+			<i class="fa fa-warning"></i> {{edit.errorMsg}}
 		</div>
 	</section>
 </article>

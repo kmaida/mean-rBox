@@ -64,11 +64,13 @@
 		 *
 		 * @private
 		 */
-		function _recipeError() {
+		function _recipeError(err) {
 			edit.recipe = 'error';
-			Page.setTitle('Recipe Not Found');
+			Page.setTitle('Error');
+			edit.errorMsg = err.data.message;
 		}
-		recipeData.getRecipe(_recipeSlug).then(_recipeSuccess, _recipeError);
+		recipeData.getRecipe(_recipeSlug)
+			.then(_recipeSuccess, _recipeError);
 
 		/**
 		 * Reset delete button
@@ -114,7 +116,8 @@
 
 		edit.deleteRecipe = function() {
 			edit.deleteBtnText = 'Deleting...';
-			recipeData.deleteRecipe(edit.recipe._id).then(_deleteSuccess, _deleteError);
+			recipeData.deleteRecipe(edit.recipe._id)
+				.then(_deleteSuccess, _deleteError);
 		}
 	}
 })();

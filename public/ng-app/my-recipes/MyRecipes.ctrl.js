@@ -44,7 +44,8 @@
 		function _getUserSuccess(data) {
 			myRecipes.user = data;
 		}
-		userData.getUser().then(_getUserSuccess);
+		userData.getUser()
+			.then(_getUserSuccess);
 
 		/**
 		 * Successful promise returning user's recipe data
@@ -55,6 +56,7 @@
 		function _recipesSuccess(data) {
 			myRecipes.recipes = data;
 		}
-		recipeData.getMyRecipes().then(_recipesSuccess);
+		recipeData.getMyRecipes()
+			.then(_recipesSuccess);
 	}
 })();
