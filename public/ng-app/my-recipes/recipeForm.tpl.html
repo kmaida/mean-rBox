@@ -93,7 +93,7 @@
 	<div class="form-group recipeForm-public">
 		<label>Public<span class="req">*</span></label>
 		<p>
-			<small>Indicate whether this recipe should appear in the public listing. Users with a direct link will still be able to view recipes.</small>
+			<small>Indicate whether this recipe should be visible to other people.</small>
 		</p>
 		<div class="radio">
 			<label class="radio-inline">
@@ -101,14 +101,14 @@
 					   name="isPublic"
 					   ng-value="true"
 					   ng-model="rf.recipeData.isPublic"
-					   required>Yes
+					   required>Anyone can view
 			</label>
 
 			<label class="radio-inline">
 				<input type="radio"
 					   name="isPublic"
 					   ng-value="false"
-					   ng-model="rf.recipeData.isPublic">No
+					   ng-model="rf.recipeData.isPublic">Only me
 			</label>
 		</div>
 	</div>

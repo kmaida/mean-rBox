@@ -103,10 +103,9 @@
 		/**
 		 * Error deleting recipe
 		 *
-		 * @param err {promise}
 		 * @private
 		 */
-		function _deleteError(err) {
+		function _deleteError() {
 			edit.deleted = 'error';
 			edit.deleteBtnText = 'Error deleting!';
 

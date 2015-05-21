@@ -42,13 +42,15 @@
 		/**
 		 * Error retrieving recipe
 		 *
+		 * @param res {promise}
 		 * @private
 		 */
-		function _recipeError(err) {
+		function _recipeError(res) {
 			recipe.recipe = 'error';
-			Page.setTitle('Oops!');
-			recipe.errorMsg = err.data.message;
+			Page.setTitle('Error');
+			recipe.errorMsg = res.data.message;
 		}
-		recipeData.getRecipe(recipeSlug).then(_recipeSuccess, _recipeError);
+		recipeData.getRecipe(recipeSlug)
+			.then(_recipeSuccess, _recipeError);
 	}
 })();
