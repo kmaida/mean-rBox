@@ -45,13 +45,14 @@
 					   placeholder="flour"
 					   ng-model="ing.ingredient"
 					   class="form-control">
+				<div class="input-group-btn">
+					<button class="btn btn-danger"
+							ng-click="rf.removeItem(rf.recipeData.ingredients, $index)"
+							ng-disabled="rf.recipeData.ingredients.length === 1">
+						<i class="fa fa-trash"></i>
+					</button>
+				</div>
 			</div>
-
-			<button class="btn btn-danger recipeForm-ingredients-item-deleteBtn"
-					ng-click="rf.removeItem(rf.recipeData.ingredients, $index)"
-					ng-disabled="rf.recipeData.ingredients.length === 1">
-				<i class="fa fa-trash"></i>
-			</button>
 		</div>
 
 		<p>
@@ -70,7 +71,7 @@
 				<input id="directions-{{$index}}"
 					   name="directions-{{$index}}"
 					   type="text"
-					   placeholder="Written instructions"
+					   placeholder="Written cooking instructions for step {{$index + 1}}"
 					   ng-model="step.step"
 					   class="form-control">
 				<div class="input-group-btn">

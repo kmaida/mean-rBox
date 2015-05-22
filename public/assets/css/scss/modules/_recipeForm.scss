@@ -5,7 +5,7 @@
 .recipeForm {
 	&-ingredients-item,
 	&-directions-step {
-		margin-bottom: 6px;
+		margin-bottom: 8px;
 	}
 	&-ingredients-item {
 		&-amt,
@@ -14,15 +14,6 @@
 
 			@include mq($mq-large) {
 				margin-bottom: 0;
-			}
-		}
-		&-deleteBtn {
-			i:after {
-				content: ' Delete Ingredient';
-
-				@include mq($mq-large) {
-					content: none;
-				}
 			}
 		}
 	}
