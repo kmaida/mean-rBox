@@ -13,8 +13,8 @@
 
 			<p ng-if="recipe.user && recipe.recipe && recipe.author && recipe.author.id !== recipe.user._id">
 				<button class="btn" ng-class="{'btn-primary': recipe.filed === false || recipe.user.savedRecipes.indexOf(recipe.recipe._id) === -1, 'btn-danger': recipe.filed === true || recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1}" ng-click="recipe.fileRecipe(recipe.recipe._id)">
-					<span ng-if="recipe.filed === undefined">{{recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1 ? 'Unfile' : 'File'}} this recipe</span>
-					<span ng-if="recipe.filed !== undefined">{{recipe.filed ? 'Unfile' : 'File'}} this recipe</span>
+					<span ng-if="recipe.filed === undefined"><i class="fa" ng-class="{'fa-trash': recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1, 'fa-archive': recipe.user.savedRecipes.indexOf(recipe.recipe._id) === -1}"></i> {{recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1 ? 'Unfile' : 'File'}} this recipe</span>
+					<span ng-if="recipe.filed !== undefined"><i class="fa" ng-class="{'fa-trash': recipe.filed, 'fa-archive': !recipe.filed}"></i> {{recipe.filed ? 'Unfile' : 'File'}} this recipe</span>
 				</button>
 			</p>
 
