@@ -49,8 +49,27 @@
 			return $auth.isAuthenticated();
 		};
 
+		/**
+		 * Successful promise getting user's data
+		 *
+		 * @param data {promise}.data
+		 * @private
+		 */
 		function _getUserSuccess(data) {
 			myRecipes.user = data;
+			var savedRecipesObj = {savedRecipes: data.savedRecipes};
+
+			/**
+			 * Successful promise returning user's saved recipes
+			 *
+			 * @param recipes {promise}.data
+			 * @private
+			 */
+			function _filedSuccess(recipes) {
+				myRecipes.filedRecipes = recipes;
+			}
+			recipeData.getFiledRecipes(savedRecipesObj)
+				.then(_filedSuccess);
 		}
 		userData.getUser()
 			.then(_getUserSuccess);
@@ -58,7 +77,7 @@
 		/**
 		 * Successful promise returning user's recipe data
 		 *
-		 * @param data
+		 * @param data {promise}.data
 		 * @private
 		 */
 		function _recipesSuccess(data) {
@@ -66,15 +85,5 @@
 		}
 		recipeData.getMyRecipes()
 			.then(_recipesSuccess);
-
-
-
-
-		function _filedSuccess(data) {
-			myRecipes.filedRecipes = data;
-			console.log('my filed recipes:', data);
-		}
-		recipeData.getFiledRecipes()
-			.then(_filedSuccess);
 	}
 })();

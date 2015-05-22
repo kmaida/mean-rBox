@@ -502,28 +502,25 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | GET /api/recipes/me/filed - get my saved recipes
+	 | POST /api/recipes/me/filed - get my saved recipes
 	 |--------------------------------------------------------------------------
 	 */
-	app.get('/api/recipes/me/filed', ensureAuthenticated, function(req, res) {
-		User.findById(req.user, function(err, user) {
-			if (!user) {
-				return res.status(400).send({message: 'User not found.'});
+	app.post('/api/recipes/me/filed', ensureAuthenticated, function(req, res) {
+		Recipe.find({ isPublic: true}, function(err, recipes) {
+			if (!recipes) {
+				return res.status(400).send({message: 'No recipes found.'});
 			}
-			if (user.savedRecipes) {
-				Recipe.find({ isPublic: true}, function(err, recipes) {
-					if (!recipes) {
-						return res.status(400).send({message: 'No recipes found.'});
-					}
-					var recipeArr = [];
-					recipes.forEach(function(recipe) {
-						if (user.savedRecipes.indexOf(recipe._id) > -1) {
-							recipeArr.push(recipe);
-						}
-					});
-					res.send(recipeArr);
-				});
+			if (!req.body.savedRecipes) {
+				return res.status(200).send({message: 'You do not have any recipes filed.'});
 			}
+			var recipeArr = [];
+			recipes.forEach(function(recipe) {
+				var rId = recipe._id.toString();
+				if (req.body.savedRecipes.indexOf(rId) > -1) {
+					recipeArr.push(recipe);
+				}
+			});
+			res.send(recipeArr);
 		});
 	});
 
@@ -573,7 +570,6 @@ module.exports = function(app, config) {
 			if (existingRecipe) {
 				return res.status(409).send({message: 'You already have a recipe with that name.'});
 			}
-
 			var recipe = new Recipe({
 				userId: req.user || req.body.userId,
 				name: req.body.name,
@@ -588,7 +584,6 @@ module.exports = function(app, config) {
 				prepTime: req.body.prepTime,
 				cookTime: req.body.cookTime
 			});
-
 			recipe.save(function() {
 				res.send(recipe);
 			});
@@ -640,7 +635,6 @@ module.exports = function(app, config) {
 			if (recipe.userId !== req.user) {
 				return res.status(401).send({ message: 'You cannot delete someone else\'s recipe.' });
 			}
-
 			recipe.remove(function(err) {
 				res.status(200).end();
 			});
