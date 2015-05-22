@@ -22,6 +22,7 @@
 		 */
 		function _getUserSuccess(data) {
 			recipe.user = data;
+
 		}
 		if ($auth.isAuthenticated()) {
 			userData.getUser()
@@ -64,5 +65,35 @@
 		}
 		recipeData.getRecipe(recipeSlug)
 			.then(_recipeSuccess, _recipeError);
+
+		/**
+		 * File or unfile this recipe
+		 *
+		 * @param recipeId {string} ID of recipe to save
+		 */
+		recipe.fileRecipe = function(recipeId) {
+			/**
+			 * Successful promise from saving recipe to user data
+			 *
+			 * @param data {promise}.data
+			 * @private
+			 */
+			function _fileSuccess(data) {
+				console.log(data.message);
+				recipe.apiMsg = data.added ? 'Recipe saved!' : 'Recipe removed!';
+			}
+
+			/**
+			 * Error promise from saving recipe to user data
+			 *
+			 * @param response {promise}
+			 * @private
+			 */
+			function _fileError(response) {
+				console.log(response.data.message);
+			}
+			recipeData.fileRecipe(recipeId)
+				.then(_fileSuccess, _fileError);
+		};
 	}
 })();

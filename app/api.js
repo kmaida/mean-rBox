@@ -137,7 +137,7 @@ module.exports = function(app, config) {
 				return res.status(400).send({ message: 'User not found' });
 			}
 			user.displayName = req.body.displayName || user.displayName;
-			// user.email = req.body.email || user.email;
+
 			user.save(function(err) {
 				res.status(200).end();
 			});
@@ -616,6 +616,38 @@ module.exports = function(app, config) {
 
 			recipe.remove(function(err) {
 				res.status(200).end();
+			});
+		});
+	});
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | PUT /api/recipe/:recipeId/file - save a recipe ID to user data
+	 |--------------------------------------------------------------------------
+	 */
+	app.put('/api/recipe/:recipeId/file', ensureAuthenticated, function(req, res) {
+		User.findById(req.user, function(err, user) {
+			if (!user) {
+				return res.status(400).send({ message: 'User not found' });
+			}
+			var rIndex = user.savedRecipes.indexOf(req.params.recipeId);
+			var successMsg;
+			var added;
+
+			if (rIndex > -1) {
+				// recipe exists - delete it
+				user.savedRecipes.splice(rIndex, 1);
+				successMsg = 'Recipe removed!';
+				added = false;
+			} else {
+				// recipe does not exist - add it
+				user.savedRecipes.push(req.params.recipeId);
+				successMsg = 'Recipe saved!';
+				added = true;
+			}
+
+			user.save(function(err) {
+				res.status(200).send({ message: successMsg, added: added }).end();
 			});
 		});
 	});

@@ -105,5 +105,17 @@
 				.get('/api/recipes/author/' + userId)
 				.then(_getRes);
 		};
+
+		/**
+		 * File/unfile this recipe in user data
+		 *
+		 * @param recipeId {string} ID of recipe to save
+		 * @returns {promise}
+		 */
+		this.fileRecipe = function(recipeId) {
+			return $http
+				.put('/api/recipe/' + recipeId + '/file')
+				.then(_getRes);
+		};
 	}
 })();

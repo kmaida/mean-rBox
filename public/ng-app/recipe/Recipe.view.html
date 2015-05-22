@@ -11,6 +11,10 @@
 				By: <img class="user-picture" ng-src="{{::recipe.author.picture}}"/><a class="user-displayName" ng-href="/recipes/author/{{::recipe.author.id}}">{{::recipe.author.displayName}}</a>
 			</p>
 
+			<p ng-if="recipe.user && recipe.recipe && recipe.author && recipe.author.id !== recipe.user._id">
+				<a ng-click="recipe.fileRecipe(recipe.recipe._id)">{{recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1 ? 'Unfile' : 'File'}} this recipe</a>
+			</p>
+
 			<p class="lead" ng-bind-html="recipe.recipe.description"></p>
 
 			<section class="recipe-ingredients">
