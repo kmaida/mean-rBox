@@ -511,18 +511,16 @@ module.exports = function(app, config) {
 				return res.status(400).send({message: 'User not found'});
 			}
 			if (user.savedRecipes) {
-				var recipeArr = [];
-
-				user.savedRecipes.forEach(function(recipeId) {
-					console.log(recipeId);
-
-
+				Recipe.find({ isPublic: true}, function(err, recipes) {
+					var recipeArr = [];
+					recipes.forEach(function(recipe) {
+						if (user.savedRecipes.indexOf(recipe._id) > -1) {
+							recipeArr.push(recipe);
+						}
+					});
+					res.send(recipeArr);
 				});
-				//
-				//console.log('saved recipes:', recipeArr);
-				//res.send(recipeArr);
 			}
-
 		});
 	});
 
