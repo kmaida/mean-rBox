@@ -24,8 +24,8 @@
 			recipe.user = data;
 
 			// logged in users can file recipes
-			recipe.fileText = 'File recipe to Saved Recipes';
-			recipe.unfileText = 'Remove recipe from Saved Recipes';
+			recipe.fileText = 'File this recipe';
+			recipe.unfileText = 'Remove recipe from Filed Recipes';
 		}
 		if ($auth.isAuthenticated()) {
 			userData.getUser()

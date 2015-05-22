@@ -34,12 +34,21 @@
 		 * @private
 		 */
 		function _checkUserAdmin() {
-			// if user is authenticated and not defined yet, check if they're an admin
-			if ($auth.isAuthenticated() && header.adminUser === undefined) {
+			/**
+			 * Successful promise getting user
+			 *
+			 * @param data {promise}.data
+			 * @private
+			 */
+			function _getUserSuccess(data) {
+				header.user = data;
+				header.adminUser = data.isAdmin;
+			}
+
+			// if user is authenticated, get user data
+			if ($auth.isAuthenticated() && header.user === undefined) {
 				userData.getUser()
-					.then(function(data) {
-						header.adminUser = data.isAdmin;
-					});
+					.then(_getUserSuccess);
 			}
 		}
 		_checkUserAdmin();

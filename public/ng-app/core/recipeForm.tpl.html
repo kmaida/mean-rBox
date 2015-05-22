@@ -1,4 +1,4 @@
-<form name="recipeForm" novalidate>
+<form name="recipeForm" class="recipeForm" novalidate>
 	<p class="req"><strong>*</strong> <small><em>required</em></small></p>
 
 	<div class="form-group recipeForm-name">
@@ -111,6 +111,70 @@
 					   ng-value="false"
 					   ng-model="rf.recipeData.isPublic">Only me
 			</label>
+		</div>
+	</div>
+
+	<div class="form-group recipeForm-prepTime">
+		<label for="prepTime">Preparation Time</label>
+		<p>
+			<small>How long will it take to prepare this recipe?</small>
+		</p>
+		<div class="form-group form-inline">
+			<div class="input-group">
+				<input id="prepTime"
+					   name="prepTime"
+					   type="number"
+					   min="1"
+					   step="1"
+					   class="form-control"
+					   ng-model="rf.recipeData.prepTime">
+				<div class="input-group-addon">minutes</div>
+			</div>
+
+			<div ng-if="recipeForm.prepTime.$invalid && recipeForm.prepTime.$dirty" ng-messages="recipeForm.prepTime.$error" class="text-danger">
+				<span ng-message="number">{{rf.timeError}}</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group recipeForm-cookTime">
+		<label for="cookTime">Cook Time</label>
+		<p>
+			<small>How long will it take to cook this recipe?</small>
+		</p>
+		<div class="form-group form-inline">
+			<div class="input-group">
+				<input id="cookTime"
+					   name="cookTime"
+					   type="number"
+					   min="1"
+					   step="1"
+					   class="form-control"
+					   ng-model="rf.recipeData.cookTime">
+				<div class="input-group-addon">minutes</div>
+			</div>
+			<div ng-if="recipeForm.cookTime.$invalid && recipeForm.cookTime.$dirty" ng-messages="recipeForm.cookTime.$error" class="text-danger">
+				<span ng-message="number">{{rf.timeError}}</span>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group recipeForm-servings">
+		<label for="servings">Servings</label>
+		<p>
+			<small>How many servings does this recipe make?</small>
+		</p>
+		<input id="servings"
+			   name="servings"
+			   type="number"
+			   min="1"
+			   step="1"
+			   class="form-control"
+			   ng-pattern="/^\d+$/"
+			   ng-model="rf.recipeData.servings">
+		<div ng-if="recipeForm.servings.$invalid && recipeForm.servings.$dirty" ng-messages="recipeForm.servings.$error" class="text-danger">
+			<span ng-message="pattern">Please enter an integer.</span>
+			<span ng-message="number">Please enter an integer.</span>
 		</div>
 	</div>
 

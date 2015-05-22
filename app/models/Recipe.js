@@ -18,8 +18,8 @@ var recipeSchema = new mongoose.Schema({
 	ingredients: Array,
 	directions: Array,
 	servings: Number,
-	prepTime: String,
-	cookTime: String
+	prepTime: Number,
+	cookTime: Number
 });
 
 var Recipe = mongoose.model('Recipe', recipeSchema);

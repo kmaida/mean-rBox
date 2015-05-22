@@ -17,4 +17,15 @@
 			}
 		}
 	}
+	&-servings input,
+	&-prepTime input,
+	&-cookTime input {
+		max-width: 100px;
+	}
+	&-dietary select {
+		max-width: 150px;
+	}
+	div[ng-messages] {
+		padding-top: 8px;
+	}
 }

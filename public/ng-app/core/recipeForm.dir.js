@@ -18,6 +18,7 @@
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients :  [{id: 1}];
 			rf.recipeData.directions = _isEdit ? rf.recipe.directions :  [{id: 1}];
+			rf.timeError = 'Please enter a number in minutes. Multiply hours by 60.';
 
 			// fetch dietary options list
 			rf.dietary = Recipe.dietary;
