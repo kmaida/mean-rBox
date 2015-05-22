@@ -502,6 +502,32 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
+	 | GET /api/recipes/me/filed - get my saved recipes
+	 |--------------------------------------------------------------------------
+	 */
+	app.get('/api/recipes/me/filed', ensureAuthenticated, function(req, res) {
+		User.findById(req.user, function(err, user) {
+			if (!user) {
+				return res.status(400).send({message: 'User not found'});
+			}
+			if (user.savedRecipes) {
+				var recipeArr = [];
+
+				user.savedRecipes.forEach(function(recipeId) {
+					console.log(recipeId);
+
+
+				});
+				//
+				//console.log('saved recipes:', recipeArr);
+				//res.send(recipeArr);
+			}
+
+		});
+	});
+
+	/*
+	 |--------------------------------------------------------------------------
 	 | GET /api/recipes/author/:userId - get list of a user's public recipes
 	 |--------------------------------------------------------------------------
 	 */

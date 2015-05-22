@@ -95,6 +95,17 @@
 		};
 
 		/**
+		 * Get my filed recipes
+		 *
+		 * @returns {promise}
+		 */
+		this.getFiledRecipes = function() {
+			return $http
+				.get('/api/recipes/me/filed')
+				.then(_getRes);
+		};
+
+		/**
 		 * Get a specific user's public recipes
 		 *
 		 * @param userId {string} user ID

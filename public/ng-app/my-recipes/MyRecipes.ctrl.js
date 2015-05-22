@@ -62,5 +62,12 @@
 		}
 		recipeData.getMyRecipes()
 			.then(_recipesSuccess);
+
+		function _filedSuccess(data) {
+			myRecipes.filedRecipes = data;
+			console.log('my filed recipes:', data);
+		}
+		recipeData.getFiledRecipes()
+			.then(_filedSuccess);
 	}
 })();
