@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('RecipeCtrl', RecipeCtrl);
 
-	RecipeCtrl.$inject = ['Page', '$auth', '$routeParams', 'recipeData', 'userData'];
+	RecipeCtrl.$inject = ['$scope', 'Page', '$auth', '$routeParams', 'recipeData', 'userData'];
 
-	function RecipeCtrl(Page, $auth, $routeParams, recipeData, userData) {
+	function RecipeCtrl($scope, Page, $auth, $routeParams, recipeData, userData) {
 		// controllerAs ViewModel
 		var recipe = this;
 		var recipeSlug = $routeParams.slug;
@@ -81,6 +81,7 @@
 			function _fileSuccess(data) {
 				console.log(data.message);
 				recipe.apiMsg = data.added ? 'Recipe saved!' : 'Recipe removed!';
+				recipe.filed = data.added;
 			}
 
 			/**
@@ -95,5 +96,9 @@
 			recipeData.fileRecipe(recipeId)
 				.then(_fileSuccess, _fileError);
 		};
+
+		$scope.$watch('recipe.filed', function(newVal, oldVal) {
+			console.log(newVal);
+		});
 	}
 })();

@@ -622,7 +622,7 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | PUT /api/recipe/:recipeId/file - save a recipe ID to user data
+	 | PUT /api/recipe/:recipeId/file - save/remove a recipe ID in user data
 	 |--------------------------------------------------------------------------
 	 */
 	app.put('/api/recipe/:recipeId/file', ensureAuthenticated, function(req, res) {
@@ -645,7 +645,6 @@ module.exports = function(app, config) {
 				successMsg = 'Recipe saved!';
 				added = true;
 			}
-
 			user.save(function(err) {
 				res.status(200).send({ message: successMsg, added: added }).end();
 			});
