@@ -508,10 +508,13 @@ module.exports = function(app, config) {
 	app.get('/api/recipes/me/filed', ensureAuthenticated, function(req, res) {
 		User.findById(req.user, function(err, user) {
 			if (!user) {
-				return res.status(400).send({message: 'User not found'});
+				return res.status(400).send({message: 'User not found.'});
 			}
 			if (user.savedRecipes) {
 				Recipe.find({ isPublic: true}, function(err, recipes) {
+					if (!recipes) {
+						return res.status(400).send({message: 'No recipes found.'});
+					}
 					var recipeArr = [];
 					recipes.forEach(function(recipe) {
 						if (user.savedRecipes.indexOf(recipe._id) > -1) {

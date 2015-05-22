@@ -19,9 +19,21 @@
 				<recipes-list recipes="myRecipes.recipes"></recipes-list>
 			</section>
 
+			<!-- Filed Recipes -->
+			<section ng-if="myRecipes.currentTab === 'filed-recipes'" class="recipeBoxFiled">
+				<h2><i class="fa fa-archive fa-fw"></i>Filed Recipes</h2>
+
+				<p class="lead">View recipes you have filed by other authors.</p>
+
+				<recipes-list recipes="myRecipes.filedRecipes"></recipes-list>
+			</section>
+
 			<!-- Add New Recipe -->
 			<section ng-if="myRecipes.currentTab === 'add-recipe'" class="addRecipe">
-				<h2><i class="fa fa-book fa-fw"></i>Add New Recipe</h2>
+				<h2><i class="fa fa-book fa-fw"></i>Add Recipe</h2>
+
+				<p class="lead">Create a new recipe.</p>
+
 				<recipe-form ng-if="myRecipes.user" user-id="{{::myRecipes.user._id}}"></recipe-form>
 			</section>
 		</div>

@@ -20,7 +20,11 @@
 				query: 'recipe-box'
 			},
 			{
-				name: 'Add New Recipe',
+				name: 'Filed Recipes',
+				query: 'filed-recipes'
+			},
+			{
+				name: 'Add Recipe',
 				query: 'add-recipe'
 			}
 		];
@@ -66,7 +70,6 @@
 
 
 
-		// TODO: fix this API route
 		function _filedSuccess(data) {
 			myRecipes.filedRecipes = data;
 			console.log('my filed recipes:', data);
