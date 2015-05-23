@@ -9,6 +9,19 @@ module.exports = function(app, config) {
 
 //-------------------------- USERS API
 
+	var _defaultPicture = '/assets/images/img-user.png';
+
+	/**
+	 * Set default display name to last 5 characters of ID
+	 *
+	 * @param idStr {string} ID
+	 * @returns {string}
+	 * @private
+	 */
+	function _defaultDisplayName(idStr) {
+		return 'user' + idStr.substr(idStr.length - 5);
+	}
+
 	/*
 	 |--------------------------------------------------------------------------
 	 | Login Required Middleware
@@ -108,8 +121,8 @@ module.exports = function(app, config) {
 		User.findById(req.params.id, function(err, user) {
 			var userObj = {
 				id: req.params.id,
-				picture: user.picture || '/assets/images/img-user.png',
-				displayName: user.displayName || 'user' + req.params.id
+				picture: user.picture || _defaultPicture,
+				displayName: user.displayName || _defaultDisplayName(req.params.id)
 			};
 			res.send(userObj);
 		});
@@ -122,6 +135,12 @@ module.exports = function(app, config) {
 	 */
 	app.get('/api/me', ensureAuthenticated, function(req, res) {
 		User.findById(req.user, function(err, user) {
+			if (!user.displayName) {
+				user.displayName = _defaultDisplayName(req.user);
+			}
+			if (!user.picture) {
+				user.picture = _defaultPicture;
+			}
 			res.send(user);
 		});
 	});
@@ -136,8 +155,8 @@ module.exports = function(app, config) {
 			if (!user) {
 				return res.status(400).send({ message: 'User not found' });
 			}
-			user.displayName = req.body.displayName || user.displayName;
-
+			user.displayName = req.body.displayName || user.displayName || _defaultDisplayName(req.user);
+			user.picture = user.picture || _defaultPicture;
 			user.save(function(err) {
 				res.status(200).end();
 			});
@@ -152,11 +171,15 @@ module.exports = function(app, config) {
 	app.get('/api/users', ensureAdmin, function(req, res) {
 		User.find({}, function(err, users) {
 			var userArr = [];
-
 			users.forEach(function(user) {
+				if (!user.displayName) {
+					user.displayName = _defaultDisplayName(user._id);
+				}
+				if (!user.picture) {
+					user.picture = _defaultPicture;
+				}
 				userArr.push(user);
 			});
-
 			res.send(userArr);
 		});
 	});
@@ -198,7 +221,7 @@ module.exports = function(app, config) {
 								return res.status(400).send({ message: 'User not found' });
 							}
 							user.google = profile.sub;
-							user.picture = user.picture || profile.picture;
+							user.picture = user.picture || profile.picture || _defaultPicture;
 							user.displayName = user.displayName || profile.name;
 							user.save(function() {
 								var token = createToken(user);
