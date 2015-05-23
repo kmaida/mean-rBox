@@ -55,8 +55,8 @@
 
 			<p ng-if="recipe.user && recipe.author && recipe.author.id !== recipe.user._id">
 				<a ng-click="recipe.fileRecipe(recipe.recipe._id)">
-					<span ng-if="recipe.filed === undefined"><i class="fa fa-fw" ng-class="{'fa-trash': recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1, 'fa-folder-open-o': recipe.user.savedRecipes.indexOf(recipe.recipe._id) === -1}"></i>{{recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1 ? recipe.unfileText : recipe.fileText}}</span>
-					<span ng-if="recipe.filed !== undefined"><i class="fa fa-fw" ng-class="{'fa-trash': recipe.filed, 'fa-folder-open-o': !recipe.filed}"></i>{{recipe.filed ? recipe.unfileText : recipe.fileText}}</span>
+					<span ng-if="recipe.filed === undefined"><i class="fa fa-fw" ng-class="{'fa-times': recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1, 'fa-folder-open-o': recipe.user.savedRecipes.indexOf(recipe.recipe._id) === -1}"></i>{{recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1 ? recipe.unfileText : recipe.fileText}}</span>
+					<span ng-if="recipe.filed !== undefined"><i class="fa fa-fw" ng-class="{'fa-times': recipe.filed, 'fa-folder-open-o': !recipe.filed}"></i>{{recipe.filed ? recipe.unfileText : recipe.fileText}}</span>
 				</a>
 			</p>
 		</div>
