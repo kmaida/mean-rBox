@@ -7,11 +7,31 @@
 				<small ng-if="recipe.user && recipe.user._id === recipe.recipe.userId"> <a ng-href="/recipe/{{::recipe.recipe.slug}}/edit"><i class="fa fa-pencil-square-o"></i></a></small>
 			</h1>
 
-			<p>
-				By: <img class="user-picture" ng-src="{{::recipe.author.picture}}"/><a class="user-displayName" ng-href="/recipes/author/{{::recipe.author.id}}">{{::recipe.author.displayName}}</a>
+			<p class="lead" ng-bind-html="recipe.recipe.description"></p>
+
+			<p class="recipe-author">
+				From the kitchen of <img class="user-picture" ng-src="{{::recipe.author.picture}}"/><a
+					class="user-displayName"
+					ng-href="/recipes/author/{{::recipe.author.id}}">{{::recipe.author.displayName}}</a>
 			</p>
 
-			<p class="lead" ng-bind-html="recipe.recipe.description"></p>
+			<ul class="recipe-info-list"
+				ng-if="recipe.recipe.prepTime || recipe.recipe.cookTime || recipe.recipe.servings ||
+			recipe.recipe.dietary">
+				<li ng-if="recipe.recipe.servings">
+					<i class="fa fa-fw fa-male"></i><strong>Servings:</strong> {{recipe.recipe.servings}}
+				</li>
+				<li ng-if="recipe.recipe.prepTime">
+					<i class="fa fa-fw fa-clock-o"></i><strong>Preparation Time:</strong> {{recipe.recipe.prepTime |
+					minToH}}
+				</li>
+				<li ng-if="recipe.recipe.cookTime">
+					<i class="fa fa-fw fa-fire"></i><strong>Cook Time:</strong> {{recipe.recipe.cookTime | minToH}}
+				</li>
+				<li ng-if="recipe.recipe.dietary">
+					<i class="fa fa-fw fa-spoon"></i><strong>Special Diet:</strong> {{recipe.recipe.dietary}}
+				</li>
+			</ul>
 
 			<section class="recipe-ingredients">
 				<h2>Ingredients</h2>
@@ -35,8 +55,8 @@
 
 			<p ng-if="recipe.user && recipe.author && recipe.author.id !== recipe.user._id">
 				<a ng-click="recipe.fileRecipe(recipe.recipe._id)">
-					<span ng-if="recipe.filed === undefined"><i class="fa fa-fw" ng-class="{'fa-trash': recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1, 'fa-archive': recipe.user.savedRecipes.indexOf(recipe.recipe._id) === -1}"></i>{{recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1 ? recipe.unfileText : recipe.fileText}}</span>
-					<span ng-if="recipe.filed !== undefined"><i class="fa fa-fw" ng-class="{'fa-trash': recipe.filed, 'fa-archive': !recipe.filed}"></i>{{recipe.filed ? recipe.unfileText : recipe.fileText}}</span>
+					<span ng-if="recipe.filed === undefined"><i class="fa fa-fw" ng-class="{'fa-trash': recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1, 'fa-folder-open-o': recipe.user.savedRecipes.indexOf(recipe.recipe._id) === -1}"></i>{{recipe.user.savedRecipes.indexOf(recipe.recipe._id) !== -1 ? recipe.unfileText : recipe.fileText}}</span>
+					<span ng-if="recipe.filed !== undefined"><i class="fa fa-fw" ng-class="{'fa-trash': recipe.filed, 'fa-folder-open-o': !recipe.filed}"></i>{{recipe.filed ? recipe.unfileText : recipe.fileText}}</span>
 				</a>
 			</p>
 		</div>
