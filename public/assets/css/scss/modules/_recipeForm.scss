@@ -20,7 +20,20 @@
 	&-servings input,
 	&-prepTime input,
 	&-cookTime input {
-		max-width: 80px;
+		@include mq($mq-large) {
+			max-width: 80px;
+		}
+	}
+	&-prepTime-conversion,
+	&-cookTime-conversion {
+		display: block;
+		font-style: italic;
+		padding-top: 8px;
+
+		@include mq($mq-large) {
+			display: inline;
+			padding-top: 0;
+		}
 	}
 	&-dietary select {
 		max-width: 150px;

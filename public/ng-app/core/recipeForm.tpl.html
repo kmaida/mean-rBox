@@ -117,7 +117,8 @@
 	<div class="form-group recipeForm-prepTime">
 		<label for="prepTime">Preparation Time</label>
 		<p>
-			<small>How long will it take to prepare this recipe?</small>
+			<small>How long will it take to prepare this recipe? Enter time in minutes (we will convert it to
+				hours if necessary).</small>
 		</p>
 		<div class="form-group form-inline">
 			<div class="input-group">
@@ -127,12 +128,17 @@
 					   min="1"
 					   step="1"
 					   class="form-control"
+					   ng-pattern="rf.timeRegex"
 					   ng-model="rf.recipeData.prepTime">
 				<div class="input-group-addon">minutes</div>
 			</div>
 
+			<div ng-if="recipeForm.prepTime.$valid && rf.recipeData.prepTime >= 60"
+				 class="recipeForm-prepTime-conversion text-info">({{rf.recipeData.prepTime |
+				minToH}})</div>
 			<div ng-if="recipeForm.prepTime.$invalid && recipeForm.prepTime.$dirty" ng-messages="recipeForm.prepTime.$error" class="text-danger">
 				<span ng-message="number">{{rf.timeError}}</span>
+				<span ng-message="pattern">{{rf.timeError}}</span>
 			</div>
 		</div>
 	</div>
@@ -140,7 +146,8 @@
 	<div class="form-group recipeForm-cookTime">
 		<label for="cookTime">Cook Time</label>
 		<p>
-			<small>How long will it take to cook this recipe?</small>
+			<small>How long will it take to cook this recipe? Enter time in minutes (we will convert it to
+				hours if necessary).</small>
 		</p>
 		<div class="form-group form-inline">
 			<div class="input-group">
@@ -150,11 +157,16 @@
 					   min="1"
 					   step="1"
 					   class="form-control"
+					   ng-pattern="rf.timeRegex"
 					   ng-model="rf.recipeData.cookTime">
 				<div class="input-group-addon">minutes</div>
 			</div>
+			<span ng-if="recipeForm.cookTime.$valid && rf.recipeData.cookTime >= 60"
+				 class="recipeForm-cookTime-conversion text-info">({{rf.recipeData.cookTime |
+				minToH}})</span>
 			<div ng-if="recipeForm.cookTime.$invalid && recipeForm.cookTime.$dirty" ng-messages="recipeForm.cookTime.$error" class="text-danger">
 				<span ng-message="number">{{rf.timeError}}</span>
+				<span ng-message="pattern">{{rf.timeError}}</span>
 			</div>
 		</div>
 	</div>
