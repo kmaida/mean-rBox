@@ -30,15 +30,22 @@
 			/**
 			 * Add new item
 			 * Ingredient or Direction step
+			 * Focus the newest input field
 			 *
+			 * @param $event {object} click event
 			 * @param model {object} rf.recipeData model
 			 */
-			rf.addItem = function(model) {
+			rf.addItem = function($event, model) {
 				var _newItem = {
 					id: model.length + 1
 				};
 
 				model.push(_newItem);
+
+				$timeout(function() {
+					var _lastInput = angular.element($event.target).parent('p').prev('.last').find('input').eq(0);
+					_lastInput.focus();
+				});
 			};
 
 			/**

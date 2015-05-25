@@ -25,7 +25,8 @@
 		<label>Ingredients<span class="req">*</span></label>
 
 		<div class="form-inline recipeForm-ingredients-item"
-			 ng-repeat="ing in rf.recipeData.ingredients track by $index">
+			 ng-repeat="ing in rf.recipeData.ingredients track by $index"
+			 ng-class="{'last': $last}">
 
 			<div class="input-group recipeForm-ingredients-item-amt">
 				<label for="ingredientAmt-{{$index}}" class="input-group-addon">Amount</label>
@@ -56,7 +57,7 @@
 		</div>
 
 		<p>
-			<button class="btn btn-info" ng-click="rf.addItem(rf.recipeData.ingredients)">
+			<button class="btn btn-info" ng-click="rf.addItem($event, rf.recipeData.ingredients)">
 				<i class="fa fa-plus"></i> Add Another Ingredient
 			</button>
 		</p>
@@ -65,7 +66,9 @@
 	<div class="form-group recipeForm-directions">
 		<label>Directions<span class="req">*</span></label>
 
-		<div class="recipeForm-directions-step" ng-repeat="step in rf.recipeData.directions track by $index">
+		<div class="recipeForm-directions-step"
+			 ng-repeat="step in rf.recipeData.directions track by $index"
+			 ng-class="{'last': $last}">
 			<div class="input-group">
 				<div class="input-group-addon">{{$index + 1}}.</div>
 				<input id="directions-{{$index}}"
@@ -85,7 +88,7 @@
 		</div>
 
 		<p>
-			<button class="btn btn-info" ng-click="rf.addItem(rf.recipeData.directions)">
+			<button class="btn btn-info" ng-click="rf.addItem($event, rf.recipeData.directions)">
 				<i class="fa fa-plus"></i> Add Another Step
 			</button>
 		</p>
