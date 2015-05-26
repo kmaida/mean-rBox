@@ -62,7 +62,7 @@
 					   ng-keyup="rfl.insertCharInput($event)">
 				<div class="input-group-btn">
 					<button class="btn btn-danger"
-							ng-click="rf.removeItem(rf.recipeData.ingredients, $index)"
+							ng-click="rfl.removeItem(rf.recipeData.ingredients, $index)"
 							ng-disabled="rf.recipeData.ingredients.length === 1">
 						<i class="fa fa-trash"></i>
 					</button>
@@ -71,7 +71,7 @@
 		</div>
 
 		<p>
-			<button class="btn btn-info" ng-click="rf.addItem($event, rf.recipeData.ingredients)">
+			<button class="btn btn-info" ng-click="rfl.addItem($event, rf.recipeData.ingredients)">
 				<i class="fa fa-plus"></i> Add Another Ingredient
 			</button>
 		</p>
@@ -95,7 +95,7 @@
 					   ng-keyup="rfl.insertCharInput($event)">
 				<div class="input-group-btn">
 					<button class="btn btn-danger"
-							ng-click="rf.removeItem(rf.recipeData.directions, $index)"
+							ng-click="rfl.removeItem(rf.recipeData.directions, $index)"
 							ng-disabled="rf.recipeData.directions.length === 1">
 						<i class="fa fa-trash"></i>
 					</button>
@@ -104,7 +104,7 @@
 		</div>
 
 		<p>
-			<button class="btn btn-info" ng-click="rf.addItem($event, rf.recipeData.directions)">
+			<button class="btn btn-info" ng-click="rfl.addItem($event, rf.recipeData.directions)">
 				<i class="fa fa-plus"></i> Add Another Step
 			</button>
 		</p>

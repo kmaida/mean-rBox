@@ -47,9 +47,7 @@
 				<h2>Directions</h2>
 
 				<ol>
-					<li ng-repeat="step in recipe.recipe.directions">
-						{{::step.step}}
-					</li>
+					<li ng-repeat="step in recipe.recipe.directions" ng-bind-html="step.step"></li>
 				</ol>
 			</section>
 

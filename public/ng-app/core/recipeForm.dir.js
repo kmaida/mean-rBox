@@ -25,38 +25,6 @@
 			rf.dietary = Recipe.dietary;
 
 			/**
-			 * Add new item
-			 * Ingredient or Direction step
-			 * Focus the newest input field
-			 *
-			 * @param $event {object} click event
-			 * @param model {object} rf.recipeData model
-			 */
-			rf.addItem = function($event, model) {
-				var _newItem = {
-					id: model.length + 1
-				};
-
-				model.push(_newItem);
-
-				$timeout(function() {
-					var _lastInput = angular.element($event.target).parent('p').prev('.last').find('input').eq(0);
-					_lastInput.focus();
-				});
-			};
-
-			/**
-			 * Remove item
-			 * Ingredient or Direction step
-			 *
-			 * @param model {object} rf.recipeData model
-			 * @param i {index}
-			 */
-			rf.removeItem = function(model, i) {
-				model.splice(i, 1);
-			};
-
-			/**
 			 * Clean empty items out of array before saving
 			 * Ingredients or Directions
 			 *
@@ -167,8 +135,10 @@
 			 * @param $event {object}
 			 */
 			$scope.rfl.insertCharInput = function($event) {
-				_lastInput = angular.element($event.target);
-				_caretPos = _lastInput[0].selectionStart;
+				$timeout(function() {
+					_lastInput = angular.element('#' + $event.target.id);
+					_caretPos = _lastInput[0].selectionStart;
+				});
 			};
 
 			/**
@@ -183,7 +153,6 @@
 
 					_lastInput.val(_textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos));
 					_caretPos = _lastInput[0].selectionStart;
-					_lastInput.focus();
 				}
 			};
 
@@ -194,6 +163,38 @@
 			$scope.rfl.clearInsertChar = function() {
 				_lastInput = null;
 				_caretPos = null;
+			};
+
+			/**
+			 * Add new item
+			 * Ingredient or Direction step
+			 * Focus the newest input field
+			 *
+			 * @param $event {object} click event
+			 * @param model {object} rf.recipeData model
+			 */
+			$scope.rfl.addItem = function($event, model) {
+				var _newItem = {
+					id: model.length + 1
+				};
+
+				model.push(_newItem);
+
+				$timeout(function() {
+					var _newestInput = angular.element($event.target).parent('p').prev('.last').find('input').eq(0);
+					_newestInput.focus();
+				});
+			};
+
+			/**
+			 * Remove item
+			 * Ingredient or Direction step
+			 *
+			 * @param model {object} rf.recipeData model
+			 * @param i {index}
+			 */
+			$scope.rfl.removeItem = function(model, i) {
+				model.splice(i, 1);
 			};
 		}
 
