@@ -37,19 +37,10 @@
 	}
 	&-specialChars,
 	&-tags {
-		small {
-			display: block;
-			margin-bottom: 6px;
-
-			@include mq($mq-large) {
-				display: inline;
-				margin-bottom: 0;
-			}
-		}
 		button {
 			font-size: 14px;
 			margin-bottom: 2px;
-			margin-left: 2px;
+			margin-right: 2px;
 
 			i {
 				transition: all 250ms ease;
@@ -60,8 +51,8 @@
 					transform: rotateZ(0deg);
 				}
 			}
-			&:first-child {
-				margin-left: 0;
+			&:last-child {
+				margin-right: 0;
 			}
 		}
 	}

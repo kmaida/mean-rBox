@@ -32,13 +32,19 @@
 		];
 
 		var tags = [
-			'poultry',
 			'beef',
-			'pork',
 			'fish',
 			'pasta',
+			'poultry',
+			'pork',
+			'vegetable',
 			'one-pot',
-			'fast'
+			'fast',
+			'slow-cook',
+			'stock',
+			'baked',
+			'low calorie',
+			'alcohol'
 		];
 
 		return {
