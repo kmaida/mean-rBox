@@ -24,6 +24,56 @@
 			// fetch dietary options list
 			rf.dietary = Recipe.dietary;
 
+			// fetch special characters
+			rf.chars = Recipe.insertChar;
+
+			// setup special characters private vars
+			var _lastInput;
+			var _ingIndex;
+			var _caretPos;
+
+			/**
+			 * Keep track of caret position in ingredient amount text field
+			 *
+			 * @param $event {object}
+			 * @param index {number}
+			 */
+			rf.insertCharInput = function($event, index) {
+				$timeout(function() {
+					_ingIndex = index;
+					_lastInput = angular.element('#' + $event.target.id);
+					_caretPos = _lastInput[0].selectionStart;
+				});
+			};
+
+			/**
+			 * Insert character at last caret position
+			 * In supported field
+			 *
+			 * @param char {string} special character
+			 */
+			rf.insertChar = function(char) {
+				if (_lastInput) {
+					var _textVal = rf.recipeData.ingredients[_ingIndex].amt;
+
+					rf.recipeData.ingredients[_ingIndex].amt = _textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos);
+
+					$timeout(function() {
+						_caretPos = _lastInput[0].selectionStart;
+					});
+				}
+			};
+
+			/**
+			 * Clear caret position and last input
+			 * So that special characters don't end up in undesired fields
+			 */
+			rf.clearChar = function() {
+				_ingIndex = null;
+				_lastInput = null;
+				_caretPos = null;
+			};
+
 			/**
 			 * Clean empty items out of array before saving
 			 * Ingredients or Directions
@@ -122,48 +172,6 @@
 		function recipeFormLink($scope, $elem, $attrs) {
 			// set up $scope object for namespacing
 			$scope.rfl = {};
-
-			// fetch special characters
-			$scope.rfl.chars = Recipe.insertChar;
-
-			var _lastInput;
-			var _caretPos;
-
-			/**
-			 * Keep track of caret position in text field
-			 *
-			 * @param $event {object}
-			 */
-			$scope.rfl.insertCharInput = function($event) {
-				$timeout(function() {
-					_lastInput = angular.element('#' + $event.target.id);
-					_caretPos = _lastInput[0].selectionStart;
-				});
-			};
-
-			/**
-			 * Insert character at last caret position
-			 * In supported field
-			 *
-			 * @param char {string} special character
-			 */
-			$scope.rfl.insertChar = function(char) {
-				if (_lastInput) {
-					var _textVal = _lastInput.val();
-
-					_lastInput.val(_textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos));
-					_caretPos = _lastInput[0].selectionStart;
-				}
-			};
-
-			/**
-			 * Clear caret position and last input
-			 * So that special characters don't end up in undesired fields
-			 */
-			$scope.rfl.clearChar = function() {
-				_lastInput = null;
-				_caretPos = null;
-			};
 
 			/**
 			 * Add new item

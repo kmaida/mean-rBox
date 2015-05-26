@@ -8,7 +8,7 @@
 			   type="text"
 			   ng-model="rf.recipeData.name"
 			   class="form-control"
-			   ng-focus="rfl.clearChar()"
+			   ng-focus="rf.clearChar()"
 			   required>
 	</div>
 
@@ -19,7 +19,7 @@
 				  class="form-control"
 				  rows="3"
 				  ng-model="rf.recipeData.description"
-				  ng-focus="rfl.clearChar()"
+				  ng-focus="rf.clearChar()"
 				  required></textarea>
 	</div>
 
@@ -30,8 +30,8 @@
 			<small>Measurement characters:</small>
 			<button
 					class="btn btn-default btn-sm"
-					ng-repeat="char in rfl.chars"
-					ng-click="rfl.insertChar(char)">{{char}}</button>
+					ng-repeat="char in rf.chars"
+					ng-click="rf.insertChar(char)">{{char}}</button>
 		</div>
 
 		<div class="form-inline recipeForm-ingredients-item"
@@ -46,8 +46,8 @@
 					   placeholder="1 c, ¼ tsp, pinch"
 					   ng-model="ing.amt"
 					   class="form-control"
-					   ng-focus="rfl.insertCharInput($event)"
-					   ng-keyup="rfl.insertCharInput($event)">
+					   ng-focus="rf.insertCharInput($event, $index)"
+					   ng-keyup="rf.insertCharInput($event, $index)">
 			</div>
 
 			<div class="input-group recipeForm-ingredients-item-ingredient">
@@ -58,7 +58,7 @@
 					   placeholder="flour"
 					   ng-model="ing.ingredient"
 					   class="form-control"
-					   ng-focus="rfl.clearChar()">
+					   ng-focus="rf.clearChar()">
 				<div class="input-group-btn">
 					<button class="btn btn-danger"
 							ng-click="rfl.removeItem(rf.recipeData.ingredients, $index)"
@@ -90,7 +90,7 @@
 					   placeholder="Written cooking instructions for step {{$index + 1}}"
 					   ng-model="step.step"
 					   class="form-control"
-					   ng-focus="rfl.clearChar()">
+					   ng-focus="rf.clearChar()">
 				<div class="input-group-btn">
 					<button class="btn btn-danger"
 							ng-click="rfl.removeItem(rf.recipeData.directions, $index)"
@@ -119,7 +119,7 @@
 					   name="isPublic"
 					   ng-value="true"
 					   ng-model="rf.recipeData.isPublic"
-					   ng-focus="rfl.clearChar()"
+					   ng-focus="rf.clearChar()"
 					   required>Anyone can view
 			</label>
 
@@ -128,7 +128,7 @@
 					   name="isPublic"
 					   ng-value="false"
 					   ng-model="rf.recipeData.isPublic"
-					   ng-focus="rfl.clearChar()">Only me
+					   ng-focus="rf.clearChar()">Only me
 			</label>
 		</div>
 	</div>
@@ -149,7 +149,7 @@
 					   class="form-control"
 					   ng-pattern="rf.timeRegex"
 					   ng-model="rf.recipeData.prepTime"
-					   ng-focus="rfl.clearChar()">
+					   ng-focus="rf.clearChar()">
 				<div class="input-group-addon">minutes</div>
 			</div>
 
@@ -179,7 +179,7 @@
 					   class="form-control"
 					   ng-pattern="rf.timeRegex"
 					   ng-model="rf.recipeData.cookTime"
-					   ng-focus="rfl.clearChar()">
+					   ng-focus="rf.clearChar()">
 				<div class="input-group-addon">minutes</div>
 			</div>
 			<span ng-if="recipeForm.cookTime.$valid && rf.recipeData.cookTime >= 60"
@@ -205,7 +205,7 @@
 			   class="form-control"
 			   ng-pattern="/^\d+$/"
 			   ng-model="rf.recipeData.servings"
-			   ng-focus="rfl.clearChar()">
+			   ng-focus="rf.clearChar()">
 		<div ng-if="recipeForm.servings.$invalid && recipeForm.servings.$dirty" ng-messages="recipeForm.servings.$error" class="text-danger">
 			<span ng-message="pattern">Please enter an integer.</span>
 			<span ng-message="number">Please enter an integer.</span>
@@ -222,7 +222,7 @@
 				class="form-control"
 				ng-options="item as item for item in rf.dietary"
 				ng-model="rf.recipeData.dietary"
-				ng-focus="rfl.clearChar()">
+				ng-focus="rf.clearChar()">
 		</select>
 	</div>
 
