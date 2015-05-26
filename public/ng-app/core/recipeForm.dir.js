@@ -152,17 +152,11 @@
 					var _textVal = _lastInput.val();
 
 					_lastInput.val(_textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos));
-					_caretPos = _lastInput[0].selectionStart;
-				}
-			};
 
-			/**
-			 * Clear variables for special character insertion
-			 * On focus of fields that do not support special characters
-			 */
-			$scope.rfl.clearInsertChar = function() {
-				_lastInput = null;
-				_caretPos = null;
+					// clear
+					_lastInput = null;
+					_caretPos = null;
+				}
 			};
 
 			/**

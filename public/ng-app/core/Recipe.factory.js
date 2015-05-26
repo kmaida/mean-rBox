@@ -15,8 +15,7 @@
 		var insertChar = [
 			'¼',
 			'½',
-			'¾',
-			'º'
+			'¾'
 		];
 
 		return {
