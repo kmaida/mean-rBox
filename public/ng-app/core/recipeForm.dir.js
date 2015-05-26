@@ -24,9 +24,6 @@
 			// fetch dietary options list
 			rf.dietary = Recipe.dietary;
 
-			// fetch special characters
-			rf.insertChar = Recipe.insertChar;
-
 			/**
 			 * Add new item
 			 * Ingredient or Direction step
@@ -152,6 +149,54 @@
 			};
 		}
 
+		recipeFormLink.$inject = ['$scope', '$elem', '$attrs'];
+
+		function recipeFormLink($scope, $elem, $attrs) {
+			// set up $scope object for namespacing
+			$scope.rfl = {};
+
+			// fetch special characters
+			$scope.rfl.chars = Recipe.insertChar;
+
+			var _lastInput;
+			var _caretPos;
+
+			/**
+			 * Keep track of caret position in text field
+			 *
+			 * @param $event {object}
+			 */
+			$scope.rfl.insertCharInput = function($event) {
+				_lastInput = angular.element($event.target);
+				_caretPos = _lastInput[0].selectionStart;
+			};
+
+			/**
+			 * Insert character at last caret position
+			 * In supported field
+			 *
+			 * @param char {string} special character
+			 */
+			$scope.rfl.insertChar = function(char) {
+				if (_lastInput) {
+					var _textVal = _lastInput.val();
+
+					_lastInput.val(_textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos));
+					_caretPos = _lastInput[0].selectionStart;
+					_lastInput.focus();
+				}
+			};
+
+			/**
+			 * Clear variables for special character insertion
+			 * On focus of fields that do not support special characters
+			 */
+			$scope.rfl.clearInsertChar = function() {
+				_lastInput = null;
+				_caretPos = null;
+			};
+		}
+
 		return {
 			restrict: 'EA',
 			scope: {
@@ -161,7 +206,8 @@
 			templateUrl: 'ng-app/core/recipeForm.tpl.html',
 			controller: recipeFormCtrl,
 			controllerAs: 'rf',
-			bindToController: true
+			bindToController: true,
+			link: recipeFormLink
 		}
 	}
 })();

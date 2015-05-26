@@ -35,6 +35,14 @@
 			padding-top: 0;
 		}
 	}
+	&-specialChars button {
+		font-size: 13px;
+		margin-left: 2px;
+
+		&:first-child {
+			margin-left: 0;
+		}
+	}
 	&-dietary select {
 		max-width: 150px;
 	}
