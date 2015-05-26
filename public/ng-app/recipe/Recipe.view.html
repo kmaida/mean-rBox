@@ -15,9 +15,13 @@
 					ng-href="/recipes/author/{{::recipe.author.id}}">{{::recipe.author.displayName}}</a>
 			</p>
 
-			<ul class="recipe-info-list"
-				ng-if="recipe.recipe.prepTime || recipe.recipe.cookTime || recipe.recipe.servings ||
-			recipe.recipe.dietary">
+			<ul class="recipe-info-list">
+				<li>
+					<i class="fa fa-fw fa-cutlery"></i><strong>Category:</strong> {{recipe.recipe.category}}
+				</li>
+				<li ng-if="recipe.recipe.tags && recipe.recipe.tags.length">
+					<i class="fa fa-fw fa-tag"></i><strong>Tags:</strong> <span ng-repeat="tag in recipe.recipe.tags">{{tag}}{{!$last ? ', ' : ''}}</span>
+				</li>
 				<li ng-if="recipe.recipe.servings">
 					<i class="fa fa-fw fa-male"></i><strong>Servings:</strong> {{recipe.recipe.servings}}
 				</li>

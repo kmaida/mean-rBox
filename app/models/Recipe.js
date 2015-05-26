@@ -14,6 +14,7 @@ var recipeSchema = new mongoose.Schema({
 	description: String,
 	isPublic: Boolean,
 	dietary: String,
+	category: String,
 	tags: Array,
 	ingredients: Array,
 	directions: Array,

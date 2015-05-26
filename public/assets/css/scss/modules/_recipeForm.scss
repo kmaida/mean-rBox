@@ -35,7 +35,8 @@
 			padding-top: 0;
 		}
 	}
-	&-specialChars {
+	&-specialChars,
+	&-tags {
 		small {
 			display: block;
 			margin-bottom: 6px;
@@ -47,13 +48,24 @@
 		}
 		button {
 			font-size: 14px;
+			margin-bottom: 2px;
 			margin-left: 2px;
 
+			i {
+				transition: all 250ms ease;
+				transform: rotateZ(45deg);
+
+				&.added {
+					transition: all 250ms ease;
+					transform: rotateZ(0deg);
+				}
+			}
 			&:first-child {
 				margin-left: 0;
 			}
 		}
 	}
+	&-category select,
 	&-dietary select {
 		max-width: 150px;
 	}

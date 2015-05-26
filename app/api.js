@@ -600,6 +600,7 @@ module.exports = function(app, config) {
 				description: req.body.description,
 				isPublic: req.body.isPublic,
 				dietary: req.body.dietary,
+				category: req.body.category,
 				tags: req.body.tags,
 				ingredients: req.body.ingredients,
 				directions: req.body.directions,
@@ -632,6 +633,7 @@ module.exports = function(app, config) {
 			recipe.description = req.body.description || recipe.description;
 			recipe.isPublic = req.body.isPublic;
 			recipe.dietary = req.body.dietary || recipe.dietary;
+			recipe.category = req.body.category || recipe.category;
 			recipe.tags = req.body.tags || recipe.tags;
 			recipe.ingredients = req.body.ingredients || recipe.ingredients;
 			recipe.directions = req.body.directions || recipe.directions;

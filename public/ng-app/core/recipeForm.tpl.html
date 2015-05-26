@@ -133,6 +133,37 @@
 		</div>
 	</div>
 
+	<div class="form-group recipeForm-category">
+		<label for="recipeCategory">Category<span class="req">*</span></label>
+		<select id="recipeCategory"
+				name="category"
+				class="form-control"
+				ng-options="item as item for item in rf.categories"
+				ng-model="rf.recipeData.category"
+				ng-focus="rf.clearChar()">
+		</select>
+	</div>
+
+	<div class="form-group recipeForm-servings">
+		<label for="servings">Servings</label>
+		<p>
+			<small>How many servings does this recipe make?</small>
+		</p>
+		<input id="servings"
+			   name="servings"
+			   type="number"
+			   min="1"
+			   step="1"
+			   class="form-control"
+			   ng-pattern="/^\d+$/"
+			   ng-model="rf.recipeData.servings"
+			   ng-focus="rf.clearChar()">
+		<div ng-if="recipeForm.servings.$invalid && recipeForm.servings.$dirty" ng-messages="recipeForm.servings.$error" class="text-danger">
+			<span ng-message="pattern">Please enter an integer.</span>
+			<span ng-message="number">Please enter an integer.</span>
+		</div>
+	</div>
+
 	<div class="form-group recipeForm-prepTime">
 		<label for="prepTime">Preparation Time</label>
 		<p>
@@ -192,24 +223,19 @@
 		</div>
 	</div>
 
-	<div class="form-group recipeForm-servings">
-		<label for="servings">Servings</label>
+	<div class="form-group recipeForm-tags">
+		<label>Tags</label>
 		<p>
-			<small>How many servings does this recipe make?</small>
+			<small>Select any applicable tags.</small>
 		</p>
-		<input id="servings"
-			   name="servings"
-			   type="number"
-			   min="1"
-			   step="1"
-			   class="form-control"
-			   ng-pattern="/^\d+$/"
-			   ng-model="rf.recipeData.servings"
-			   ng-focus="rf.clearChar()">
-		<div ng-if="recipeForm.servings.$invalid && recipeForm.servings.$dirty" ng-messages="recipeForm.servings.$error" class="text-danger">
-			<span ng-message="pattern">Please enter an integer.</span>
-			<span ng-message="number">Please enter an integer.</span>
-		</div>
+		<p>
+			<button ng-repeat="tag in rf.tags"
+					ng-click="rf.addRemoveTag(tag)"
+					class="btn"
+					ng-class="{'btn-info': !rf.tagMap[tag], 'btn-danger': rf.tagMap[tag]}">
+				<i ng-class="{'added': rf.tagMap[tag]}" class="fa fa-times"></i> {{tag}}
+			</button>
+		</p>
 	</div>
 
 	<div class="form-group recipeForm-dietary">

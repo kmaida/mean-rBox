@@ -16,10 +16,17 @@
 
 			rf.recipeData = _isEdit ? rf.recipe : {};
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
-			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients :  [{id: 1}];
-			rf.recipeData.directions = _isEdit ? rf.recipe.directions :  [{id: 1}];
+			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
+			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: 1}];
+			rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
 			rf.timeRegex = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
 			rf.timeError = 'Please enter a number in minutes. Multiply hours by 60.';
+
+			// fetch categories options list
+			rf.categories = Recipe.categories;
+
+			// fetch tags options list
+			rf.tags = Recipe.tags;
 
 			// fetch dietary options list
 			rf.dietary = Recipe.dietary;
@@ -72,6 +79,33 @@
 				_ingIndex = null;
 				_lastInput = null;
 				_caretPos = null;
+			};
+
+			// create map of touched tags
+			rf.tagMap = {};
+			if (_isEdit && rf.recipeData.tags.length) {
+				angular.forEach(rf.recipeData.tags, function(tag, i) {
+					rf.tagMap[tag] = true;
+				});
+			}
+
+			/**
+			 * Add / remove tag
+			 *
+			 * @param tag {string} tag name
+			 */
+			rf.addRemoveTag = function(tag) {
+				var _activeTagIndex = rf.recipeData.tags.indexOf(tag);
+
+				if (_activeTagIndex > -1) {
+					// tag exists in model, turn it off
+					rf.recipeData.tags.splice(_activeTagIndex, 1);
+					rf.tagMap[tag] = false;
+				} else {
+					// tag does not exist in model, turn it on
+					rf.recipeData.tags.push(tag);
+					rf.tagMap[tag] = true;
+				}
 			};
 
 			/**
