@@ -35,12 +35,23 @@
 			padding-top: 0;
 		}
 	}
-	&-specialChars button {
-		font-size: 14px;
-		margin-left: 2px;
+	&-specialChars {
+		small {
+			display: block;
+			margin-bottom: 6px;
 
-		&:first-child {
-			margin-left: 0;
+			@include mq($mq-large) {
+				display: inline;
+				margin-bottom: 0;
+			}
+		}
+		button {
+			font-size: 14px;
+			margin-left: 2px;
+
+			&:first-child {
+				margin-left: 0;
+			}
 		}
 	}
 	&-dietary select {

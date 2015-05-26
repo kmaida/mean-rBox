@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('MyRecipesCtrl', MyRecipesCtrl);
 
-	MyRecipesCtrl.$inject = ['Page', '$auth', 'recipeData', 'userData', '$location'];
+	MyRecipesCtrl.$inject = ['Page', '$auth', 'recipeData', 'userData', '$location', 'mediaCheck', '$scope', 'MQ', '$timeout'];
 
-	function MyRecipesCtrl(Page, $auth, recipeData, userData, $location) {
+	function MyRecipesCtrl(Page, $auth, recipeData, userData, $location, mediaCheck, $scope, MQ, $timeout) {
 		// controllerAs ViewModel
 		var myRecipes = this;
 		var _tab = $location.search().view;
@@ -16,19 +16,35 @@
 
 		myRecipes.tabs = [
 			{
-				name: 'My Recipe Box',
 				query: 'recipe-box'
 			},
 			{
-				name: 'Filed Recipes',
 				query: 'filed-recipes'
 			},
 			{
-				name: 'Add Recipe',
-				query: 'add-recipe'
+				query: 'new-recipe'
 			}
 		];
 		myRecipes.currentTab = _tab ? _tab : 'recipe-box';
+
+		mediaCheck.init({
+			scope: $scope,
+			mq: MQ.SMALL,
+			enter: function() {
+				$timeout(function() {
+					myRecipes.tabs[0].name = 'Recipe Box';
+					myRecipes.tabs[1].name = 'Filed';
+					myRecipes.tabs[2].name = 'New Recipe';
+				});
+			},
+			exit: function() {
+				$timeout(function() {
+					myRecipes.tabs[0].name = 'My Recipe Box';
+					myRecipes.tabs[1].name = 'Filed Recipes';
+					myRecipes.tabs[2].name = 'Add New Recipe';
+				});
+			}
+		});
 
 		/**
 		 * Change tab

@@ -54,7 +54,7 @@
 			 */
 			rf.insertChar = function(char) {
 				if (_lastInput) {
-					var _textVal = rf.recipeData.ingredients[_ingIndex].amt;
+					var _textVal = rf.recipeData.ingredients[_ingIndex].amt === undefined ? '' : rf.recipeData.ingredients[_ingIndex].amt;
 
 					rf.recipeData.ingredients[_ingIndex].amt = _textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos);
 
@@ -126,7 +126,7 @@
 				}
 
 				if (!_isEdit || _isEdit && _originalSlug !== rf.recipeData.slug) {
-					$timeout(_goToNewSlug, 1500);
+					$timeout(_goToNewSlug, 1000);
 				} else {
 					$timeout(_resetSaveBtn, 2000);
 				}

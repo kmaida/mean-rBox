@@ -18,6 +18,10 @@
 					<p class="lead">View <a ng-href="/recipe/{{::edit.recipe.slug}}">{{::edit.recipe.name}}</a> recipe.</p>
 
 					<recipe-form user-id="edit.user._id" recipe="edit.recipe"></recipe-form>
+
+					<p class="editRecipe-footer-viewRecipe">
+						<em>View <a ng-href="/recipe/{{::edit.recipe.slug}}">{{::edit.recipe.name}}</a>.</em>
+					</p>
 				</section>
 
 				<!-- Delete Recipe -->
