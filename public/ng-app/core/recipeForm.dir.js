@@ -152,11 +152,17 @@
 					var _textVal = _lastInput.val();
 
 					_lastInput.val(_textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos));
-
-					// clear
-					_lastInput = null;
-					_caretPos = null;
+					_caretPos = _lastInput[0].selectionStart;
 				}
+			};
+
+			/**
+			 * Clear caret position and last input
+			 * So that special characters don't end up in undesired fields
+			 */
+			$scope.rfl.clearChar = function() {
+				_lastInput = null;
+				_caretPos = null;
 			};
 
 			/**
