@@ -1,18 +1,14 @@
 # mean-rBox
 
-Recipe box MEAN stack application.
+MEAN stack Recipe box application. Create, file, and view recipes.
 
 * MongoDB
-* Express
-* AngularJS (with [reStart-angular](https://github.com/kmaida/reStart-angular))
+* Express 4
+* AngularJS v1.4.0
 * Node
 * Token-based authentication (with Oauth via [Satellizer](https://github.com/sahat/satellizer))
-* FontAwesome (CDN)
+* FontAwesome (local CSS, CDN fonts)
 * Bootstrap 3 (local)
 * Gulp
 
-## To Do
-
-* [ ] Add image upload
-* [ ] Add categorization
-* [ ] Drag and drop???
+(built with [reStart-mean](https://github.com/kmaida/reStart-mean))
