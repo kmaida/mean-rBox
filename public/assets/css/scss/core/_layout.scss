@@ -25,12 +25,13 @@ body {
 		transition: none;
 		transform: none;
 	}
-	.csstransforms3d .nav-open & {
+	.nav-open & {
 		transform: translate3d(270px,0,0);
 	}
-	.no-csstransforms3d .nav-open & {
-		left: 270px;
-	}
+	// Safari has weird false negative for csstransforms3d support (does NOT affect restart-mean or restart-angular!)
+//	.no-csstransforms3d .nav-open & {
+//		left: 270px;
+//	}
 }
 
 /*-- Header --*/
@@ -63,14 +64,14 @@ header .nav {
 	.nav-open & {
 		display: block;	/* deal with FOUC */
 	}
-	.no-csstransforms3d .nav-closed & {
-		left: -100%;
-	}
-	.no-csstransforms3d .nav-open & {
-		left: -270px;
-
-		@include mq($mq-large) {
-			left: 0;
-		}
-	}
+//	.no-csstransforms3d .nav-closed & {
+//		left: -100%;
+//	}
+//	.no-csstransforms3d .nav-open & {
+//		left: -270px;
+//
+//		@include mq($mq-large) {
+//			left: 0;
+//		}
+//	}
 }
