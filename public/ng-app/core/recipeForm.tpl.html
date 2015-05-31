@@ -57,7 +57,7 @@
 				<input id="ingredient-{{$index}}"
 					   name="ingredient-{{$index}}"
 					   type="text"
-					   placeholder="flour"
+					   placeholder="ingredient {{$index + 1}}"
 					   ng-model="ing.ingredient"
 					   class="form-control"
 					   ng-focus="rf.clearChar()">
@@ -89,7 +89,7 @@
 				<input id="directions-{{$index}}"
 					   name="directions-{{$index}}"
 					   type="text"
-					   placeholder="Written cooking instructions for step {{$index + 1}}"
+					   placeholder="Directions for step {{$index + 1}}"
 					   ng-model="step.step"
 					   class="form-control"
 					   ng-focus="rf.clearChar()">
