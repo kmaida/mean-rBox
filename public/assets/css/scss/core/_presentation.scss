@@ -38,8 +38,7 @@ body {
 
 /*-- iOS form field text zooming --*/
 
-input.form-control,
-textarea.form-control {
+.form-control {
 	font-size: 16px;
 
 	@include mq($mq-large) {
