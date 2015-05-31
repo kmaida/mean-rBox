@@ -50,6 +50,8 @@
 					_ingIndex = index;
 					_lastInput = angular.element('#' + $event.target.id);
 					_caretPos = _lastInput[0].selectionStart;
+
+					// TODO: fix _caretPos to not reposition to the end when caret changed via click
 				});
 			};
 
@@ -66,7 +68,7 @@
 					rf.recipeData.ingredients[_ingIndex].amt = _textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos);
 
 					$timeout(function() {
-						_caretPos = _lastInput[0].selectionStart;
+						_lastInput.focus();
 					});
 				}
 			};

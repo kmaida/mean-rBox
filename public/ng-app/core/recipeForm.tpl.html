@@ -47,9 +47,10 @@
 					   type="text"
 					   placeholder="1 c, ¼ tsp, pinch"
 					   ng-model="ing.amt"
-					   class="form-control"
+					   class="form-control recipeForm-ingredients-item-amt-input"
 					   ng-focus="rf.insertCharInput($event, $index)"
-					   ng-keyup="rf.insertCharInput($event, $index)">
+					   ng-keyup="rf.insertCharInput($event, $index)"
+					   ng-click="rf.insertCharInput($event, $index)">
 			</div>
 
 			<div class="input-group recipeForm-ingredients-item-ingredient">
