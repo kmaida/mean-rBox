@@ -22,13 +22,13 @@
 		];
 
 		var categories = [
-			'Appetizer',
-			'Soup',
-			'Salad',
-			'Side dish',
-			'Main course',
-			'Dessert',
-			'Beverage'
+			'appetizer',
+			'soup',
+			'salad',
+			'side',
+			'entree',
+			'dessert',
+			'beverage'
 		];
 
 		var tags = [
@@ -43,7 +43,7 @@
 			'slow-cook',
 			'stock',
 			'baked',
-			'low calorie',
+			'low-calorie',
 			'alcohol'
 		];
 

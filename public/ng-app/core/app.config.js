@@ -26,8 +26,18 @@
 				controllerAs: 'recipe'
 			})
 			.when('/recipes/author/:userId', {
-				templateUrl: 'ng-app/recipes-author/RecipesAuthor.view.html',
+				templateUrl: 'ng-app/recipes-archives/RecipesArchives.view.html',
 				controller: 'RecipesAuthorCtrl',
+				controllerAs: 'ra'
+			})
+			.when('/recipes/tag/:tag', {
+				templateUrl: 'ng-app/recipes-archives/RecipesArchives.view.html',
+				controller: 'RecipesTagCtrl',
+				controllerAs: 'ra'
+			})
+			.when('/recipes/category/:category', {
+				templateUrl: 'ng-app/recipes-archives/RecipesArchives.view.html',
+				controller: 'RecipesCategoryCtrl',
 				controllerAs: 'ra'
 			})
 			.when('/my-recipes', {
