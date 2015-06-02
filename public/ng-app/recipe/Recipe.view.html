@@ -17,10 +17,13 @@
 
 			<ul class="recipe-info-list">
 				<li>
-					<i class="fa fa-fw fa-cutlery"></i><strong>Category:</strong> {{recipe.recipe.category}}
+					<i class="fa fa-fw fa-cutlery"></i><strong>Category:</strong> <a
+						ng-href="/recipes/category/{{::recipe.recipe.category | lowercase}}">{{::recipe.recipe.category}}</a>
 				</li>
 				<li ng-if="recipe.recipe.tags && recipe.recipe.tags.length">
-					<i class="fa fa-fw fa-tag"></i><strong>Tags:</strong> <span ng-repeat="tag in recipe.recipe.tags">{{tag}}{{!$last ? ', ' : ''}}</span>
+					<i class="fa fa-fw fa-tag"></i><strong>Tags:</strong> <span
+						ng-repeat="tag in recipe.recipe.tags"><a ng-href="/recipes/tag/{{::tag}}">{{::tag
+					}}</a>{{!$last ? ', ' : ''}}</span>
 				</li>
 				<li ng-if="recipe.recipe.servings">
 					<i class="fa fa-fw fa-male"></i><strong>Servings:</strong> {{recipe.recipe.servings}}
