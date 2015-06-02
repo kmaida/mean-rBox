@@ -40,6 +40,39 @@
 			var _caretPos;
 
 			/**
+			 * Set selection range
+			 *
+			 * @param input
+			 * @param selectionStart {number}
+			 * @param selectionEnd {number}
+			 * @private
+			 */
+			function _setSelectionRange(input, selectionStart, selectionEnd) {
+				if (input.setSelectionRange) {
+					input.focus();
+					input.setSelectionRange(selectionStart, selectionEnd);
+				}
+				else if (input.createTextRange) {
+					var range = input.createTextRange();
+					range.collapse(true);
+					range.moveEnd('character', selectionEnd);
+					range.moveStart('character', selectionStart);
+					range.select();
+				}
+			}
+
+			/**
+			 * Set caret position
+			 *
+			 * @param input
+			 * @param pos {number} intended caret position
+			 * @private
+			 */
+			function _setCaretToPos(input, pos) {
+				_setSelectionRange(input, pos, pos);
+			}
+
+			/**
 			 * Keep track of caret position in ingredient amount text field
 			 *
 			 * @param $event {object}
@@ -50,8 +83,6 @@
 					_ingIndex = index;
 					_lastInput = angular.element('#' + $event.target.id);
 					_caretPos = _lastInput[0].selectionStart;
-
-					// TODO: fix _caretPos to not reposition to the end when caret changed via click
 				});
 			};
 
@@ -68,7 +99,8 @@
 					rf.recipeData.ingredients[_ingIndex].amt = _textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos);
 
 					$timeout(function() {
-						_lastInput.focus();
+						_caretPos = _caretPos + 1;
+						_setCaretToPos(_lastInput[0], _caretPos);
 					});
 				}
 			};
