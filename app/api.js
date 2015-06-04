@@ -669,9 +669,9 @@ module.exports = function(app, config) {
 			recipe.tags = req.body.tags || recipe.tags;
 			recipe.ingredients = req.body.ingredients || recipe.ingredients;
 			recipe.directions = req.body.directions || recipe.directions;
-			recipe.servings = req.body.servings || recipe.servings;
-			recipe.prepTime = req.body.prepTime || recipe.prepTime;
-			recipe.cookTime = req.body.cookTime || recipe.cookTime;
+			recipe.servings = req.body.servings;
+			recipe.prepTime = req.body.prepTime;
+			recipe.cookTime = req.body.cookTime;
 
 			recipe.save(function(err) {
 				res.status(200).end();
