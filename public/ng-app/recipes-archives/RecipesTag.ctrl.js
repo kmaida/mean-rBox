@@ -17,6 +17,9 @@
 		ra.heading = 'Recipes tagged "' + _tag + '"';
 		Page.setTitle('Recipes tagged "' + _tag + '"');
 
+		ra.showCategoryFilter = 'true';
+		ra.showTagFilter = 'false';
+
 		/**
 		 * Successful promise returned from getting public recipes
 		 *

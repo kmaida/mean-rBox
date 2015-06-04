@@ -3,7 +3,11 @@
 	<div class="recipesList-searchFilter-search form-group form-inline">
 		<div class="input-group">
 			<span class="input-group-addon"><i class="fa fa-search"></i></span>
-			<input id="query" type="text" class="form-control" ng-model="rl.query" placeholder="Search recipes" />
+			<input id="query"
+				   type="text"
+				   class="form-control"
+				   ng-model="rl.query"
+				   placeholder="Search recipes" />
 			<span class="input-group-btn">
 				<button class="btn btn-default" ng-disabled="!rl.query" ng-click="rl.query=''">&times;</button>
 			</span>
@@ -14,13 +18,39 @@
 	<div class="recipesList-searchFilter-filter">
 		<div ng-if="rl.showCategoryFilter" class="recipesList-searchFilter-filter-category">
 			Filter by category
+			<select id="filter-category"
+					class="form-control"
+					ng-options="cat as cat for cat in rl.categories"
+					ng-model="rl.catPredicate">
+			</select>
 		</div>
+		<div ng-if="rl.showTagFilter" class="recipesList-searchFilter-filter-tag">
+			Filter by tag
+			<select id="filter-tag"
+					class="form-control"
+					ng-options="tag as tag for tag in rl.tags"
+					ng-model="rl.tagPredicate">
+			</select>
+		</div>
+	</div>
+
+	<!-- Sorting -->
+	<div class="recipesList-searchFilter-sort">
+		<a ng-click="rl.sortPredicate = 'name'; rl.toggleSort('name');">
+			<i class="fa fa-fw fa-sort-alpha-asc" ng-class="{'fa-sort-alpha-asc': !rl.nameReverse, 'fa-sort-alpha-desc': rl.nameReverse}"></i>Sort by name
+		</a> |
+		<a ng-click="rl.sortPredicate = 'totalTime'; rl.toggleSort('totalTime')">
+			<i class="fa fa-fw fa-sort-numeric-asc"></i>Sort by time
+		</a> |
+		<a ng-click="rl.sortPredicate = 'nIng'; rl.toggleSort('nIng')">
+			<i class="fa fa-fw fa-sort-amount-asc"></i>Sort by number of ingredients
+		</a>
 	</div>
 </div>
 
 <div ng-if="(rl.recipes | filter:rl.query).length" class="recipesList-recipes-wrapper">
 	<ul class="recipesList-list list-unstyled">
-		<li ng-repeat="recipe in rl.recipes | filter:rl.query | orderBy:'name'" class="recipesList-list-item">
+		<li ng-repeat="recipe in rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | orderBy:rl.sortPredicate:rl.reverse" class="recipesList-list-item">
 			<h4 class="recipesList-list-item-name"><a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a></h4>
 
 			<span class="recipesList-list-item-category">
@@ -40,6 +70,6 @@
 	</ul>
 </div>
 
-<div ng-if="rl.recipes && !(rl.recipes | filter:rl.query).length" class="alert alert-warning">
-	<i class="fa fa-warning"></i> No recipes{{rl.query ? ' match your search query' : ''}}.
+<div ng-if="rl.recipes && !(rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate).length" class="alert alert-warning">
+	<i class="fa fa-warning"></i> No recipes{{rl.query || rl.catPredicate || rl.tagPredicate ? ' match your search/filter query' : ''}}.
 </div>

@@ -14,6 +14,9 @@
 
 		ra.className = 'recipesAuthor';
 
+		ra.showCategoryFilter = 'true';
+		ra.showTagFilter = 'true';
+
 		/**
 		 * Successful promise returned from getting author's basic data
 		 *

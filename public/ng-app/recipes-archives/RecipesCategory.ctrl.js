@@ -17,6 +17,9 @@
 		ra.heading = _catTitle + 's';
 		Page.setTitle(_catTitle + 's');
 
+		ra.showCategoryFilter = 'false';
+		ra.showTagFilter = 'true';
+
 		/**
 		 * Successful promise returned from getting public recipes
 		 *
