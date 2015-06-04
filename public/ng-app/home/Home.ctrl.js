@@ -5,13 +5,16 @@
 		.module('rBox')
 		.controller('HomeCtrl', HomeCtrl);
 
-	HomeCtrl.$inject = ['Page', 'localData', 'recipeData'];
+	HomeCtrl.$inject = ['Page', 'localData', 'recipeData', 'Recipe'];
 
-	function HomeCtrl(Page, localData, recipeData) {
+	function HomeCtrl(Page, localData, recipeData, Recipe) {
 		// controllerAs ViewModel
 		var home = this;
 
 		Page.setTitle('All Recipes');
+
+		home.categories = Recipe.categories;
+		home.tags = Recipe.tags;
 
 		/**
 		 * Get local data from static JSON

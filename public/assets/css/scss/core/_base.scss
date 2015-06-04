@@ -37,9 +37,10 @@ a,
 	cursor: pointer;
 }
 
-/*-- Inline link touch targets --*/
+/*-- touch targets --*/
 
-.touch p a {
+.touchevents .list a,
+.touchevents p a {
 	margin: 0 -.5em;
 	padding: 0 .5em;
 }

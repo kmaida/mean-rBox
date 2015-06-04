@@ -7,9 +7,9 @@
 
 	function Recipe() {
 		var dietary = [
-			'Vegetarian',
+			'Gluten-free',
 			'Vegan',
-			'Gluten-free'
+			'Vegetarian'
 		];
 
 		var insertChar = [
@@ -23,28 +23,28 @@
 
 		var categories = [
 			'appetizer',
-			'soup',
+			'beverage',
+			'dessert',
+			'entree',
 			'salad',
 			'side',
-			'entree',
-			'dessert',
-			'beverage'
+			'soup'
 		];
 
 		var tags = [
+			'alcohol',
+			'baked',
 			'beef',
-			'fish',
-			'pasta',
-			'poultry',
-			'pork',
-			'vegetable',
-			'one-pot',
 			'fast',
+			'fish',
+			'low-calorie',
+			'one-pot',
+			'pasta',
+			'pork',
+			'poultry',
 			'slow-cook',
 			'stock',
-			'baked',
-			'low-calorie',
-			'alcohol'
+			'vegetable'
 		];
 
 		return {

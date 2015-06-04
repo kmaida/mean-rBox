@@ -21,9 +21,12 @@
 						ng-href="/recipes/category/{{::recipe.recipe.category | lowercase}}">{{::recipe.recipe.category}}</a>
 				</li>
 				<li ng-if="recipe.recipe.tags && recipe.recipe.tags.length">
-					<i class="fa fa-fw fa-tag"></i><strong>Tags:</strong> <span
+					<i class="fa fa-fw fa-tags"></i><strong>Tags:</strong> <span
 						ng-repeat="tag in recipe.recipe.tags"><a ng-href="/recipes/tag/{{::tag}}">{{::tag
 					}}</a>{{!$last ? ', ' : ''}}</span>
+				</li>
+				<li ng-if="recipe.recipe.dietary">
+					<i class="fa fa-fw fa-heartbeat"></i><strong>Special Diet:</strong> {{recipe.recipe.dietary}}
 				</li>
 				<li ng-if="recipe.recipe.servings">
 					<i class="fa fa-fw fa-male"></i><strong>Servings:</strong> {{recipe.recipe.servings}}
@@ -38,9 +41,6 @@
 				<li ng-if="recipe.recipe.prepTime && recipe.recipe.cookTime">
 					<i class="fa fa-fw fa-clock-o"></i><strong>Total Time:</strong> {{(recipe.recipe.prepTime + recipe.recipe.cookTime) |
 					minToH}}
-				</li>
-				<li ng-if="recipe.recipe.dietary">
-					<i class="fa fa-fw fa-spoon"></i><strong>Special Diet:</strong> {{recipe.recipe.dietary}}
 				</li>
 			</ul>
 

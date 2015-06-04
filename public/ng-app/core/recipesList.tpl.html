@@ -1,18 +1,30 @@
-<div ng-if="rl.recipes.length" class="form-group form-inline">
-	<div class="input-group">
-		<span class="input-group-addon"><i class="fa fa-search"></i></span>
-		<input id="query" type="text" class="form-control" ng-model="rl.query" placeholder="Search recipes" />
-		<span class="input-group-btn">
-			<button class="btn btn-default" ng-disabled="!rl.query" ng-click="rl.query=''">&times;</button>
-		</span>
+<div ng-if="rl.recipes.length" class="recipesList-searchFilter">
+	<!-- Search -->
+	<div class="recipesList-searchFilter-search form-group form-inline">
+		<div class="input-group">
+			<span class="input-group-addon"><i class="fa fa-search"></i></span>
+			<input id="query" type="text" class="form-control" ng-model="rl.query" placeholder="Search recipes" />
+			<span class="input-group-btn">
+				<button class="btn btn-default" ng-disabled="!rl.query" ng-click="rl.query=''">&times;</button>
+			</span>
+		</div>
+	</div>
+
+	<!-- Filtering -->
+	<div class="recipesList-searchFilter-filter">
+		<div ng-if="rl.showCategoryFilter" class="recipesList-searchFilter-filter-category">
+			Filter by category
+		</div>
 	</div>
 </div>
 
-<ul ng-if="(rl.recipes | filter:rl.query).length">
-	<li ng-repeat="recipe in rl.recipes | filter:rl.query | orderBy:'name'">
-		<a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a>
-	</li>
-</ul>
+<div ng-if="(rl.recipes | filter:rl.query).length" class="recipesList-recipes-wrapper">
+	<ul class="recipesList-list">
+		<li ng-repeat="recipe in rl.recipes | filter:rl.query | orderBy:'name'">
+			<a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a>
+		</li>
+	</ul>
+</div>
 
 <div ng-if="rl.recipes && !(rl.recipes | filter:rl.query).length" class="alert alert-warning">
 	<i class="fa fa-warning"></i> No recipes{{rl.query ? ' match your search query' : ''}}.

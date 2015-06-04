@@ -5,26 +5,39 @@
 		.module('rBox')
 		.directive('recipesList', recipesList);
 
-	recipesList.$inject = [];
+	recipesList.$inject = ['Recipe'];
 
-	function recipesList() {
+	function recipesList(Recipe) {
 
 		function recipesListCtrl() {
 			// controllerAs view model
 			var rl = this;
 
-			// TODO: if controller needs to manipulate recipe data, can add ng-if in templates, or add a watch
+			if (rl.categoryFilter === 'true') {
+				rl.categories = Recipe.categories;
+				rl.showCategoryFilter = true;
+			}
+		}
+
+		recipesListLink.$inject = ['$scope', '$attrs', '$elem'];
+
+		function recipesListLink($scope, $attrs, $elem) {
+			$scope.rll = {};
+
+
 		}
 
 		return {
 			restrict: 'EA',
 			scope: {
-				recipes: '='
+				recipes: '=',
+				categoryFilter: '@'
 			},
 			templateUrl: 'ng-app/core/recipesList.tpl.html',
 			controller: recipesListCtrl,
 			controllerAs: 'rl',
-			bindToController: true
+			bindToController: true,
+			link: recipesListLink
 		}
 	}
 })();
