@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('HomeCtrl', HomeCtrl);
 
-	HomeCtrl.$inject = ['Page', 'localData', 'recipeData', 'Recipe'];
+	HomeCtrl.$inject = ['Page', 'localData', 'recipeData', 'Recipe', '$auth', 'userData'];
 
-	function HomeCtrl(Page, localData, recipeData, Recipe) {
+	function HomeCtrl(Page, localData, recipeData, Recipe, $auth, userData) {
 		// controllerAs ViewModel
 		var home = this;
 
@@ -59,5 +59,24 @@
 		}
 		recipeData.getPublicRecipes()
 			.then(_publicRecipesSuccess);
+
+		/**
+		 * Successful promise getting user
+		 *
+		 * @param data {promise}.data
+		 * @private
+		 */
+		function _getUserSuccess(data) {
+			home.user = data;
+			home.welcomeMsg = 'Hello, ' + home.user.displayName + '! Want to <a href="/my-recipes?view=new-recipe">add a new recipe</a>?';
+		}
+
+		// if user is authenticated, get user data
+		if ($auth.isAuthenticated() && home.user === undefined) {
+			userData.getUser()
+				.then(_getUserSuccess);
+		} else if (!$auth.isAuthenticated()) {
+			home.welcomeMsg = 'Welcome to <strong>rBox</strong>! Browse through the public recipe box or <a href="/login">Login</a> to file or contribute recipes.';
+		}
 	}
 })();
