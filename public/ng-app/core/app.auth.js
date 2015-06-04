@@ -6,25 +6,25 @@
 		.config(authConfig)
 		.run(authRun);
 
-	authConfig.$inject = ['$authProvider'];
+	authConfig.$inject = ['$authProvider', 'OAUTHCLIENTS'];
 
-	function authConfig($authProvider) {
-		$authProvider.loginUrl = 'http://rbox.kmaida.io/auth/login';
+	function authConfig($authProvider, OAUTHCLIENTS) {
+		$authProvider.loginUrl = OAUTHCLIENTS.LOGINURL;
 
 		$authProvider.facebook({
-			clientId: '360173197505650'
+			clientId: OAUTHCLIENTS.CLIENT.FB
 		});
 
 		$authProvider.google({
-			clientId: '362136322942-k45h52q3uq56dc1gas1f52c0ulhg5190.apps.googleusercontent.com'
+			clientId: OAUTHCLIENTS.CLIENT.GOOGLE
 		});
 
 		$authProvider.twitter({
-			url: '/auth/twitter'
+			url: OAUTHCLIENTS.CLIENT.TWITTER
 		});
 
 		$authProvider.github({
-			clientId: '9ff097299c86e524b10f'
+			clientId: OAUTHCLIENTS.CLIENT.GITHUB
 		});
 	}
 

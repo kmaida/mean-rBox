@@ -1,4 +1,4 @@
-// login/Oauth constants
+// login account constants
 (function() {
 	'use strict';
 
