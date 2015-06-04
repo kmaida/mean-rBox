@@ -29,11 +29,15 @@
 					<i class="fa fa-fw fa-male"></i><strong>Servings:</strong> {{recipe.recipe.servings}}
 				</li>
 				<li ng-if="recipe.recipe.prepTime">
-					<i class="fa fa-fw fa-clock-o"></i><strong>Preparation Time:</strong> {{recipe.recipe.prepTime |
+					<i class="fa fa-fw fa-spoon"></i><strong>Preparation Time:</strong> {{recipe.recipe.prepTime |
 					minToH}}
 				</li>
 				<li ng-if="recipe.recipe.cookTime">
 					<i class="fa fa-fw fa-fire"></i><strong>Cook Time:</strong> {{recipe.recipe.cookTime | minToH}}
+				</li>
+				<li ng-if="recipe.recipe.prepTime && recipe.recipe.cookTime">
+					<i class="fa fa-fw fa-clock-o"></i><strong>Total Time:</strong> {{(recipe.recipe.prepTime + recipe.recipe.cookTime) |
+					minToH}}
 				</li>
 				<li ng-if="recipe.recipe.dietary">
 					<i class="fa fa-fw fa-spoon"></i><strong>Special Diet:</strong> {{recipe.recipe.dietary}}
