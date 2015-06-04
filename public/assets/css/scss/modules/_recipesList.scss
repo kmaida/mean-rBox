@@ -2,3 +2,29 @@
      RECIPES LIST
 --------------------*/
 
+.recipesList {
+	&-searchFilter {
+		&-search {
+			margin-bottom: 20px;
+		}
+	}
+	&-list {
+		&-item {
+			border-bottom: 1px solid $color-border;
+
+			&:last-child {
+				border-bottom: 0 none;
+			}
+			&-name {
+				font-size: 16px;
+				margin-bottom: 5px;
+			}
+			> span {
+				display: block;
+			}
+			&-desc {
+				margin-top: 4px;
+			}
+		}
+	}
+}

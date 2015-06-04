@@ -2,11 +2,15 @@
     COLOR VARIABLES
 --------------------*/
 
+$color-mountainMist: #999;
+$color-bonJour: #E0E0E0;
+
 $color-white: #fff;
 $color-black: #000;
 $color-black-light: #555;
 $color-copy: #333;
-$color-disabled: #999;
+$color-disabled: $color-mountainMist;
+$color-border: $color-bonJour;
 $color-invalid-rgba: rgba(169,68,66,.6);
 $color-gray-rgba: rgba(255,255,255,.5);
 

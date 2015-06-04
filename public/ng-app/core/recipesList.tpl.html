@@ -20,10 +20,22 @@
 
 <div ng-if="(rl.recipes | filter:rl.query).length" class="recipesList-recipes-wrapper">
 	<ul class="recipesList-list list-unstyled">
-		<li ng-repeat="recipe in rl.recipes | filter:rl.query | orderBy:'name'">
-			<strong><a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a></strong>
-			<span ng-if="recipe.prepTime || recipe.cookTime">{{(recipe.prepTime + recipe.cookTime) | minToH}}</span>
-			<p>{{::recipe.description | trimStr:100}}</p>
+		<li ng-repeat="recipe in rl.recipes | filter:rl.query | orderBy:'name'" class="recipesList-list-item">
+			<h4 class="recipesList-list-item-name"><a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a></h4>
+
+			<span class="recipesList-list-item-category">
+				<i class="fa fa-fw fa-cutlery"></i>
+				<a ng-href="/recipes/category/{{::recipe.category | lowercase}}">{{::recipe.category}}</a>
+			</span>
+			<span ng-if="recipe.tags.length" class="recipesList-list-item-tags">
+				<i class="fa fa-fw fa-tags"></i>
+				<span ng-repeat="tag in recipe.tags"><a ng-href="/recipes/tag/{{::tag}}">{{::tag}}</a>{{!$last ? ', ' : ''}}</span>
+			</span>
+			<span ng-if="recipe.prepTime || recipe.cookTime" class="recipesList-list-item-time">
+				<i class="fa fa-fw fa-clock-o"></i>{{::(recipe.prepTime + recipe.cookTime) | minToH}}
+			</span>
+
+			<p class="recipesList-list-item-desc">{{::recipe.description | trimStr:100}}</p>
 		</li>
 	</ul>
 </div>
