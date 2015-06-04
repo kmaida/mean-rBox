@@ -6,12 +6,20 @@
 		<ul class="list categories-list"
 			ng-class="{'nav-pills nav nav-justified': vs.viewformat === 'large', 'list-inline': vs.viewformat === 'small'}">
 			<li ng-repeat="cat in home.categories track by $index">
-				<a ng-href="/recipes/category/{{cat | lowercase}}">{{cat}}s</a>
+				<a ng-href="/recipes/category/{{cat | lowercase}}" ng-class="{disabled: !home.mapCategories[cat]}">
+					{{cat}}s<span ng-if="home.mapCategories[cat]" class="badge">{{home.mapCategories[cat]}}</span>
+				</a>
 			</li>
 		</ul>
 
 		<div class="tags-cloud">
-			<a ng-repeat="tag in home.tags track by $index" ng-href="/recipes/tag/{{tag}}" class="btn btn-info"><i class="fa fa-tag fa-fw"></i>{{tag}}</a>
+			<a ng-repeat="tag in home.tags track by $index"
+			   ng-href="/recipes/tag/{{tag}}"
+			   ng-disabled="home.mapTags[tag] == 0"
+			   class="btn btn-info">
+				<i class="fa fa-tag fa-fw"></i>{{tag}}
+				<span ng-if="home.mapTags[tag]" class="badge">{{home.mapTags[tag]}}</span>
+			</a>
 		</div>
 
 		<recipes-list recipes="home.recipes"></recipes-list>
