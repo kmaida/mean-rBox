@@ -16,29 +16,29 @@
 			</p>
 
 			<ul class="recipe-info-list">
-				<li>
+				<li class="recipe-info-list-category">
 					<i class="fa fa-fw fa-cutlery"></i><strong>Category:</strong> <a
 						ng-href="/recipes/category/{{::recipe.recipe.category | lowercase}}">{{::recipe.recipe.category}}</a>
 				</li>
-				<li ng-if="recipe.recipe.tags && recipe.recipe.tags.length">
+				<li ng-if="recipe.recipe.tags && recipe.recipe.tags.length" class="recipe-info-list-tags">
 					<i class="fa fa-fw fa-tags"></i><strong>Tags:</strong> <span
 						ng-repeat="tag in recipe.recipe.tags"><a ng-href="/recipes/tag/{{::tag}}">{{::tag
 					}}</a>{{!$last ? ', ' : ''}}</span>
 				</li>
-				<li ng-if="recipe.recipe.dietary">
+				<li ng-if="recipe.recipe.dietary" class="recipe-info-list-dietary">
 					<i class="fa fa-fw fa-heartbeat"></i><strong>Special Diet:</strong> {{recipe.recipe.dietary}}
 				</li>
-				<li ng-if="recipe.recipe.servings">
+				<li ng-if="recipe.recipe.servings" class="recipe-info-list-servings">
 					<i class="fa fa-fw fa-male"></i><strong>Servings:</strong> {{recipe.recipe.servings}}
 				</li>
-				<li ng-if="recipe.recipe.prepTime">
+				<li ng-if="recipe.recipe.prepTime" class="recipe-info-list-prepTime">
 					<i class="fa fa-fw fa-spoon"></i><strong>Preparation Time:</strong> {{recipe.recipe.prepTime |
 					minToH}}
 				</li>
-				<li ng-if="recipe.recipe.cookTime">
+				<li ng-if="recipe.recipe.cookTime" class="recipe-info-list-cookTime">
 					<i class="fa fa-fw fa-fire"></i><strong>Cook Time:</strong> {{recipe.recipe.cookTime | minToH}}
 				</li>
-				<li ng-if="recipe.recipe.prepTime && recipe.recipe.cookTime">
+				<li ng-if="recipe.recipe.prepTime && recipe.recipe.cookTime" class="recipe-info-list-totalTime">
 					<i class="fa fa-fw fa-clock-o"></i><strong>Total Time:</strong> {{(recipe.recipe.prepTime + recipe.recipe.cookTime) |
 					minToH}}
 				</li>

@@ -22,13 +22,13 @@
 		];
 
 		var categories = [
-			'appetizer',
-			'beverage',
-			'dessert',
-			'entree',
-			'salad',
-			'side',
-			'soup'
+			'Appetizer',
+			'Beverage',
+			'Dessert',
+			'Entree',
+			'Salad',
+			'Side',
+			'Soup'
 		];
 
 		var tags = [

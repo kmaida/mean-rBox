@@ -3,18 +3,16 @@
 
 		<h1 class="content-heading">rBox - All Recipes</h1>
 
-		<ul class="list home-list categories-list"
+		<ul class="list categories-list"
 			ng-class="{'nav-pills nav nav-justified': vs.viewformat === 'large', 'list-inline': vs.viewformat === 'small'}">
 			<li ng-repeat="cat in home.categories track by $index">
-				<a ng-href="/recipes/category/{{cat}}">{{cat}}s</a>
+				<a ng-href="/recipes/category/{{cat | lowercase}}">{{cat}}s</a>
 			</li>
 		</ul>
 
-		<ul class="list home-list tags-list list-inline">
-			<li ng-repeat="tag in home.tags track by $index">
-				<a ng-href="/recipes/tag/{{tag}}"><i class="fa fa-tag fa-fw"></i>{{tag}}</a>
-			</li>
-		</ul>
+		<div class="tags-cloud">
+			<a ng-repeat="tag in home.tags track by $index" ng-href="/recipes/tag/{{tag}}" class="btn btn-info"><i class="fa fa-tag fa-fw"></i>{{tag}}</a>
+		</div>
 
 		<recipes-list recipes="home.recipes"></recipes-list>
 	</section>

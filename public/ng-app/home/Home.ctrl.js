@@ -16,6 +16,13 @@
 		home.categories = Recipe.categories;
 		home.tags = Recipe.tags;
 
+		home.mapCategories = {};
+		home.mapTags = {};
+
+		for (var i = 0; i < home.categories.length; i++) {
+			home.mapCategories[home.categories[i]] = '';
+		}
+
 		/**
 		 * Get local data from static JSON
 		 *
@@ -35,6 +42,10 @@
 		 */
 		function _publicRecipesSuccess(data) {
 			home.recipes = data;
+
+			angular.forEach(home.recipes, function(recipe) {
+				console.log(recipe, recipe.category);
+			});
 		}
 		recipeData.getPublicRecipes()
 			.then(_publicRecipesSuccess);

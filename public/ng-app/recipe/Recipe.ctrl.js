@@ -25,7 +25,7 @@
 
 			// logged in users can file recipes
 			recipe.fileText = 'File this recipe';
-			recipe.unfileText = 'Remove recipe from Filed Recipes';
+			recipe.unfileText = 'Remove from Filed Recipes';
 		}
 		if ($auth.isAuthenticated()) {
 			userData.getUser()

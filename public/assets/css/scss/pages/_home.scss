@@ -2,3 +2,20 @@
       HOME PAGE
 --------------------*/
 
+.categories-list {
+	margin-bottom: 10px;
+
+	li {
+		text-transform: capitalize;
+	}
+}
+.tags-cloud {
+	margin: 10px auto 20px;
+	max-width: 630px;
+	text-align: center;
+
+	.btn {
+		margin-bottom: 2px;
+		margin-right: 2px;
+	}
+}

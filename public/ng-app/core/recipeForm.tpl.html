@@ -147,6 +147,21 @@
 		</select>
 	</div>
 
+	<div class="form-group recipeForm-tags">
+		<label>Tags</label>
+		<p>
+			<small>Select any applicable tags.</small>
+		</p>
+		<p>
+			<button ng-repeat="tag in rf.tags"
+					ng-click="rf.addRemoveTag(tag)"
+					class="btn"
+					ng-class="{'btn-info': !rf.tagMap[tag], 'btn-danger': rf.tagMap[tag]}">
+				<i ng-class="{'added': rf.tagMap[tag]}" class="fa fa-times"></i> {{tag}}
+			</button>
+		</p>
+	</div>
+
 	<div class="form-group recipeForm-servings">
 		<label for="servings">Servings</label>
 		<p>
@@ -224,21 +239,6 @@
 				<span ng-message="pattern">{{rf.timeError}}</span>
 			</div>
 		</div>
-	</div>
-
-	<div class="form-group recipeForm-tags">
-		<label>Tags</label>
-		<p>
-			<small>Select any applicable tags.</small>
-		</p>
-		<p>
-			<button ng-repeat="tag in rf.tags"
-					ng-click="rf.addRemoveTag(tag)"
-					class="btn"
-					ng-class="{'btn-info': !rf.tagMap[tag], 'btn-danger': rf.tagMap[tag]}">
-				<i ng-class="{'added': rf.tagMap[tag]}" class="fa fa-times"></i> {{tag}}
-			</button>
-		</p>
 	</div>
 
 	<div class="form-group recipeForm-dietary">
