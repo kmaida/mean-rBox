@@ -36,15 +36,38 @@
 
 	<!-- Sorting -->
 	<div class="recipesList-searchFilter-sort">
-		<a ng-click="rl.sortPredicate = 'name'; rl.toggleSort('name');">
-			<i class="fa fa-fw fa-sort-alpha-asc" ng-class="{'fa-sort-alpha-asc': !rl.nameReverse, 'fa-sort-alpha-desc': rl.nameReverse}"></i>Sort by name
-		</a> |
-		<a ng-click="rl.sortPredicate = 'totalTime'; rl.toggleSort('totalTime')">
-			<i class="fa fa-fw fa-sort-numeric-asc"></i>Sort by time
-		</a> |
-		<a ng-click="rl.sortPredicate = 'nIng'; rl.toggleSort('nIng')">
-			<i class="fa fa-fw fa-sort-amount-asc"></i>Sort by number of ingredients
-		</a>
+		<div class="recipesList-searchFilter-sort-buttons btn-group btn-group-sm" role="group">
+			<button class="btn btn-default btn-label" disabled>Sort:</button>
+			<button class="btn btn-default"
+					ng-click="rl.sortPredicate = 'name'; rl.toggleSort('name');"
+					ng-class="{active: rl.sortPredicate === 'name'}">
+				<i class="fa fa-fw"
+				   ng-class="{
+				   	'fa-sort': rl.sortPredicate !== 'name',
+				   	'fa-sort-alpha-asc': rl.sortPredicate === 'name' && !rl.nameReverse,
+				   	'fa-sort-alpha-desc': rl.sortPredicate === 'name' && rl.nameReverse}"></i>Name
+			</button>
+
+			<button class="btn btn-default"
+					ng-click="rl.sortPredicate = 'totalTime'; rl.toggleSort('totalTime')"
+					ng-class="{active: rl.sortPredicate === 'totalTime'}">
+				<i class="fa fa-fw"
+				   ng-class="{
+				   	'fa-sort': rl.sortPredicate !== 'totalTime',
+				   	'fa-sort-numeric-asc': rl.sortPredicate === 'totalTime' && !rl.totalTimeReverse,
+				   	'fa-sort-numeric-desc': rl.sortPredicate === 'totalTime' && rl.totalTimeReverse}"></i>Time
+			</button>
+
+			<button class="btn btn-default"
+					ng-click="rl.sortPredicate = 'nIng'; rl.toggleSort('nIng')"
+					ng-class="{active: rl.sortPredicate === 'nIng'}">
+				<i class="fa fa-fw"
+				   ng-class="{
+				   	'fa-sort': rl.sortPredicate !== 'nIng',
+				   	'fa-sort-amount-asc': rl.sortPredicate === 'nIng' && !rl.nIngReverse,
+				   	'fa-sort-amount-desc': rl.sortPredicate === 'nIng' && rl.nIngReverse}"></i># Ingredients
+			</button>
+		</div>
 	</div>
 </div>
 

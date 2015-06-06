@@ -41,8 +41,8 @@
 			rl.tagPredicate = '';
 
 			rl.nameReverse = false;
-			rl.totalTimeReverse = false;
-			rl.nIngReverse = false;
+			rl.totalTimeReverse = true;
+			rl.nIngReverse = true;
 
 			rl.toggleSort = function(predicate) {
 				rl[predicate + 'Reverse'] = !rl[predicate + 'Reverse'];

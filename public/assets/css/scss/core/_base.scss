@@ -37,6 +37,13 @@ a,
 	cursor: pointer;
 }
 
+/*-- increase power of disabled --*/
+
+[disabled],
+.disabled {
+	pointer-events: none;
+}
+
 /*-- touch targets --*/
 
 .touchevents .list a,
