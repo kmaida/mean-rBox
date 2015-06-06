@@ -12,6 +12,7 @@
 		$routeProvider
 			.when('/', {
 				templateUrl: 'ng-app/home/Home.view.html',
+				reloadOnSearch: false,
 				controller: 'HomeCtrl',
 				controllerAs: 'home'
 			})

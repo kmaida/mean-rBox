@@ -5,25 +5,43 @@
 
 		<p class="lead" ng-bind-html="home.welcomeMsg"></p>
 
-		<ul class="list categories-list"
-			ng-class="{'nav-pills nav nav-justified': vs.viewformat === 'large', 'list-inline': vs.viewformat === 'small'}">
-			<li ng-repeat="cat in home.categories track by $index">
-				<a ng-href="/recipes/category/{{cat | lowercase}}" ng-class="{disabled: !home.mapCategories[cat]}">
-					{{cat}}s<span ng-if="home.mapCategories[cat]" class="badge">{{home.mapCategories[cat]}}</span>
-				</a>
+		<ul class="nav nav-tabs homeTabs">
+			<li role="presentation" ng-repeat="tab in home.tabs" ng-class="{active: home.currentTab === tab.query}">
+				<a ng-click="home.changeTab(tab.query)">{{tab.name}}</a>
 			</li>
 		</ul>
 
-		<div class="tags-cloud">
-			<a ng-repeat="tag in home.tags track by $index"
-			   ng-href="/recipes/tag/{{tag}}"
-			   ng-disabled="home.mapTags[tag] == 0"
-			   class="btn btn-info">
-				<i class="fa fa-tag fa-fw"></i>{{tag}}
-				<span ng-if="home.mapTags[tag]" class="badge">{{home.mapTags[tag]}}</span>
-			</a>
-		</div>
+		<section ng-if="home.currentTab === 'recipe-boxes'" class="allRecipes-recipeBoxes">
+			<h2><i class="fa fa-fw fa-cutlery"></i>Recipe Boxes</h2>
 
-		<recipes-list recipes="home.recipes"></recipes-list>
+			<p class="lead">Select a category, tag, or special dietary preference to find recipe options quickly.</p>
+
+			<ul class="list categories-list"
+				ng-class="{'nav-pills nav nav-justified': vs.viewformat === 'large', 'list-inline': vs.viewformat === 'small'}">
+				<li ng-repeat="cat in home.categories track by $index">
+					<a ng-href="/recipes/category/{{cat | lowercase}}" ng-class="{disabled: !home.mapCategories[cat]}">
+						{{cat}}s<span ng-if="home.mapCategories[cat]" class="badge">{{home.mapCategories[cat]}}</span>
+					</a>
+				</li>
+			</ul>
+
+			<div class="tags-cloud">
+				<a ng-repeat="tag in home.tags track by $index"
+				   ng-href="/recipes/tag/{{tag}}"
+				   ng-disabled="home.mapTags[tag] == 0"
+				   class="btn btn-info">
+					<i class="fa fa-tag fa-fw"></i>{{tag}}
+					<span ng-if="home.mapTags[tag]" class="badge">{{home.mapTags[tag]}}</span>
+				</a>
+			</div>
+		</section>
+
+		<section ng-if="home.currentTab === 'search-browse-all'" class="allRecipes-viewAllSearch">
+			<h2><i class="fa fa-fw fa-list-alt"></i>Search / Browse All&nbsp;Recipes</h2>
+
+			<p class="lead">These are all of the public recipes filed in rBox.</p>
+
+			<recipes-list recipes="home.recipes"></recipes-list>
+		</section>
 	</section>
 </article>

@@ -8,7 +8,7 @@ body {
 	font: normal 14px/1.4 'Helvetica Neue', Helvetica, Arial, Verdana, sans-serif;
 }
 .layout-canvas {
-	background: $color-white;
+	background: $color-bgContent;
 }
 
 /*-- Button transitions --*/
@@ -68,6 +68,35 @@ body {
 
 	@include mq($mq-large) {
 		margin-top: 0;
+	}
+}
+
+/*-- Divider --*/
+
+.rBox-divider {
+	height: 32px;
+	margin: 15px 0;
+	position: relative;
+	text-align: center;
+
+	i {
+		background: $color-celeste;
+		border: 4px solid $color-bgContent;
+		border-radius: 100px;
+		box-sizing: content-box;
+		color: $color-white;
+		font-size: 14px;
+		height: 26px;
+		line-height: 26px;
+		width: 26px;
+	}
+	&:before {
+		border-top: 1px solid $color-border;
+		content: '';
+		margin-left: -84px;
+		position: absolute;
+			top: 17px;
+		width: 200px;
 	}
 }
 

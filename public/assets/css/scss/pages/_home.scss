@@ -30,11 +30,7 @@
 }
 .tags-cloud {
 	margin: 10px auto 20px;
-	text-align: center;
 
-	@include mq($mq-large) {
-		max-width: 85%;
-	}
 	.btn {
 		margin-bottom: 2px;
 		margin-right: 2px;

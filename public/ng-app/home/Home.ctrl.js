@@ -5,13 +5,37 @@
 		.module('rBox')
 		.controller('HomeCtrl', HomeCtrl);
 
-	HomeCtrl.$inject = ['Page', 'localData', 'recipeData', 'Recipe', '$auth', 'userData'];
+	HomeCtrl.$inject = ['Page', 'localData', 'recipeData', 'Recipe', '$auth', 'userData', '$location'];
 
-	function HomeCtrl(Page, localData, recipeData, Recipe, $auth, userData) {
+	function HomeCtrl(Page, localData, recipeData, Recipe, $auth, userData, $location) {
 		// controllerAs ViewModel
 		var home = this;
 
 		Page.setTitle('All Recipes');
+
+		var _tab = $location.search().view;
+
+		home.tabs = [
+			{
+				name: 'Recipe Boxes',
+				query: 'recipe-boxes'
+			},
+			{
+				name: 'Search / Browse All',
+				query: 'search-browse-all'
+			}
+		];
+		home.currentTab = _tab ? _tab : 'recipe-boxes';
+
+		/**
+		 * Change tab
+		 *
+		 * @param query {string} tab to switch to
+		 */
+		home.changeTab = function(query) {
+			$location.search('view', query);
+			home.currentTab = query;
+		};
 
 		home.categories = Recipe.categories;
 		home.tags = Recipe.tags;
