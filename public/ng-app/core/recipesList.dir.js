@@ -27,8 +27,6 @@
 				}
 			});
 
-			console.log(rl.categoryFilter, rl.tagFilter);
-
 			if (rl.categoryFilter === 'true') {
 				rl.categories = Recipe.categories;
 				rl.showCategoryFilter = true;
@@ -51,13 +49,11 @@
 
 			/**
 			 * Toggle sort asc/desc
-			 * TODO: make this only toggle when clicked more than once
 			 *
 			 * @param predicate {string}
 			 */
 			rl.toggleSort = function(predicate) {
 				rl[predicate + 'Reverse'] = !rl[predicate + 'Reverse'];
-
 				rl.reverse = rl[predicate + 'Reverse'];
 			};
 

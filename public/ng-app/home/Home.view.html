@@ -14,7 +14,7 @@
 		<section ng-if="home.currentTab === 'recipe-boxes'" class="allRecipes-recipeBoxes">
 			<h2><i class="fa fa-fw fa-cutlery"></i>Recipe Boxes</h2>
 
-			<p class="lead">Select a category, tag, or special dietary preference to find recipe options quickly.</p>
+			<p class="lead">Select a dish category or tag to find recipe options quickly.</p>
 
 			<ul class="list categories-list"
 				ng-class="{'nav-pills nav nav-justified': vs.viewformat === 'large', 'list-inline': vs.viewformat === 'small'}">
@@ -41,7 +41,10 @@
 
 			<p class="lead">These are all of the public recipes filed in rBox.</p>
 
-			<recipes-list recipes="home.recipes"></recipes-list>
+			<recipes-list recipes="home.recipes"
+						  category-filter="true"
+						  tag-filter="true"
+						  diet-filter="true"></recipes-list>
 		</section>
 	</section>
 </article>
