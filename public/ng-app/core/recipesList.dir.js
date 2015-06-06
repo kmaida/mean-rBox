@@ -27,6 +27,8 @@
 				}
 			});
 
+			console.log(rl.categoryFilter, rl.tagFilter);
+
 			if (rl.categoryFilter === 'true') {
 				rl.categories = Recipe.categories;
 				rl.showCategoryFilter = true;
@@ -36,14 +38,23 @@
 				rl.showTagFilter = true;
 			}
 
+			rl.specialDiet = Recipe.dietary;
+
 			rl.sortPredicate = 'name';
 			rl.catPredicate = '';
 			rl.tagPredicate = '';
+			rl.dietPredicate = '';
 
 			rl.nameReverse = false;
 			rl.totalTimeReverse = true;
 			rl.nIngReverse = true;
 
+			/**
+			 * Toggle sort asc/desc
+			 * TODO: make this only toggle when clicked more than once
+			 *
+			 * @param predicate {string}
+			 */
 			rl.toggleSort = function(predicate) {
 				rl[predicate + 'Reverse'] = !rl[predicate + 'Reverse'];
 
@@ -54,6 +65,7 @@
 				if (!!rl.query) {
 					rl.catPredicate = '';
 					rl.tagPredicate = '';
+					rl.dietPredicate = '';
 				}
 			});
 		}

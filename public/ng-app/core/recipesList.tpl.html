@@ -16,21 +16,58 @@
 
 	<!-- Filtering -->
 	<div class="recipesList-searchFilter-filter">
-		<div ng-if="rl.showCategoryFilter" class="recipesList-searchFilter-filter-category">
-			Filter by category
+		<div ng-if="rl.showCategoryFilter"
+			 class="recipesList-searchFilter-filter-item recipesList-searchFilter-filter-category input-group">
+			<label for="filter-category" class="input-group-addon">
+				Category
+			</label>
 			<select id="filter-category"
 					class="form-control"
 					ng-options="cat as cat for cat in rl.categories"
 					ng-model="rl.catPredicate">
 			</select>
+			<span class="input-group-btn">
+				<button class="btn btn-default"
+						ng-click="rl.catPredicate = ''"
+						ng-disabled="!rl.catPredicate">
+					&times;
+				</button>
+			</span>
 		</div>
-		<div ng-if="rl.showTagFilter" class="recipesList-searchFilter-filter-tag">
-			Filter by tag
+		<div ng-if="rl.showTagFilter"
+			 class="recipesList-searchFilter-filter-item recipesList-searchFilter-filter-tag input-group">
+			<label for="filter-tag" class="input-group-addon">
+				Tag
+			</label>
 			<select id="filter-tag"
 					class="form-control"
 					ng-options="tag as tag for tag in rl.tags"
 					ng-model="rl.tagPredicate">
 			</select>
+			<span class="input-group-btn">
+				<button class="btn btn-default"
+						ng-click="rl.tagPredicate = ''"
+						ng-disabled="!rl.tagPredicate">
+					&times;
+				</button>
+			</span>
+		</div>
+		<div class="recipesList-searchFilter-filter-item recipesList-searchFilter-filter-diet input-group">
+			<label for="filter-diet" class="input-group-addon">
+				Special Diet
+			</label>
+			<select id="filter-diet"
+					class="form-control"
+					ng-options="diet as diet for diet in rl.specialDiet"
+					ng-model="rl.dietPredicate">
+			</select>
+			<span class="input-group-btn">
+				<button class="btn btn-default"
+						ng-click="rl.dietPredicate = ''"
+						ng-disabled="!rl.dietPredicate">
+					&times;
+				</button>
+			</span>
 		</div>
 	</div>
 
@@ -73,7 +110,7 @@
 
 <div ng-if="(rl.recipes | filter:rl.query).length" class="recipesList-recipes-wrapper">
 	<ul class="recipesList-list list-unstyled">
-		<li ng-repeat="recipe in rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | orderBy:rl.sortPredicate:rl.reverse" class="recipesList-list-item">
+		<li ng-repeat="recipe in rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate | orderBy:rl.sortPredicate:rl.reverse" class="recipesList-list-item">
 			<h4 class="recipesList-list-item-name"><a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a></h4>
 
 			<span class="recipesList-list-item-category">
@@ -93,6 +130,6 @@
 	</ul>
 </div>
 
-<div ng-if="rl.recipes && !(rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate).length" class="alert alert-warning">
+<div ng-if="rl.recipes && !(rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate).length" class="alert alert-warning">
 	<i class="fa fa-warning"></i> No recipes{{rl.query || rl.catPredicate || rl.tagPredicate ? ' match your search/filter query' : ''}}.
 </div>
