@@ -79,6 +79,7 @@
 			restrict: 'EA',
 			scope: {
 				recipes: '=',
+				customLabels: '@',
 				categoryFilter: '@',
 				tagFilter: '@'
 			},

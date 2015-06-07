@@ -5,7 +5,8 @@
 		<h1 class="content-heading">{{::ra.heading}}</h1>
 
 		<recipes-list recipes="ra.recipes"
-					  category-filter="{{ra.showCategoryFilter}}"
-					  tag-filter="{{ra.showTagFilter}}"></recipes-list>
+					  custom-labels="{{::ra.customLabels}}"
+					  category-filter="{{::ra.showCategoryFilter}}"
+					  tag-filter="{{::ra.showTagFilter}}"></recipes-list>
 	</section>
 </article>

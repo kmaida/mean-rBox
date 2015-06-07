@@ -1,13 +1,13 @@
 <div ng-if="rl.recipes.length" class="recipesList-searchFilter">
 	<!-- Search -->
-	<div class="recipesList-searchFilter-search form-group form-inline">
+	<div class="recipesList-searchFilter-search form-group">
 		<div class="input-group">
 			<span class="input-group-addon"><i class="fa fa-search"></i></span>
 			<input id="query"
 				   type="text"
 				   class="form-control"
 				   ng-model="rl.query"
-				   placeholder="Search recipes" />
+				   placeholder="Search {{::rl.customLabels}}" />
 			<span class="input-group-btn">
 				<button class="btn btn-default" ng-disabled="!rl.query" ng-click="rl.query=''">&times;</button>
 			</span>
@@ -16,7 +16,7 @@
 
 	<!-- Filtering -->
 	<div class="recipesList-searchFilter-filter">
-		<h4><i class="fa fa-fw fa-filter"></i>Filter Recipes</h4>
+		<h4><i class="fa fa-fw fa-filter"></i>Filter {{::rl.customLabels}}</h4>
 
 		<div ng-if="rl.showCategoryFilter"
 			 class="recipesList-searchFilter-filter-item recipesList-searchFilter-filter-category input-group">
@@ -76,7 +76,7 @@
 	<divider></divider>
 
 	<!-- Sorting -->
-	<div class="recipesList-searchFilter-sort">
+	<div ng-if="(rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate).length" class="recipesList-searchFilter-sort">
 		<div class="recipesList-searchFilter-sort-buttons btn-group btn-group-sm" role="group">
 			<button class="btn btn-default btn-label" disabled>Sort:</button>
 			<button class="btn btn-default"
@@ -135,5 +135,5 @@
 </div>
 
 <div ng-if="rl.recipes && !(rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate).length" class="alert alert-warning">
-	<i class="fa fa-warning"></i> No recipes{{rl.query || rl.catPredicate || rl.tagPredicate ? ' match your search/filter query' : ''}}.
+	<i class="fa fa-warning"></i> No recipes{{rl.query || rl.catPredicate || rl.tagPredicate ? ' match your query. Try searching / filtering again' : ''}}.
 </div>

@@ -26,7 +26,8 @@
 		function _authorSuccess(data) {
 			ra.author = data;
 			ra.heading = 'Recipes by ' + ra.author.displayName;
-			Page.setTitle('Recipes by ' + ra.author.displayName);
+			ra.customLabels = ra.heading;
+			Page.setTitle(ra.heading);
 		}
 		userData.getAuthor(_aid)
 			.then(_authorSuccess);

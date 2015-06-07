@@ -15,7 +15,8 @@
 
 		ra.className = 'recipesCategory';
 		ra.heading = _catTitle + 's';
-		Page.setTitle(_catTitle + 's');
+		ra.customLabels = ra.heading;
+		Page.setTitle(ra.heading);
 
 		ra.showCategoryFilter = 'false';
 		ra.showTagFilter = 'true';

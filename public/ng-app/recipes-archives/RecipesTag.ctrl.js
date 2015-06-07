@@ -15,7 +15,8 @@
 		ra.className = 'recipesTag';
 
 		ra.heading = 'Recipes tagged "' + _tag + '"';
-		Page.setTitle('Recipes tagged "' + _tag + '"');
+		ra.customLabels = ra.heading;
+		Page.setTitle(ra.heading);
 
 		ra.showCategoryFilter = 'true';
 		ra.showTagFilter = 'false';
