@@ -22,7 +22,7 @@
 						recipe.totalTime = (recipe.cookTime ? recipe.cookTime : 0) + (recipe.prepTime ? recipe.prepTime : 0);
 						recipe.nIng = recipe.ingredients.length;
 					});
-
+					// deregister the watch
 					_watchRecipes();
 				}
 			});
@@ -61,7 +61,7 @@
 			};
 
 			// number of recipes to show/add in a set
-			var _resultsSet = 3;
+			var _resultsSet = 15;
 
 			/**
 			 * Reset results showing to initial default on search/filter
@@ -98,13 +98,22 @@
 			});
 		}
 
-		// TODO: delete this link function if not needed
 		recipesListLink.$inject = ['$scope', '$attrs', '$elem'];
 
 		function recipesListLink($scope, $attrs, $elem) {
 			$scope.rll = {};
 
-
+			// watch the currently visible number of recipes to display a count
+			$scope.$watch(
+				function() {
+					return angular.element('.recipesList-list-item').length;
+				},
+				function(newVal, oldVal) {
+					if (newVal) {
+						$scope.rll.displayedResults = newVal;
+					}
+				}
+			)
 		}
 
 		return {

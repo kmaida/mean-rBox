@@ -135,8 +135,8 @@
 	</ul>
 
 	<p ng-if="rl.filtered.length"
-	   class="recipesList-recipes-nShowing text-center">
-		Showing {{rl.listLen}} of {{rl.filtered.length}}
+	   class="recipesList-recipes-displayedResults text-center">
+		Showing <strong>{{rll.displayedResults}}</strong> of <strong>{{rl.filtered.length}}</strong>
 	</p>
 
 	<p ng-if="rl.filtered.length > rl.nResultsShowing"
