@@ -1,5 +1,5 @@
 <div ng-if="rl.recipes.length" class="recipesList-searchFilter">
-	
+
 	<!-- Search -->
 	<div class="recipesList-searchFilter-search form-group">
 		<div class="input-group">
@@ -90,8 +90,8 @@
 				<i class="fa fa-fw"
 				   ng-class="{
 				   	'fa-sort': rl.sortPredicate !== 'name',
-				   	'fa-sort-alpha-asc': rl.sortPredicate === 'name' && !rl.nameReverse,
-				   	'fa-sort-alpha-desc': rl.sortPredicate === 'name' && rl.nameReverse}"></i>Name
+				   	'fa-sort-alpha-asc': rl.sortPredicate === 'name' && !rl.reverseObj.name,
+				   	'fa-sort-alpha-desc': rl.sortPredicate === 'name' && rl.reverseObj.name}"></i>Name
 			</button>
 
 			<button class="btn btn-default"
@@ -100,8 +100,8 @@
 				<i class="fa fa-fw"
 				   ng-class="{
 				   	'fa-sort': rl.sortPredicate !== 'totalTime',
-				   	'fa-sort-numeric-asc': rl.sortPredicate === 'totalTime' && !rl.totalTimeReverse,
-				   	'fa-sort-numeric-desc': rl.sortPredicate === 'totalTime' && rl.totalTimeReverse}"></i>Time
+				   	'fa-sort-numeric-asc': rl.sortPredicate === 'totalTime' && !rl.reverseObj.totalTime,
+				   	'fa-sort-numeric-desc': rl.sortPredicate === 'totalTime' && rl.reverseObj.totalTime}"></i>Time
 			</button>
 
 			<button class="btn btn-default"
@@ -110,8 +110,8 @@
 				<i class="fa fa-fw"
 				   ng-class="{
 				   	'fa-sort': rl.sortPredicate !== 'nIng',
-				   	'fa-sort-amount-asc': rl.sortPredicate === 'nIng' && !rl.nIngReverse,
-				   	'fa-sort-amount-desc': rl.sortPredicate === 'nIng' && rl.nIngReverse}"></i># Ingredients
+				   	'fa-sort-amount-asc': rl.sortPredicate === 'nIng' && !rl.reverseObj.nIng,
+				   	'fa-sort-amount-desc': rl.sortPredicate === 'nIng' && rl.reverseObj.nIng}"></i># Ingredients
 			</button>
 		</div>
 	</div>

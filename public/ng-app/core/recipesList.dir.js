@@ -46,11 +46,13 @@
 
 			// set up sort predicate and reversals
 			rl.sortPredicate = 'name';
-			rl.nameReverse = false;
-			rl.totalTimeReverse = false;
-			rl.nIngReverse = false;
 
-			var _lastClicked = 'name';
+			rl.reverseObj = {
+				name: false,
+				totalTime: false,
+				nIng: false
+			};
+			var _lastSortedBy = 'name';
 
 			/**
 			 * Toggle sort asc/desc
@@ -58,11 +60,11 @@
 			 * @param predicate {string}
 			 */
 			rl.toggleSort = function(predicate) {
-				if (_lastClicked === predicate) {
-					rl[predicate + 'Reverse'] = !rl[predicate + 'Reverse'];
+				if (_lastSortedBy === predicate) {
+					rl.reverseObj[predicate] = !rl.reverseObj[predicate];
 				}
-				rl.reverse = rl[predicate + 'Reverse'];
-				_lastClicked = predicate;
+				rl.reverse = rl.reverseObj[predicate];
+				_lastSortedBy = predicate;
 			};
 
 			// number of recipes to show/add in a set
