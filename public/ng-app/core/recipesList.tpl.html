@@ -76,7 +76,7 @@
 	<divider></divider>
 
 	<!-- Sorting -->
-	<div ng-if="(rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate).length" class="recipesList-searchFilter-sort">
+	<div ng-if="rl.recipes && (rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate).length" class="recipesList-searchFilter-sort">
 		<div class="recipesList-searchFilter-sort-buttons btn-group btn-group-sm" role="group">
 			<button class="btn btn-default btn-label" disabled>Sort:</button>
 			<button class="btn btn-default"
@@ -112,9 +112,10 @@
 	</div>
 </div>
 
-<div ng-if="(rl.recipes | filter:rl.query).length" class="recipesList-recipes-wrapper">
+<div ng-if="rl.recipes" class="recipesList-recipes-wrapper">
 	<ul class="recipesList-list list-unstyled">
-		<li ng-repeat="recipe in rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate | orderBy:rl.sortPredicate:rl.reverse" class="recipesList-list-item">
+		<li ng-repeat="recipe in rl.filtered = (rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate) | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate | orderBy:rl.sortPredicate:rl.reverse | limitTo:rl.nResultsShowing"
+			class="recipesList-list-item" ng-init="rl.listLen = rl.filtered.length">
 			<h4 class="recipesList-list-item-name"><a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a></h4>
 
 			<span class="recipesList-list-item-category">
@@ -132,8 +133,20 @@
 			<p class="recipesList-list-item-desc">{{::recipe.description | trimStr:100}}</p>
 		</li>
 	</ul>
-</div>
 
-<div ng-if="rl.recipes && !(rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate).length" class="alert alert-warning">
-	<i class="fa fa-warning"></i> No recipes{{rl.query || rl.catPredicate || rl.tagPredicate ? ' match your query. Try searching / filtering again' : ''}}.
+	<p ng-if="rl.filtered.length"
+	   class="recipesList-recipes-nShowing text-center">
+		Showing {{rl.listLen}} of {{rl.filtered.length}}
+	</p>
+
+	<p ng-if="rl.filtered.length > rl.nResultsShowing"
+	   class="recipesList-recipes-loadMore text-center">
+		<button class="btn btn-default" ng-click="rl.loadMore()">
+			<i class="fa fa-fw fa-plus-circle"></i>Load More
+		</button>
+	</p>
+
+	<div ng-if="!rl.filtered.length" class="alert alert-warning">
+		<i class="fa fa-warning"></i> No recipes{{rl.query || rl.catPredicate || rl.tagPredicate || rl.dietPredicate ? ' match your query. Try searching / filtering again' : ''}}.
+	</div>
 </div>
