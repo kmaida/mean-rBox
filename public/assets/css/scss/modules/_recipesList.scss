@@ -12,29 +12,29 @@
 				margin: 6px 0;
 			}
 		}
-		&-sort {
-			margin: 15px 0;
+	}
+	&-sort {
+		margin: 15px 0;
 
-			&-buttons {
-				.btn {
-					color: $text-muted;
+		&-buttons {
+			.btn {
+				color: $text-muted;
+
+				i {
+					opacity: .6;
+				}
+				&.active {
+					color: $color-copy;
 
 					i {
-						opacity: .6;
-					}
-					&.active {
-						color: $color-copy;
-
-						i {
-							opacity: 1;
-						}
+						opacity: 1;
 					}
 				}
-				.btn-label {
-					color: $color-copy;
-					font-weight: bold;
-					opacity: 1;
-				}
+			}
+			.btn-label {
+				color: $color-copy;
+				font-weight: bold;
+				opacity: 1;
 			}
 		}
 	}

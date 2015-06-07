@@ -1,4 +1,5 @@
 <div ng-if="rl.recipes.length" class="recipesList-searchFilter">
+	
 	<!-- Search -->
 	<div class="recipesList-searchFilter-search form-group">
 		<div class="input-group">
@@ -72,12 +73,16 @@
 			</span>
 		</div>
 	</div>
+</div>
 
-	<divider></divider>
+<divider></divider>
+
+<div ng-if="rl.recipes" class="recipesList-recipes-wrapper">
 
 	<!-- Sorting -->
-	<div ng-if="rl.recipes && (rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate).length" class="recipesList-searchFilter-sort">
-		<div class="recipesList-searchFilter-sort-buttons btn-group btn-group-sm" role="group">
+	<div ng-if="rl.recipes && (rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate).length"
+		 class="recipesList-sort">
+		<div class="recipesList-sort-buttons btn-group btn-group-sm" role="group">
 			<button class="btn btn-default btn-label" disabled>Sort:</button>
 			<button class="btn btn-default"
 					ng-click="rl.sortPredicate = 'name'; rl.toggleSort('name');"
@@ -110,9 +115,8 @@
 			</button>
 		</div>
 	</div>
-</div>
 
-<div ng-if="rl.recipes" class="recipesList-recipes-wrapper">
+	<!-- Recipes list -->
 	<ul class="recipesList-list list-unstyled">
 		<li ng-repeat="recipe in rl.filtered = (rl.recipes | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate) | filter:rl.query | filter:rl.catPredicate | filter:rl.tagPredicate | filter:rl.dietPredicate | orderBy:rl.sortPredicate:rl.reverse | limitTo:rl.nResultsShowing"
 			class="recipesList-list-item" ng-init="rl.listLen = rl.filtered.length">
