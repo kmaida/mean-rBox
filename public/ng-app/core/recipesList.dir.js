@@ -40,9 +40,17 @@
 			rl.specialDiet = Recipe.dietary;
 
 			// set all filters to empty
-			rl.catPredicate = '';
-			rl.tagPredicate = '';
-			rl.dietPredicate = '';
+			rl.filterPredicates = {};
+
+			function _resetFilterPredicates() {
+				rl.filterPredicates.cat = '';
+				rl.filterPredicates.tag = '';
+				rl.filterPredicates.diet = '';
+			}
+
+			//rl.catPredicate = '';
+			//rl.tagPredicate = '';
+			//rl.dietPredicate = '';
 
 			// set up sort predicate and reversals
 			rl.sortPredicate = 'name';
@@ -90,19 +98,61 @@
 			// watch search query and if it exists, clear filters and reset results showing
 			$scope.$watch('rl.query', function(newVal, oldVal) {
 				if (!!rl.query) {
-					rl.catPredicate = '';
-					rl.tagPredicate = '';
-					rl.dietPredicate = '';
+					_resetFilterPredicates();
 					_resetResultsShowing();
 				}
 			});
 
 			// watch filters and if any of them change, reset the results showing
-			$scope.$watchGroup(['rl.catPredicate', 'rl.tagPredicate', 'rl.dietPredicate'], function(newVal, oldVal) {
+			$scope.$watch('rl.filterPredicates', function(newVal, oldVal) {
 				if (!!newVal && newVal !== oldVal) {
 					_resetResultsShowing();
 				}
 			});
+
+			var _openFiltersOnload = $scope.$watch('rl.openFilters', function(newVal, oldVal) {
+				if (newVal !== undefined) {
+					rl.showSearchFilter = newVal === 'true';
+					_openFiltersOnload();
+				}
+			});
+
+			/**
+			 * Toggle search/filter section open/closed
+			 */
+			rl.toggleSearchFilter = function() {
+				rl.showSearchFilter = !rl.showSearchFilter;
+			};
+
+			/**
+			 * Clear search query and all filters
+			 */
+			rl.clearSearchFilter = function() {
+				_resetFilterPredicates();
+				rl.query = '';
+			};
+
+			/**
+			 * Show number of currently active search + filter items
+			 *
+			 * @param query {string}
+			 * @param filtersObj {object}
+			 * @returns {number}
+			 */
+			rl.activeSearchFilters = function(query, filtersObj) {
+				var total = 0;
+
+				if (query) {
+					total = total += 1;
+				}
+				angular.forEach(filtersObj, function(filter) {
+					if (filter) {
+						total = total += 1;
+					}
+				});
+
+				return total;
+			};
 		}
 
 		recipesListLink.$inject = ['$scope', '$attrs', '$elem'];
@@ -120,13 +170,14 @@
 						$scope.rll.displayedResults = newVal;
 					}
 				}
-			)
+			);
 		}
 
 		return {
 			restrict: 'EA',
 			scope: {
 				recipes: '=',
+				openFilters: '@',
 				customLabels: '@',
 				categoryFilter: '@',
 				tagFilter: '@'

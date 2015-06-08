@@ -4,6 +4,20 @@
 
 .recipesList {
 	&-searchFilter {
+		&-toggle {
+			i {
+				transition: transform 250ms ease;
+			}
+			.open {
+				transform: rotateZ(45deg);
+				transition: transform 250ms ease;
+			}
+			.badge {
+				background-color: $brand-info;
+				font-size: 10px;
+				padding: 3px 6px;
+			}
+		}
 		&-search {
 			margin-bottom: 20px;
 		}
@@ -51,6 +65,10 @@
 			}
 			> span {
 				display: block;
+
+				@include mq($mq-large) {
+					display: inline;
+				}
 			}
 			&-desc {
 				margin-top: 4px;
