@@ -39,6 +39,10 @@
 			var _ingIndex;
 			var _caretPos;
 
+			rf.charTouchend = function() {
+				console.log(this);
+			};
+
 			/**
 			 * Set selection range
 			 *

@@ -33,7 +33,8 @@
 			<button
 					class="btn btn-default btn-sm"
 					ng-repeat="char in rf.chars"
-					ng-click="rf.insertChar(char)">{{char}}</button>
+					ng-click="rf.insertChar(char)"
+					ng-touchend="rf.charTouchend()">{{char}}</button>
 		</div>
 
 		<div class="form-inline recipeForm-ingredients-item"
