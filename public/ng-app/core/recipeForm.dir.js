@@ -30,6 +30,7 @@
 
 			// fetch dietary options list
 			rf.dietary = Recipe.dietary;
+			rf.dietaryLen = Recipe.dietary.length + 1;
 
 			// fetch special characters
 			rf.chars = Recipe.insertChar;
