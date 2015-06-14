@@ -106,10 +106,6 @@
 				}
 			};
 
-			rf.charTouchend = function($event) {
-				angular.element($event.target).blur();
-			};
-
 			/**
 			 * Clear caret position and last input
 			 * So that special characters don't end up in undesired fields
