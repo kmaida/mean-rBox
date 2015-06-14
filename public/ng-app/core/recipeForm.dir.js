@@ -49,7 +49,8 @@
 			 */
 			function _setSelectionRange(input, selectionStart, selectionEnd) {
 				if (input.setSelectionRange) {
-					input.click().focus();
+					input.click();
+					input.focus();
 					input.setSelectionRange(selectionStart, selectionEnd);
 				}
 				else if (input.createTextRange) {
@@ -258,7 +259,8 @@
 
 				$timeout(function() {
 					var _newestInput = angular.element($event.target).parent('p').prev('.last').find('input').eq(0);
-					_newestInput.click().focus();
+					_newestInput.click();
+					_newestInput.focus();
 				});
 			};
 
