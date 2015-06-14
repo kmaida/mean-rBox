@@ -39,10 +39,6 @@
 			var _ingIndex;
 			var _caretPos;
 
-			rf.charTouchend = function() {
-				alert(this);
-			};
-
 			/**
 			 * Set selection range
 			 *
@@ -108,6 +104,10 @@
 						_setCaretToPos(_lastInput[0], _caretPos);
 					});
 				}
+			};
+
+			rf.charTouchend = function($event) {
+				angular.element($event.target).blur();
 			};
 
 			/**
