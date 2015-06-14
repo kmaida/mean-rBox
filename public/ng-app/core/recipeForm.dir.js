@@ -19,6 +19,7 @@
 			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
 			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: 1}];
 			rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
+			
 			rf.timeRegex = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
 			rf.timeError = 'Please enter a number in minutes. Multiply hours by 60.';
 
@@ -30,7 +31,6 @@
 
 			// fetch dietary options list
 			rf.dietary = Recipe.dietary;
-			rf.dietaryLen = Recipe.dietary.length + 1;
 
 			// fetch special characters
 			rf.chars = Recipe.insertChar;
@@ -211,7 +211,6 @@
 			function _recipeSaveError(err) {
 				rf.saveBtnText = 'Error saving!';
 				rf.saved = 'error';
-
 				$timeout(_resetSaveBtn, 4000);
 			}
 
