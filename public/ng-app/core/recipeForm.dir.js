@@ -40,7 +40,7 @@
 			var _caretPos;
 
 			rf.charTouchend = function() {
-				console.log(this);
+				alert(this);
 			};
 
 			/**
