@@ -48,10 +48,6 @@
 				rl.filterPredicates.diet = '';
 			}
 
-			//rl.catPredicate = '';
-			//rl.tagPredicate = '';
-			//rl.dietPredicate = '';
-
 			// set up sort predicate and reversals
 			rl.sortPredicate = 'name';
 
