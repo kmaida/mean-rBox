@@ -1,7 +1,8 @@
 <div ng-if="rl.recipes.length" class="recipesList-searchFilter">
 	<p class="text-center">
 		<button class="recipesList-searchFilter-toggle btn btn-default"
-		   ng-click="rl.toggleSearchFilter()">
+				blur-on-end
+				ng-click="rl.toggleSearchFilter()">
 			<i class="fa fa-fw fa-plus-circle"
 			   ng-class="{open: rl.showSearchFilter}"></i>{{!rl.showSearchFilter ?
 			'Show' : 'Hide'}} Search / Filters
@@ -165,7 +166,9 @@
 
 	<p ng-if="rl.filtered.length > rl.nResultsShowing"
 	   class="recipesList-recipes-loadMore text-center">
-		<button class="btn btn-default" ng-click="rl.loadMore()">
+		<button class="btn btn-default"
+				blur-on-end
+				ng-click="rl.loadMore()">
 			<i class="fa fa-fw fa-plus-circle"></i>Load More
 		</button>
 	</p>

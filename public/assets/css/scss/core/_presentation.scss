@@ -11,15 +11,6 @@ body {
 	background: $color-bgContent;
 }
 
-/*-- Button transitions --*/
-
-.btn,
-.btn:hover,
-.btn:active,
-.btn:focus {
-	transition: $transition-all;
-}
-
 /*-- AdBlock messaging --*/
 
 .ad-test {
@@ -36,17 +27,7 @@ body {
 	}
 }
 
-/*-- iOS form field text zooming --*/
-
-.form-control {
-	font-size: 16px;
-
-	@include mq($mq-large) {
-		font-size: 14px;
-	}
-}
-
-/*------------------------------------------------------------------------- Content --*/
+/*-- Content --*/
 
 .content-wrapper {
 	padding: $padding-screen-small;
@@ -102,7 +83,7 @@ body {
 	}
 }
 
-/*-- Forms --*/
+/*-- Buttons / Forms --*/
 
 .btn {
 	min-height: 34px;
@@ -112,6 +93,15 @@ body {
 	&.btn-lg {
 		min-height: inherit;
 	}
+}
+.btn,
+.btn:hover,
+.btn:active,
+.btn:focus {
+	transition: $transition-all;
+}
+.btn:focus {
+	outline: none !important;
 }
 .req {
 	color: $brand-danger;
@@ -135,5 +125,14 @@ body {
 			-webkit-border-top-left-radius: 0;
 			-webkit-border-bottom-left-radius: 0;
 		}
+	}
+}
+/* iOS form field text zooming */
+
+.form-control {
+	font-size: 16px;
+
+	@include mq($mq-large) {
+		font-size: 14px;
 	}
 }

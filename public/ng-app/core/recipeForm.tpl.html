@@ -30,8 +30,8 @@
 			<p>
 				<small>Measurement characters: click to insert at cursor in <strong>Amount</strong> field.</small>
 			</p>
-			<button
-					class="btn btn-default btn-sm"
+			<button class="btn btn-default btn-sm"
+					blur-on-end
 					ng-repeat="char in rf.chars"
 					ng-click="rf.insertChar(char)">{{char}}</button>
 		</div>
@@ -73,7 +73,9 @@
 		</div>
 
 		<p>
-			<button class="btn btn-info" ng-click="rfl.addItem($event, rf.recipeData.ingredients)">
+			<button class="btn btn-info"
+					blur-on-end
+					ng-click="rfl.addItem($event, rf.recipeData.ingredients)">
 				<i class="fa fa-plus"></i> Add Another Ingredient
 			</button>
 		</p>
@@ -105,7 +107,9 @@
 		</div>
 
 		<p>
-			<button class="btn btn-info" ng-click="rfl.addItem($event, rf.recipeData.directions)">
+			<button class="btn btn-info"
+					blur-on-end
+					ng-click="rfl.addItem($event, rf.recipeData.directions)">
 				<i class="fa fa-plus"></i> Add Another Step
 			</button>
 		</p>

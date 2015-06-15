@@ -19,7 +19,7 @@
 			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
 			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: 1}];
 			rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
-			
+
 			rf.timeRegex = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
 			rf.timeError = 'Please enter a number in minutes. Multiply hours by 60.';
 
