@@ -17,6 +17,7 @@
 
 			rf.recipeData = _isEdit ? rf.recipe : {};
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
+			rf.recipeData.photo = _isEdit ? rf.recipe.photo : rf.uploadedImage;
 			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
 			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: 1}];
 			rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
@@ -119,44 +120,10 @@
 			};
 
 			/**
-			 * Image file upload
+			 * Upload image file
 			 *
-			 * @param image
-			 * @param $event {object}
+			 * @param files {Array} array of files to upload
 			 */
-			//rf.onFileSelect = function(image, $event) {
-			//	console.log('Image upload:', image, $event);
-			//
-			//	if (angular.isArray(image)) {
-			//		image = image[0];
-			//	}
-			//
-			//	rf.uploadInProgress = true;
-			//	rf.uploadProgress = 0;
-			//
-			//	rf.upload = Upload.upload({
-			//		url: '/api/recipe/upload-image',
-			//		method: 'POST',
-			//		fields: {
-			//			// TODO: add information tying this image to a specific recipe
-			//		},
-			//		file: image
-			//	}).progress(function(event) {
-			//		rf.uploadProgress = Math.floor(event.loaded / event.total);
-			//		$scope.$apply();
-			//	}).success(function(data, status, headers, config) {
-			//		rf.uploadInProgress = false;
-			//		rf.uploadedImage = JSON.parse(data);
-			//	}).error(function(err) {
-			//		rf.uploadInProgress = false;
-			//		console.log('Error uploading file: ' + err.message || err);
-			//	})
-			//};
-
-
-
-
-
 			rf.upload = function(files) {
 				if (files && files.length) {
 					for (var i = 0; i < files.length; i++) {
@@ -169,6 +136,7 @@
 							file: file
 						}).progress(function(evt) {
 							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+							rf.uploadInProgress = true;
 							rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
 						}).success(function (data, status, headers, config) {
 							$timeout(function() {
@@ -176,15 +144,14 @@
 								rf.uploadedImage = '/uploads/images/' + data.filename;
 								console.log(data);
 							});
+						}).error(function(err) {
+							rf.uploadInProgress = false;
+							rf.uploadError = true;
+							console.log('Error uploading file:', err.message || err);
 						});
 					}
 				}
 			};
-
-
-
-
-
 
 			// create map of touched tags
 			rf.tagMap = {};

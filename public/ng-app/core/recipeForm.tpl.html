@@ -25,6 +25,7 @@
 
 	<div class="form-group recipeForm-uploadImage">
 		<input type="file"
+			   ng-model="rf.recipeData.photo"
 			   ngf-select
 			   ngf-change="rf.upload($files, $event)"
 			   ngf-max-size="5000000"
