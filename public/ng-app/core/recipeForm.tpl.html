@@ -29,15 +29,20 @@
 			<small>You may upload a photograph of your dish in <strong>png</strong> or <strong>jpg</strong> format.
 				File must be <strong>under 500kb</strong>.</small>
 		</p>
+
 		<img ng-if="rf.recipeData.photo"
-			 class="recipePhoto-img"
+			 class="recipeForm-uploadImage-img"
 			 ng-src="{{'/uploads/images/' + rf.recipeData.photo}}">
+
+		<button ng-if="rf.recipeData.photo"
+				class="btn btn-danger"
+				ng-click="rf.recipeData.photo = null"><i class="fa fa-times"></i> Remove Photo</button>
+
 		<input id="recipePhoto"
 			   type="file"
-			   class="form-control"
-			   ng-model="rf.recipeData.photo"
+			   class="recipeForm-uploadImage-input form-control"
 			   ngf-select
-			   ngf-change="rf.upload($files, $event)"
+			   ngf-change="rf.upload($files)"
 			   ngf-max-size="500000"
 			   accept="image/png, image/jpeg">
 

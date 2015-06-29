@@ -3,6 +3,16 @@
 --------------------*/
 
 .recipeForm {
+	&-uploadImage {
+		&-img {
+			display: block;
+			margin-bottom: 15px;
+			max-width: 100%;
+		}
+		&-input {
+			margin-top: 15px;
+		}
+	}
 	&-ingredients-item,
 	&-directions-step {
 		margin-bottom: 8px;

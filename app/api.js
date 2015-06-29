@@ -521,6 +521,8 @@ module.exports = function(app, config) {
 
 //-------------------------- RECIPES API
 
+	var _imgPath = './public/uploads/images/';
+
 	/*
 	 |--------------------------------------------------------------------------
 	 | GET /api/recipes - get all public recipes
@@ -666,9 +668,14 @@ module.exports = function(app, config) {
 				return res.status(401).send({ message: 'You cannot edit someone else\'s recipe.' });
 			}
 
+			// if photo is being removed or changed, remove old photo from the file system
+			if (recipe.photo && (recipe.photo !== req.body.photo)) {
+				fs.unlink(_imgPath + recipe.photo);
+			}
+
 			recipe.name = req.body.name || recipe.name;
 			recipe.slug = req.body.slug || recipe.slug;
-			recipe.photo = req.body.photo || recipe.photo;
+			recipe.photo = req.body.photo;
 			recipe.description = req.body.description || recipe.description;
 			recipe.isPublic = req.body.isPublic;
 			recipe.dietary = req.body.dietary;
@@ -698,6 +705,9 @@ module.exports = function(app, config) {
 			}
 			if (recipe.userId !== req.user) {
 				return res.status(401).send({ message: 'You cannot delete someone else\'s recipe.' });
+			}
+			if (recipe.photo) {
+				fs.unlink(_imgPath + recipe.photo);
 			}
 			recipe.remove(function(err) {
 				res.status(200).end();
@@ -754,7 +764,7 @@ module.exports = function(app, config) {
 
 			// uuid is for generating unique file names
 			var fileName = uuid.v4() + extension;
-			var destPath = './public/uploads/images/' + fileName;
+			var destPath = _imgPath + fileName;
 
 			// server side file type check
 			if (contentType !== 'image/png' && contentType !== 'image/jpeg') {
@@ -764,6 +774,7 @@ module.exports = function(app, config) {
 
 			// server side file size check
 			if (file.size > 500000) {
+				fs.unlink(tmpPath);
 				return res.status(400).send('File is over 500kb.');
 			}
 

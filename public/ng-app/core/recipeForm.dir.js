@@ -16,7 +16,7 @@
 
 			rf.recipeData = _isEdit ? rf.recipe : {};
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
-			rf.recipeData.photo = _isEdit ? rf.recipe.photo : rf.uploadedImage;
+			rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
 			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
 			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: 1}];
 			rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
