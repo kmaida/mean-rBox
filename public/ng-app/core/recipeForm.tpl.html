@@ -30,8 +30,8 @@
 			   ngf-change="rf.upload($files, $event)"
 			   ngf-max-size="5000000"
 			   accept="image/png, image/jpeg">
-		<span ng-if="rf.uploadInProgress">Upload progress: {{ rf.uploadProgress }}</span>
-		<img ng-src="{{rf.uploadedImage}}" ng-if="rf.uploadedImage">
+		<span ng-if="rf.uploadInProgress">Upload progress: {{rf.uploadProgress}}</span>
+		<img ng-if="rf.recipeData.photo" ng-src="{{'/uploads/images/' + rf.recipeData.photo}}">
 	</div>
 
 	<div class="form-group recipeForm-ingredients">

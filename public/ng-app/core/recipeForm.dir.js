@@ -9,8 +9,7 @@
 
 	function recipeForm(recipeData, Recipe, Slug, $location, $timeout, Upload) {
 
-		recipeFormCtrl.$inject = ['$scope'];
-		function recipeFormCtrl($scope) {
+		function recipeFormCtrl() {
 			var rf = this;
 			var _isEdit = !!rf.recipe;
 			var _originalSlug = _isEdit ? rf.recipe.slug : null;
@@ -129,10 +128,7 @@
 					for (var i = 0; i < files.length; i++) {
 						var file = files[i];
 						Upload.upload({
-							url: '/api/recipe/upload-image',
-							fields: {
-
-							},
+							url: '/api/recipe/upload',
 							file: file
 						}).progress(function(evt) {
 							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
@@ -141,7 +137,7 @@
 						}).success(function (data, status, headers, config) {
 							$timeout(function() {
 								rf.uploadInProgress = false;
-								rf.uploadedImage = '/uploads/images/' + data.filename;
+								rf.recipeData.photo = data.filename;
 								console.log(data);
 							});
 						}).error(function(err) {

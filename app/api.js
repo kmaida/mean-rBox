@@ -634,6 +634,7 @@ module.exports = function(app, config) {
 				userId: req.user || req.body.userId,
 				name: req.body.name,
 				slug: req.body.slug,
+				photo: req.body.photo,
 				description: req.body.description,
 				isPublic: req.body.isPublic,
 				dietary: req.body.dietary,
@@ -667,6 +668,7 @@ module.exports = function(app, config) {
 
 			recipe.name = req.body.name || recipe.name;
 			recipe.slug = req.body.slug || recipe.slug;
+			recipe.photo = req.body.photo || recipe.photo;
 			recipe.description = req.body.description || recipe.description;
 			recipe.isPublic = req.body.isPublic;
 			recipe.dietary = req.body.dietary;
@@ -740,12 +742,10 @@ module.exports = function(app, config) {
 	 |--------------------------------------------------------------------------
 	 */
 
-	app.post('/api/recipe/upload-image', ensureAuthenticated, function(req, res) {
+	app.post('/api/recipe/upload', ensureAuthenticated, function(req, res) {
 		var form = new multiparty.Form();
 
 		form.parse(req, function(err, fields, files) {
-			console.log(files);
-
 			var file = files.file[0];
 			var contentType = file.headers['content-type'];
 			var tmpPath = file.path;
