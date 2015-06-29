@@ -63,7 +63,8 @@
 	&-dietary select {
 		max-width: 150px;
 	}
-	div[ng-messages] {
+	[ng-messages],
+	.ng-messages {
 		padding-top: 8px;
 	}
 }

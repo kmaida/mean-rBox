@@ -24,14 +24,28 @@
 	</div>
 
 	<div class="form-group recipeForm-uploadImage">
-		<input type="file"
+		<label for="recipePhoto">Recipe Photo</label>
+		<p>
+			<small>You may upload a photograph of your dish in <strong>png</strong> or <strong>jpg</strong> format.
+				File must be <strong>under 500kb</strong>.</small>
+		</p>
+		<img ng-if="rf.recipeData.photo"
+			 class="recipePhoto-img"
+			 ng-src="{{'/uploads/images/' + rf.recipeData.photo}}">
+		<input id="recipePhoto"
+			   type="file"
+			   class="form-control"
 			   ng-model="rf.recipeData.photo"
 			   ngf-select
 			   ngf-change="rf.upload($files, $event)"
-			   ngf-max-size="5000000"
+			   ngf-max-size="500000"
 			   accept="image/png, image/jpeg">
+
 		<span ng-if="rf.uploadInProgress">Upload progress: {{rf.uploadProgress}}</span>
-		<img ng-if="rf.recipeData.photo" ng-src="{{'/uploads/images/' + rf.recipeData.photo}}">
+
+		<div ng-if="rf.uploadError" class="text-danger ng-messages">
+			<span>{{rf.uploadErrorMsg}}</span>
+		</div>
 	</div>
 
 	<div class="form-group recipeForm-ingredients">

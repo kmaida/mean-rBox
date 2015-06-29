@@ -751,6 +751,7 @@ module.exports = function(app, config) {
 			var tmpPath = file.path;
 			var extIndex = tmpPath.lastIndexOf('.');
 			var extension = (extIndex < 0) ? '' : tmpPath.substr(extIndex);
+
 			// uuid is for generating unique file names
 			var fileName = uuid.v4() + extension;
 			var destPath = './public/uploads/images/' + fileName;
@@ -761,6 +762,12 @@ module.exports = function(app, config) {
 				return res.status(400).send('Unsupported file type.');
 			}
 
+			// server side file size check
+			if (file.size > 500000) {
+				return res.status(400).send('File is over 500kb.');
+			}
+
+			// rename the file to ensure a unique ID
 			fs.rename(tmpPath, destPath, function(err) {
 				if (err) {
 					return res.status(400).send('Image was not saved!');

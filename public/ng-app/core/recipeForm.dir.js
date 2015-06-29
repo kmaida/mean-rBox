@@ -125,27 +125,32 @@
 			 */
 			rf.upload = function(files) {
 				if (files && files.length) {
-					for (var i = 0; i < files.length; i++) {
-						var file = files[i];
-						Upload.upload({
+					var file = files[0];    // only single upload allowed
+
+					Upload
+						.upload({
 							url: '/api/recipe/upload',
 							file: file
-						}).progress(function(evt) {
+						})
+						.progress(function(evt) {
 							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+							rf.uploadError = false;
 							rf.uploadInProgress = true;
 							rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
-						}).success(function (data, status, headers, config) {
+						})
+						.success(function (data, status, headers, config) {
 							$timeout(function() {
 								rf.uploadInProgress = false;
 								rf.recipeData.photo = data.filename;
 								console.log(data);
 							});
-						}).error(function(err) {
+						})
+						.error(function(err) {
 							rf.uploadInProgress = false;
 							rf.uploadError = true;
+							rf.uploadErrorMsg = err.message || err;
 							console.log('Error uploading file:', err.message || err);
 						});
-					}
 				}
 			};
 
