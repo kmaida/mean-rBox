@@ -129,5 +129,10 @@
 				.post('/api/recipes/me/filed', recipeIds)
 				.then(_getRes);
 		};
+
+		this.cleanUploads = function(files) {
+			return $http
+				.post('/api/recipe/clean-uploads', files);
+		};
 	}
 })();

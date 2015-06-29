@@ -794,4 +794,16 @@ module.exports = function(app, config) {
 			});
 		});
 	});
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | POST /api/recipe/clean-uploads - remove any extra saved images
+	 |--------------------------------------------------------------------------
+	 */
+
+	app.post('/api/recipe/clean-uploads', ensureAuthenticated, function(req, res) {
+		for (var i = 0; i < req.body.length; i++) {
+			fs.unlink(_imgPath + req.body[i]);
+		}
+	});
 };

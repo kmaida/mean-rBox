@@ -118,6 +118,8 @@
 				_caretPos = null;
 			};
 
+			var _extraUploads = [];
+
 			/**
 			 * Upload image file
 			 *
@@ -142,6 +144,9 @@
 							$timeout(function() {
 								rf.uploadInProgress = false;
 								rf.recipeData.photo = data.filename;
+
+								_extraUploads.push(data.filename);
+
 								console.log(data);
 							});
 						})
@@ -262,7 +267,20 @@
 				_cleanEmpties('ingredients');
 				_cleanEmpties('directions');
 
-				// call API
+				if (rf.recipeData.photo && _extraUploads && _extraUploads.length > 1) {
+					var _keepIndex = _extraUploads.indexOf(rf.recipeData.photo);
+
+					_extraUploads.splice(_keepIndex);
+
+					if (_extraUploads.length) {
+						recipeData.cleanUploads(_extraUploads)
+							.then(function() {
+								console.log('cleaned extra uploads!');
+							});
+					}
+				}
+
+				// save!
 				if (!_isEdit) {
 					recipeData.createRecipe(rf.recipeData)
 						.then(_recipeSaved, _recipeSaveError);
