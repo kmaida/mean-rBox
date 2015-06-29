@@ -728,4 +728,13 @@ module.exports = function(app, config) {
 			});
 		});
 	});
+
+	/*
+	 |--------------------------------------------------------------------------
+	 | POST /api/recipe/upload-image - save an image
+	 |--------------------------------------------------------------------------
+	 */
+
+	app.route('/api/recipe/upload-image')
+		.post(upload.postImage);
 };
