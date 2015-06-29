@@ -2,6 +2,11 @@ var request = require('request');
 var jwt = require('jwt-simple');
 var moment = require('moment');
 var qs = require('querystring');
+// file upload
+var uuid = require('uuid');
+var multiparty = require('multiparty');
+var fs = require('fs');
+// models
 var User = require('./models/User');
 var Recipe = require('./models/Recipe');
 
@@ -735,6 +740,40 @@ module.exports = function(app, config) {
 	 |--------------------------------------------------------------------------
 	 */
 
-	app.route('/api/recipe/upload-image')
-		.post(upload.postImage);
+	app.post('/api/recipe/upload-image', ensureAuthenticated, function(req, res) {
+		var form = new multiparty.Form();
+
+		form.parse(req, function(err, fields, files) {
+			console.log(files);
+
+			var file = files.file[0];
+			var contentType = file.headers['content-type'];
+			var tmpPath = file.path;
+			var extIndex = tmpPath.lastIndexOf('.');
+			var extension = (extIndex < 0) ? '' : tmpPath.substr(extIndex);
+			// uuid is for generating unique file names
+			var fileName = uuid.v4() + extension;
+			var destPath = './public/uploads/images/' + fileName;
+
+			// server side file type check
+			if (contentType !== 'image/png' && contentType !== 'image/jpeg') {
+				fs.unlink(tmpPath);
+				return res.status(400).send('Unsupported file type.');
+			}
+
+			fs.rename(tmpPath, destPath, function(err) {
+				if (err) {
+					return res.status(400).send('Image was not saved!');
+				}
+
+				var img = {
+					filename: fileName,
+					headers: file.headers,
+					size: file.size
+				};
+
+				return res.json(img);
+			});
+		});
+	});
 };

@@ -5,11 +5,12 @@
 		.module('rBox')
 		.directive('recipeForm', recipeForm);
 
-	recipeForm.$inject = ['recipeData', 'Recipe', 'Slug', '$location', '$timeout'];
+	recipeForm.$inject = ['recipeData', 'Recipe', 'Slug', '$location', '$timeout', 'Upload'];
 
-	function recipeForm(recipeData, Recipe, Slug, $location, $timeout) {
+	function recipeForm(recipeData, Recipe, Slug, $location, $timeout, Upload) {
 
-		function recipeFormCtrl() {
+		recipeFormCtrl.$inject = ['$scope'];
+		function recipeFormCtrl($scope) {
 			var rf = this;
 			var _isEdit = !!rf.recipe;
 			var _originalSlug = _isEdit ? rf.recipe.slug : null;
@@ -116,6 +117,74 @@
 				_lastInput = null;
 				_caretPos = null;
 			};
+
+			/**
+			 * Image file upload
+			 *
+			 * @param image
+			 * @param $event {object}
+			 */
+			//rf.onFileSelect = function(image, $event) {
+			//	console.log('Image upload:', image, $event);
+			//
+			//	if (angular.isArray(image)) {
+			//		image = image[0];
+			//	}
+			//
+			//	rf.uploadInProgress = true;
+			//	rf.uploadProgress = 0;
+			//
+			//	rf.upload = Upload.upload({
+			//		url: '/api/recipe/upload-image',
+			//		method: 'POST',
+			//		fields: {
+			//			// TODO: add information tying this image to a specific recipe
+			//		},
+			//		file: image
+			//	}).progress(function(event) {
+			//		rf.uploadProgress = Math.floor(event.loaded / event.total);
+			//		$scope.$apply();
+			//	}).success(function(data, status, headers, config) {
+			//		rf.uploadInProgress = false;
+			//		rf.uploadedImage = JSON.parse(data);
+			//	}).error(function(err) {
+			//		rf.uploadInProgress = false;
+			//		console.log('Error uploading file: ' + err.message || err);
+			//	})
+			//};
+
+
+
+
+
+			rf.upload = function(files) {
+				if (files && files.length) {
+					for (var i = 0; i < files.length; i++) {
+						var file = files[i];
+						Upload.upload({
+							url: '/api/recipe/upload-image',
+							fields: {
+
+							},
+							file: file
+						}).progress(function(evt) {
+							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+							rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+						}).success(function (data, status, headers, config) {
+							$timeout(function() {
+								rf.uploadInProgress = false;
+								rf.uploadedImage = '/uploads/images/' + data.filename;
+								console.log(data);
+							});
+						});
+					}
+				}
+			};
+
+
+
+
+
 
 			// create map of touched tags
 			rf.tagMap = {};
