@@ -159,6 +159,15 @@
 				}
 			};
 
+			/**
+			 * Remove uploaded photo from front-end
+			 * (won't be cleaned up on filesystem until save)
+			 */
+			rf.removePhoto = function() {
+				rf.recipeData.photo = null;
+				angular.element('#recipePhoto').val('');
+			};
+
 			// create map of touched tags
 			rf.tagMap = {};
 			if (_isEdit && rf.recipeData.tags.length) {
