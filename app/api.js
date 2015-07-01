@@ -773,9 +773,9 @@ module.exports = function(app, config) {
 			}
 
 			// server side file size check
-			if (file.size > 500000) {
+			if (file.size > 300000) {
 				fs.unlink(tmpPath);
-				return res.status(400).send('File is over 500kb.');
+				return res.status(400).send('File is too large.');
 			}
 
 			// rename the file to ensure a unique ID

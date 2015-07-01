@@ -129,7 +129,13 @@
 			 */
 			rf.updateFile = function(files) {
 				if (files && files.length) {
-					rf.uploadedFile = files[0];    // only single upload allowed
+					if (files[0].size > 300000) {
+						rf.uploadError = 'Filesize over 300kb - photo was not uploaded.';
+						rf.removePhoto();
+					} else {
+						rf.uploadError = false;
+						rf.uploadedFile = files[0];    // only single upload allowed
+					}
 				}
 			};
 
@@ -194,6 +200,7 @@
 			 */
 			function _resetSaveBtn() {
 				rf.saved = false;
+				rf.uploadError = false;
 				rf.saveBtnText = _isEdit ? 'Update Recipe' : 'Save Recipe';
 			}
 
@@ -254,6 +261,7 @@
 					}
 				}
 
+				rf.uploadError = false;
 				rf.saveBtnText = _isEdit ? 'Updating...' : 'Saving...';
 
 				// prep data for saving
@@ -273,6 +281,8 @@
 							rf.uploadError = false;
 							rf.uploadInProgress = true;
 							rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+
+							console.log(rf.uploadProgress);
 						})
 						.success(function (data, status, headers, config) {
 							$timeout(function () {
@@ -280,13 +290,12 @@
 								rf.recipeData.photo = data.filename;
 
 								_saveRecipe();
-								console.log(data);
 							});
 						})
 						.error(function (err) {
 							rf.uploadInProgress = false;
-							rf.uploadError = true;
-							rf.uploadErrorMsg = err.message || err;
+							rf.uploadError = err.message || err;
+
 							console.log('Error uploading file:', err.message || err);
 
 							_recipeSaveError();
