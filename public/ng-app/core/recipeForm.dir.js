@@ -118,53 +118,27 @@
 				_caretPos = null;
 			};
 
-			var _extraUploads = [];
+			//var _extraUploads = [];
+
+			var _uploadedFile = null;
 
 			/**
 			 * Upload image file
 			 *
 			 * @param files {Array} array of files to upload
 			 */
-			rf.upload = function(files) {
+			rf.updateFile = function(files) {
 				if (files && files.length) {
-					var file = files[0];    // only single upload allowed
-
-					Upload
-						.upload({
-							url: '/api/recipe/upload',
-							file: file
-						})
-						.progress(function(evt) {
-							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-							rf.uploadError = false;
-							rf.uploadInProgress = true;
-							rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
-						})
-						.success(function (data, status, headers, config) {
-							$timeout(function() {
-								rf.uploadInProgress = false;
-								rf.recipeData.photo = data.filename;
-
-								_extraUploads.push(data.filename);
-
-								console.log(data);
-							});
-						})
-						.error(function(err) {
-							rf.uploadInProgress = false;
-							rf.uploadError = true;
-							rf.uploadErrorMsg = err.message || err;
-							console.log('Error uploading file:', err.message || err);
-						});
+					_uploadedFile = files[0];    // only single upload allowed
 				}
 			};
 
 			/**
 			 * Remove uploaded photo from front-end
-			 * (won't be cleaned up on filesystem until save)
 			 */
 			rf.removePhoto = function() {
 				rf.recipeData.photo = null;
+				_uploadedFile = null;
 				angular.element('#recipePhoto').val('');
 			};
 
@@ -269,6 +243,17 @@
 			 * Save recipe
 			 */
 			rf.saveRecipe = function() {
+				function _saveRecipe() {
+					// save!
+					if (!_isEdit) {
+						recipeData.createRecipe(rf.recipeData)
+							.then(_recipeSaved, _recipeSaveError);
+					} else {
+						recipeData.updateRecipe(rf.recipe._id, rf.recipeData)
+							.then(_recipeSaved, _recipeSaveError);
+					}
+				}
+
 				rf.saveBtnText = _isEdit ? 'Updating...' : 'Saving...';
 
 				// prep data for saving
@@ -276,27 +261,40 @@
 				_cleanEmpties('ingredients');
 				_cleanEmpties('directions');
 
-				if (rf.recipeData.photo && _extraUploads && _extraUploads.length > 1) {
-					var _keepIndex = _extraUploads.indexOf(rf.recipeData.photo);
+				// save uploaded file, if there is one
+				if (_uploadedFile) {
+					Upload
+						.upload({
+							url: '/api/recipe/upload',
+							file: _uploadedFile
+						})
+						.progress(function (evt) {
+							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+							rf.uploadError = false;
+							rf.uploadInProgress = true;
+							rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+						})
+						.success(function (data, status, headers, config) {
+							$timeout(function () {
+								rf.uploadInProgress = false;
+								rf.recipeData.photo = data.filename;
 
-					_extraUploads.splice(_keepIndex);
-
-					if (_extraUploads.length) {
-						recipeData.cleanUploads(_extraUploads)
-							.then(function() {
-								console.log('cleaned extra uploads!');
+								_saveRecipe();
+								console.log(data);
 							});
-					}
+						})
+						.error(function (err) {
+							rf.uploadInProgress = false;
+							rf.uploadError = true;
+							rf.uploadErrorMsg = err.message || err;
+							console.log('Error uploading file:', err.message || err);
+
+							_recipeSaveError();
+						});
+				} else {
+					_saveRecipe();
 				}
 
-				// save!
-				if (!_isEdit) {
-					recipeData.createRecipe(rf.recipeData)
-						.then(_recipeSaved, _recipeSaveError);
-				} else {
-					recipeData.updateRecipe(rf.recipe._id, rf.recipeData)
-						.then(_recipeSaved, _recipeSaveError);
-				}
 			};
 		}
 
