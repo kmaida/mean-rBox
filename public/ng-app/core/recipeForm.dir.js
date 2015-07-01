@@ -120,7 +120,7 @@
 
 			//var _extraUploads = [];
 
-			var _uploadedFile = null;
+			rf.uploadedFile = null;
 
 			/**
 			 * Upload image file
@@ -129,7 +129,7 @@
 			 */
 			rf.updateFile = function(files) {
 				if (files && files.length) {
-					_uploadedFile = files[0];    // only single upload allowed
+					rf.uploadedFile = files[0];    // only single upload allowed
 				}
 			};
 
@@ -138,7 +138,7 @@
 			 */
 			rf.removePhoto = function() {
 				rf.recipeData.photo = null;
-				_uploadedFile = null;
+				rf.uploadedFile = null;
 				angular.element('#recipePhoto').val('');
 			};
 
@@ -262,11 +262,11 @@
 				_cleanEmpties('directions');
 
 				// save uploaded file, if there is one
-				if (_uploadedFile) {
+				if (rf.uploadedFile) {
 					Upload
 						.upload({
 							url: '/api/recipe/upload',
-							file: _uploadedFile
+							file: rf.uploadedFile
 						})
 						.progress(function (evt) {
 							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
