@@ -2,6 +2,13 @@
   RECIPE DETAIL PAGE
 --------------------*/
 
+.recipe-photo {
+	display: block;
+	margin: 0 auto 20px;
+	max-height: 300px;
+	max-width: 100%;
+	width: auto;
+}
 .recipe-info-list {
 	list-style: none;
 	padding-left: 0;

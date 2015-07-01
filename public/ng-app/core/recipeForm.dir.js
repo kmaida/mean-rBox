@@ -247,20 +247,25 @@
 			}
 
 			/**
+			 * Save recipe data
+			 *
+			 * @private
+			 */
+			function _saveRecipe() {
+				if (!_isEdit) {
+					recipeData.createRecipe(rf.recipeData)
+						.then(_recipeSaved, _recipeSaveError);
+				} else {
+					recipeData.updateRecipe(rf.recipe._id, rf.recipeData)
+						.then(_recipeSaved, _recipeSaveError);
+				}
+			}
+
+			/**
 			 * Save recipe
+			 * Click on submit
 			 */
 			rf.saveRecipe = function() {
-				function _saveRecipe() {
-					// save!
-					if (!_isEdit) {
-						recipeData.createRecipe(rf.recipeData)
-							.then(_recipeSaved, _recipeSaveError);
-					} else {
-						recipeData.updateRecipe(rf.recipe._id, rf.recipeData)
-							.then(_recipeSaved, _recipeSaveError);
-					}
-				}
-
 				rf.uploadError = false;
 				rf.saveBtnText = _isEdit ? 'Updating...' : 'Saving...';
 
@@ -270,13 +275,14 @@
 				_cleanEmpties('directions');
 
 				// save uploaded file, if there is one
+				// once successfully uploaded image, save recipe with reference to saved image
 				if (rf.uploadedFile) {
 					Upload
 						.upload({
 							url: '/api/recipe/upload',
 							file: rf.uploadedFile
 						})
-						.progress(function (evt) {
+						.progress(function(evt) {
 							var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 							rf.uploadError = false;
 							rf.uploadInProgress = true;
@@ -284,7 +290,7 @@
 
 							console.log(rf.uploadProgress);
 						})
-						.success(function (data, status, headers, config) {
+						.success(function(data, status, headers, config) {
 							$timeout(function () {
 								rf.uploadInProgress = false;
 								rf.recipeData.photo = data.filename;
@@ -292,7 +298,7 @@
 								_saveRecipe();
 							});
 						})
-						.error(function (err) {
+						.error(function(err) {
 							rf.uploadInProgress = false;
 							rf.uploadError = err.message || err;
 
@@ -300,7 +306,9 @@
 
 							_recipeSaveError();
 						});
+
 				} else {
+					// no uploaded file, save recipe
 					_saveRecipe();
 				}
 

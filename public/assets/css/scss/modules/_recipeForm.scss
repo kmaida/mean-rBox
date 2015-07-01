@@ -5,9 +5,15 @@
 .recipeForm {
 	&-uploadImage {
 		&-img {
+			border: 1px solid $color-celeste;
+			border-radius: 4px;
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
 			display: block;
 			margin-bottom: 15px;
+			max-height: 300px;
 			max-width: 100%;
+			padding: 6px;
+			width: auto;
 		}
 		&-input {
 			margin-top: 15px;
