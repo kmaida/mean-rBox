@@ -8,8 +8,8 @@
 			</h1>
 
 			<a ng-if="recipe.recipe.photo"
-			   ng-href="{{'/uploads/images/' + recipe.recipe.photo}}" target="_blank">
-				<img class="recipe-photo" ng-src="{{'/uploads/images/' + recipe.recipe.photo}}">
+			   ng-href="{{::'/uploads/images/' + recipe.recipe.photo}}" target="_blank">
+				<img class="recipe-photo" ng-src="{{::'/uploads/images/' + recipe.recipe.photo}}">
 			</a>
 
 			<p class="lead" ng-bind-html="recipe.recipe.description"></p>

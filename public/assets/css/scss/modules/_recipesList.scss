@@ -59,6 +59,11 @@
 			&:last-child {
 				border-bottom: 0 none;
 			}
+			&-photo {
+				float: left;
+				margin: 10px 10px 10px 0;
+				width: 100px;
+			}
 			&-name {
 				font-size: 16px;
 				margin-bottom: 5px;

@@ -140,22 +140,29 @@
 	<!-- Recipes list -->
 	<ul class="recipesList-list list-unstyled">
 		<li ng-repeat="recipe in rl.filtered = (rl.recipes | filter:rl.query | filter:rl.filterPredicates.cat | filter:rl.filterPredicates.tag | filter:rl.filterPredicates.diet) | filter:rl.query | filter:rl.filterPredicates.cat | filter:rl.filterPredicates.tag | filter:rl.filterPredicates.diet | orderBy:rl.sortPredicate:rl.reverse | limitTo:rl.nResultsShowing"
-			class="recipesList-list-item" ng-init="rl.listLen = rl.filtered.length">
-			<h4 class="recipesList-list-item-name"><a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a></h4>
+			class="recipesList-list-item clearfix" ng-init="rl.listLen = rl.filtered.length">
 
-			<span class="recipesList-list-item-category">
-				<i class="fa fa-fw fa-cutlery"></i>
-				<a ng-href="/recipes/category/{{::recipe.category | lowercase}}">{{::recipe.category}}</a>
-			</span>
-			<span ng-if="recipe.tags.length" class="recipesList-list-item-tags">
-				<i class="fa fa-fw fa-tags"></i>
-				<span ng-repeat="tag in recipe.tags"><a ng-href="/recipes/tag/{{::tag}}">{{::tag}}</a>{{!$last ? ', ' : ''}}</span>
-			</span>
-			<span ng-if="recipe.prepTime || recipe.cookTime" class="recipesList-list-item-time">
-				<i class="fa fa-fw fa-clock-o"></i>{{::(recipe.prepTime + recipe.cookTime) | minToH}}
-			</span>
+			<a ng-if="recipe.photo"ng-href="/recipe/{{::recipe.slug}}">
+				<img class="recipesList-list-item-photo"
+					 ng-src="{{::'/uploads/images/' + recipe.photo}}">
+			</a>
+			<div class="recipesList-list-item-info">
+				<h4 class="recipesList-list-item-name"><a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a></h4>
 
-			<p class="recipesList-list-item-desc">{{::recipe.description | trimStr:150}}</p>
+				<span class="recipesList-list-item-category">
+					<i class="fa fa-fw fa-cutlery"></i>
+					<a ng-href="/recipes/category/{{::recipe.category | lowercase}}">{{::recipe.category}}</a>
+				</span>
+				<span ng-if="recipe.tags.length" class="recipesList-list-item-tags">
+					<i class="fa fa-fw fa-tags"></i>
+					<span ng-repeat="tag in recipe.tags"><a ng-href="/recipes/tag/{{::tag}}">{{::tag}}</a>{{!$last ? ', ' : ''}}</span>
+				</span>
+				<span ng-if="recipe.prepTime || recipe.cookTime" class="recipesList-list-item-time">
+					<i class="fa fa-fw fa-clock-o"></i>{{::(recipe.prepTime + recipe.cookTime) | minToH}}
+				</span>
+
+				<p class="recipesList-list-item-desc">{{::recipe.description | trimStr:150}}</p>
+			</div>
 		</li>
 	</ul>
 
