@@ -3,6 +3,7 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 var qs = require('querystring');
 // file upload
+var Imagemin = require('imagemin');
 var uuid = require('uuid');
 var multiparty = require('multiparty');
 var fs = require('fs');
@@ -784,13 +785,24 @@ module.exports = function(app, config) {
 					return res.status(400).send('Image was not saved!');
 				}
 
-				var img = {
-					filename: fileName,
-					headers: file.headers,
-					size: file.size
-				};
+				new Imagemin()
+					.src(destPath)
+					.dest(_imgPath)
+					.use(Imagemin.jpegtran({progressive: true}))
+					.use(Imagemin.optipng({optimizationLevel: 3}))
+					.run(function(err, cImg) {
+						if (err) {
+							return res.status(400).send('Image could not be compressed.');
+						}
 
-				return res.json(img);
+						var img = {
+							filename: fileName,
+							headers: file.headers,
+							size: file.size
+						};
+
+						return res.json(img);
+					});
 			});
 		});
 	});
