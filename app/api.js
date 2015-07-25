@@ -749,7 +749,7 @@ module.exports = function(app, config) {
 
 	/*
 	 |--------------------------------------------------------------------------
-	 | POST /api/recipe/upload-image - save an image
+	 | POST /api/recipe/upload - save an image
 	 |--------------------------------------------------------------------------
 	 */
 
@@ -782,7 +782,7 @@ module.exports = function(app, config) {
 			// rename the file to ensure a unique ID
 			fs.rename(tmpPath, destPath, function(err) {
 				if (err) {
-					return res.status(400).send('Image was not saved!');
+					return res.status(400).send('File rename failed:', err);
 				}
 
 				new Imagemin()
@@ -792,7 +792,7 @@ module.exports = function(app, config) {
 					.use(Imagemin.optipng({optimizationLevel: 3}))
 					.run(function(err, cImg) {
 						if (err) {
-							return res.status(400).send('Image could not be compressed.');
+							return res.status(400).send('Image could not be compressed:', err);
 						}
 
 						var img = {
