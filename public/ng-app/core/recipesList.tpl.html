@@ -161,7 +161,8 @@
 					<i class="fa fa-fw fa-clock-o"></i>{{::(recipe.prepTime + recipe.cookTime) | minToH}}
 				</span>
 
-				<p class="recipesList-list-item-desc">{{::recipe.description | trimStr:150}}</p>
+				<p class="recipesList-list-item-desc"
+				   ng-bind-html="recipe.description | trimStr:150"></p>
 			</div>
 		</li>
 	</ul>
