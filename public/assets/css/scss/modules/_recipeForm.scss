@@ -43,6 +43,31 @@
 			cursor: text;
 		}
 	}
+	ul[dnd-list] {
+		min-height: 34px;
+		position: relative;
+
+		.dndDraggingSource {
+			display: none;
+		}
+		.dndPlaceholder {
+			background-color: $color-drag-placeholder;
+			border-radius: 4px;
+			display: block;
+			margin-bottom: 8px;
+			min-height: 34px;
+		}
+		& > li {
+			position: relative;
+
+			&.selected {
+				background: $brand-success;
+			}
+		}
+		.input-group-addon {
+			cursor: move;
+		}
+	}
 	&-servings input,
 	&-prepTime input,
 	&-cookTime input {

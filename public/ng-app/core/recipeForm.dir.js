@@ -17,8 +17,11 @@
 			rf.recipeData = _isEdit ? rf.recipe : {};
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 			rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
+
+			// TODO: fix ids so that dragging a new step doesn't wipe out items below it
 			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
 			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: 1}];
+
 			rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
 
 			rf.timeRegex = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
@@ -35,6 +38,12 @@
 
 			// fetch special characters
 			rf.chars = Recipe.insertChar;
+
+			// keep track of drag and drop selected items
+			rf.selected = {
+				ing: null,
+				item: null
+			};
 
 			// setup special characters private vars
 			var _lastInput;
@@ -117,8 +126,6 @@
 				_lastInput = null;
 				_caretPos = null;
 			};
-
-			//var _extraUploads = [];
 
 			rf.uploadedFile = null;
 

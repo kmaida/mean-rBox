@@ -68,10 +68,17 @@
 					ng-click="rf.insertChar(char)">{{char}}</button>
 		</div>
 
-		<ul class="recipeForm-ingredients-list">
+		<p class="recipeForm-ingredients-instructions-dnd">
+			<small>Ingredients can be reordered by dragging and dropping.</small>
+		</p>
+
+		<ul class="recipeForm-ingredients-list" dnd-list="rf.recipeData.ingredients">
 			<li class="form-inline recipeForm-ingredients-item"
-				 ng-repeat="ing in rf.recipeData.ingredients track by $index"
-				 ng-class="{'last': $last}">
+				ng-repeat="ing in rf.recipeData.ingredients track by $index"
+				dnd-draggable="ing"
+				dnd-moved="rf.recipeData.ingredients.splice($index, 1)"
+				dnd-selected="rf.selected.ing = ing"
+				ng-class="{'last': $last, 'selected': rf.selected.ing === ing}">
 
 				<div class="input-group recipeForm-ingredients-item-amt">
 					<label for="ingredientAmt-{{$index}}" class="input-group-addon">Amount</label>
@@ -118,10 +125,18 @@
 	<div class="form-group recipeForm-directions">
 		<label>Directions<span class="req">*</span></label>
 
-		<ul class="recipeForm-directions-list">
+		<p class="recipeForm-directions-instructions-dnd">
+			<small>Direction steps can be reordered by dragging and dropping.</small>
+		</p>
+
+		<ul class="recipeForm-directions-list" dnd-list="rf.recipeData.directions">
+
 			<li class="recipeForm-directions-step"
-				 ng-repeat="step in rf.recipeData.directions track by $index"
-				 ng-class="{'last': $last}">
+				ng-repeat="step in rf.recipeData.directions track by $index"
+				dnd-draggable="step"
+				dnd-moved="rf.recipeData.directions.splice($index, 1)"
+				dnd-selected="rf.selected.ing = step"
+				ng-class="{'last': $last, 'selected': rf.selected.step === step}">
 				<div class="input-group">
 					<div class="input-group-addon">{{$index + 1}}.</div>
 					<input id="directions-{{$index}}"
