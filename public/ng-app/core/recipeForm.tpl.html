@@ -78,6 +78,7 @@
 				dnd-draggable="ing"
 				dnd-moved="rf.recipeData.ingredients.splice($index, 1)"
 				dnd-selected="rf.selected.ing = ing"
+				dnd-disable-if="!ing.ingredient"
 				ng-class="{'last': $last, 'selected': rf.selected.ing === ing}">
 
 				<div class="input-group recipeForm-ingredients-item-amt">
@@ -136,6 +137,7 @@
 				dnd-draggable="step"
 				dnd-moved="rf.recipeData.directions.splice($index, 1)"
 				dnd-selected="rf.selected.ing = step"
+				dnd-disabled-if="!step.step"
 				ng-class="{'last': $last, 'selected': rf.selected.step === step}">
 				<div class="input-group">
 					<div class="input-group-addon">{{$index + 1}}.</div>

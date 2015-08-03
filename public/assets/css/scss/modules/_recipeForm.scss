@@ -59,10 +59,6 @@
 		}
 		& > li {
 			position: relative;
-
-			&.selected {
-				background: $brand-success;
-			}
 		}
 		.input-group-addon {
 			cursor: move;
