@@ -68,41 +68,43 @@
 					ng-click="rf.insertChar(char)">{{char}}</button>
 		</div>
 
-		<div class="form-inline recipeForm-ingredients-item"
-			 ng-repeat="ing in rf.recipeData.ingredients track by $index"
-			 ng-class="{'last': $last}">
+		<ul class="recipeForm-ingredients-list">
+			<li class="form-inline recipeForm-ingredients-item"
+				 ng-repeat="ing in rf.recipeData.ingredients track by $index"
+				 ng-class="{'last': $last}">
 
-			<div class="input-group recipeForm-ingredients-item-amt">
-				<label for="ingredientAmt-{{$index}}" class="input-group-addon">Amount</label>
-				<input id="ingredientAmt-{{$index}}"
-					   name="ingredientAmt-{{$index}}"
-					   type="text"
-					   placeholder="1 c, ¼ tsp, pinch"
-					   ng-model="ing.amt"
-					   class="form-control recipeForm-ingredients-item-amt-input"
-					   ng-focus="rf.insertCharInput($event, $index)"
-					   ng-keyup="rf.insertCharInput($event, $index)"
-					   ng-click="rf.insertCharInput($event, $index)">
-			</div>
-
-			<div class="input-group recipeForm-ingredients-item-ingredient">
-				<label for="ingredient-{{$index}}" class="input-group-addon">Ingredient</label>
-				<input id="ingredient-{{$index}}"
-					   name="ingredient-{{$index}}"
-					   type="text"
-					   placeholder="ingredient {{$index + 1}}"
-					   ng-model="ing.ingredient"
-					   class="form-control"
-					   ng-focus="rf.clearChar()">
-				<div class="input-group-btn">
-					<button class="btn btn-danger"
-							ng-click="rfl.removeItem(rf.recipeData.ingredients, $index)"
-							ng-disabled="rf.recipeData.ingredients.length === 1">
-						<i class="fa fa-times"></i>
-					</button>
+				<div class="input-group recipeForm-ingredients-item-amt">
+					<label for="ingredientAmt-{{$index}}" class="input-group-addon">Amount</label>
+					<input id="ingredientAmt-{{$index}}"
+						   name="ingredientAmt-{{$index}}"
+						   type="text"
+						   placeholder="1 c, ¼ tsp, pinch"
+						   ng-model="ing.amt"
+						   class="form-control recipeForm-ingredients-item-amt-input"
+						   ng-focus="rf.insertCharInput($event, $index)"
+						   ng-keyup="rf.insertCharInput($event, $index)"
+						   ng-click="rf.insertCharInput($event, $index)">
 				</div>
-			</div>
-		</div>
+
+				<div class="input-group recipeForm-ingredients-item-ingredient">
+					<label for="ingredient-{{$index}}" class="input-group-addon">Ingredient</label>
+					<input id="ingredient-{{$index}}"
+						   name="ingredient-{{$index}}"
+						   type="text"
+						   placeholder="ingredient {{$index + 1}}"
+						   ng-model="ing.ingredient"
+						   class="form-control"
+						   ng-focus="rf.clearChar()">
+					<div class="input-group-btn">
+						<button class="btn btn-danger"
+								ng-click="rfl.removeItem(rf.recipeData.ingredients, $index)"
+								ng-disabled="rf.recipeData.ingredients.length === 1">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>
+				</div>
+			</li>
+		</ul>
 
 		<p>
 			<button class="btn btn-info"
@@ -116,27 +118,29 @@
 	<div class="form-group recipeForm-directions">
 		<label>Directions<span class="req">*</span></label>
 
-		<div class="recipeForm-directions-step"
-			 ng-repeat="step in rf.recipeData.directions track by $index"
-			 ng-class="{'last': $last}">
-			<div class="input-group">
-				<div class="input-group-addon">{{$index + 1}}.</div>
-				<input id="directions-{{$index}}"
-					   name="directions-{{$index}}"
-					   type="text"
-					   placeholder="Directions for step {{$index + 1}}"
-					   ng-model="step.step"
-					   class="form-control"
-					   ng-focus="rf.clearChar()">
-				<div class="input-group-btn">
-					<button class="btn btn-danger"
-							ng-click="rfl.removeItem(rf.recipeData.directions, $index)"
-							ng-disabled="rf.recipeData.directions.length === 1">
-						<i class="fa fa-times"></i>
-					</button>
+		<ul class="recipeForm-directions-list">
+			<li class="recipeForm-directions-step"
+				 ng-repeat="step in rf.recipeData.directions track by $index"
+				 ng-class="{'last': $last}">
+				<div class="input-group">
+					<div class="input-group-addon">{{$index + 1}}.</div>
+					<input id="directions-{{$index}}"
+						   name="directions-{{$index}}"
+						   type="text"
+						   placeholder="Directions for step {{$index + 1}}"
+						   ng-model="step.step"
+						   class="form-control"
+						   ng-focus="rf.clearChar()">
+					<div class="input-group-btn">
+						<button class="btn btn-danger"
+								ng-click="rfl.removeItem(rf.recipeData.directions, $index)"
+								ng-disabled="rf.recipeData.directions.length === 1">
+							<i class="fa fa-times"></i>
+						</button>
+					</div>
 				</div>
-			</div>
-		</div>
+			</li>
+		</ul>
 
 		<p>
 			<button class="btn btn-info"

@@ -19,6 +19,13 @@
 			margin-top: 15px;
 		}
 	}
+	&-ingredients,
+	&-directions {
+		&-list {
+			list-style: outside none;
+			padding-left: 0;
+		}
+	}
 	&-ingredients-item,
 	&-directions-step {
 		margin-bottom: 8px;
