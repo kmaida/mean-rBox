@@ -25,22 +25,32 @@
 			list-style: outside none;
 			padding-left: 0;
 		}
+		.touchevents &-instructions-dnd {
+			display: none;
+		}
 	}
 	&-ingredients-item,
 	&-directions-step {
 		margin-bottom: 8px;
 	}
-	&-ingredients-item {
-		&-amt,
-		&-ingredient {
-			margin-bottom: 3px;
-
+	&-ingredients {
+		&-list {
 			@include mq($mq-large) {
-				margin-bottom: 0;
+				max-width: 547px;
 			}
 		}
-		&-amt-input {
-			cursor: text;
+		&-item {
+			&-amt,
+			&-ingredient {
+				margin-bottom: 3px;
+
+				@include mq($mq-large) {
+					margin-bottom: 0;
+				}
+			}
+			&-amt-input {
+				cursor: text;
+			}
 		}
 	}
 	ul[dnd-list] {
@@ -56,6 +66,11 @@
 			display: block;
 			margin-bottom: 8px;
 			min-height: 34px;
+		}
+		&.recipeForm-ingredients-list .dndPlaceholder {
+			@include mq($mq-small) {
+				min-height: 71px;
+			}
 		}
 		& > li {
 			position: relative;

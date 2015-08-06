@@ -69,7 +69,7 @@
 		</div>
 
 		<p class="recipeForm-ingredients-instructions-dnd">
-			<small>Ingredients can be reordered by dragging and dropping.</small>
+			<small>Ingredients can be reordered by dragging their labels.</small>
 		</p>
 
 		<ul class="recipeForm-ingredients-list"
@@ -80,7 +80,6 @@
 				dnd-draggable="ing"
 				dnd-moved="rf.recipeData.ingredients.splice($index, 1)"
 				dnd-selected="rf.selected.ing = ing"
-				dnd-disable-if="!ing.ingredient"
 				dnd-type="ing.type"
 				ng-class="{'last': $last, 'selected': rf.selected.ing === ing}">
 
@@ -91,6 +90,7 @@
 						   type="text"
 						   placeholder="1 c, ¼ tsp, pinch"
 						   ng-model="ing.amt"
+						   draggable="true"
 						   class="form-control recipeForm-ingredients-item-amt-input"
 						   ng-focus="rf.insertCharInput($event, $index)"
 						   ng-keyup="rf.insertCharInput($event, $index)"
@@ -104,6 +104,7 @@
 						   type="text"
 						   placeholder="ingredient {{$index + 1}}"
 						   ng-model="ing.ingredient"
+						   draggable="true"
 						   class="form-control"
 						   ng-focus="rf.clearChar()">
 					<div class="input-group-btn">
@@ -130,7 +131,7 @@
 		<label>Directions<span class="req">*</span></label>
 
 		<p class="recipeForm-directions-instructions-dnd">
-			<small>Direction steps can be reordered by dragging and dropping.</small>
+			<small>Direction steps can be reordered by dragging their number labels.</small>
 		</p>
 
 		<ul class="recipeForm-directions-list"
@@ -142,7 +143,6 @@
 				dnd-draggable="step"
 				dnd-moved="rf.recipeData.directions.splice($index, 1)"
 				dnd-selected="rf.selected.ing = step"
-				dnd-disabled-if="!step.step"
 				dnd-type="step.type"
 				ng-class="{'last': $last, 'selected': rf.selected.step === step}">
 				<div class="input-group">
@@ -152,6 +152,7 @@
 						   type="text"
 						   placeholder="Directions for step {{$index + 1}}"
 						   ng-model="step.step"
+						   draggable="true"
 						   class="form-control"
 						   ng-focus="rf.clearChar()">
 					<div class="input-group-btn">

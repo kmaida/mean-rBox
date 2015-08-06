@@ -81,6 +81,14 @@ angular.module('dndLists', [])
 				element.on('dragstart', function(event) {
 					event = event.originalEvent || event;
 
+					if (event.target.tagName === 'INPUT') {
+						// Don't disable dragging if a selected text is being dragged.
+						if (!(event.dataTransfer.types && event.dataTransfer.types.length)) {
+							event.preventDefault();
+						}
+						return;
+					}
+
 					// Serialize the data associated with this element. IE only supports the Text drag type
 					event.dataTransfer.setData("Text", angular.toJson(scope.$eval(attr.dndDraggable)));
 
@@ -112,6 +120,8 @@ angular.module('dndLists', [])
 				 */
 				element.on('dragend', function(event) {
 					event = event.originalEvent || event;
+
+					if (event.target.tagName === 'INPUT') return;
 
 					// Invoke callbacks. Usually we would use event.dataTransfer.dropEffect to determine
 					// the used effect, but Chrome has not implemented that field correctly. On Windows
