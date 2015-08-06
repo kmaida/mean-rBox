@@ -9,7 +9,9 @@
 
 	function recipeForm(recipeData, Recipe, Slug, $location, $timeout, Upload) {
 
-		function recipeFormCtrl() {
+		recipeFormCtrl.$inject = ['$scope'];
+
+		function recipeFormCtrl($scope) {
 			var rf = this;
 			var _isEdit = !!rf.recipe;
 			var _originalSlug = _isEdit ? rf.recipe.slug : null;
@@ -18,9 +20,19 @@
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 			rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
 
-			// TODO: fix ids so that dragging a new step doesn't wipe out items below it
-			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: 1}];
-			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: 1}];
+			$scope.generateId = function() {
+				var _id = '';
+				var _charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+				for (var i = 0; i < 5; i++) {
+					_id += _charset.charAt(Math.floor(Math.random() * _charset.length));
+				}
+
+				return _id;
+			};
+
+			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: $scope.generateId()}];
+			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: $scope.generateId()}];
 
 			rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
 
@@ -338,7 +350,7 @@
 			 */
 			$scope.rfl.addItem = function($event, model) {
 				var _newItem = {
-					id: model.length + 1
+					id: $scope.generateId()
 				};
 
 				model.push(_newItem);
