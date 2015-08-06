@@ -20,6 +20,12 @@
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 			rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
 
+			/**
+			 * Generates a unique 5-character ID;
+			 * On $scope to share between controller and link
+			 *
+			 * @returns {string}
+			 */
 			$scope.generateId = function() {
 				var _id = '';
 				var _charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -31,8 +37,14 @@
 				return _id;
 			};
 
-			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: $scope.generateId()}];
-			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: $scope.generateId()}];
+			// for drag and drop, to restrict dragging into the wrong section
+			rf.allowedTypes = {
+				ingredients: ['ing'],
+				directions: ['step']
+			};
+
+			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: $scope.generateId(), type: 'ing'}];
+			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: $scope.generateId(), type: 'step'}];
 
 			rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
 
@@ -347,10 +359,12 @@
 			 *
 			 * @param $event {object} click event
 			 * @param model {object} rf.recipeData model
+			 * @param type {string} ing -or- step
 			 */
-			$scope.rfl.addItem = function($event, model) {
+			$scope.rfl.addItem = function($event, model, type) {
 				var _newItem = {
-					id: $scope.generateId()
+					id: $scope.generateId(),
+					type: type
 				};
 
 				model.push(_newItem);
