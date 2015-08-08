@@ -18,8 +18,26 @@
 	}
 }
 .recipe-ingredients {
+	ul {
+		list-style: outside none;
+		padding-left: 20px;
+	}
 	li {
 		padding: 3px 0;
+
+		i {
+			color: $text-muted;
+			font-size: 18px;
+			vertical-align: middle;
+		}
+		&.checked {
+			i {
+				color: $brand-success;
+			}
+			span {
+				text-decoration: line-through;
+			}
+		}
 	}
 }
 .recipe-directions {

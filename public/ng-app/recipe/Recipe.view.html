@@ -53,8 +53,16 @@
 				<h2>Ingredients</h2>
 
 				<ul>
-					<li ng-repeat="ing in recipe.recipe.ingredients">
-						{{::ing.amt}} {{::ing.ingredient}}
+					<li ng-repeat="ing in recipe.recipe.ingredients"
+						id="#ing-{{$index}}"
+						ng-click="recipe.toggleCheck('ing', $index)"
+						ng-class="{'checked': recipe.ingChecked[$index]}">
+						<i class="fa"
+						   ng-class="{'fa-circle-o': !recipe.ingChecked[$index], 'fa-check-circle': recipe.ingChecked[$index]}"></i>
+						<span>
+							{{::ing.amt}}
+							{{::ing.ingredient}}
+						</span>
 					</li>
 				</ul>
 			</section>

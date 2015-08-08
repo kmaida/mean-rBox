@@ -41,7 +41,6 @@
 		function _recipeSuccess(data) {
 			recipe.recipe = data;
 			Page.setTitle(recipe.recipe.name);
-			console.log(recipe.recipe);
 
 			/**
 			 * Successful promise returning author data
@@ -54,6 +53,35 @@
 			}
 			userData.getAuthor(recipe.recipe.userId)
 				.then(_authorSuccess);
+
+			recipe.ingChecked = [];
+			recipe.stepChecked = [];
+
+			/**
+			 * Create array of checked / unchecked items
+			 *
+			 * @param checkedArr
+			 * @param sourceArr
+			 * @private
+			 */
+			function _createCheckedArrays(checkedArr, sourceArr) {
+				for (var i = 0; i < sourceArr.length; i++) {
+					checkedArr[i] = false;
+				}
+			}
+
+			_createCheckedArrays(recipe.ingChecked, recipe.recipe.ingredients);
+			_createCheckedArrays(recipe.stepChecked, recipe.recipe.directions);
+
+			/**
+			 * Toggle checkmark
+			 *
+			 * @param type
+			 * @param index
+			 */
+			recipe.toggleCheck = function(type, index) {
+				recipe[type + 'Checked'][index] = !recipe[type + 'Checked'][index];
+			};
 		}
 		/**
 		 * Error retrieving recipe
