@@ -107,12 +107,13 @@ body {
 	color: $brand-danger;
 }
 @media screen and (-webkit-min-device-pixel-ratio:0) {
-	.input-group select.form-control {
+	select.form-control {
 		-webkit-appearance: none;
 		background-image: url(../images/webkit-select-arrows.png);
 		background-repeat: no-repeat;
 		background-position: 100% 50%;
-
+	}
+	.input-group select.form-control {
 		&:first-child {
 			-webkit-border-top-right-radius: 0;
 			-webkit-border-bottom-right-radius: 0;
@@ -127,6 +128,7 @@ body {
 		}
 	}
 }
+
 /* iOS form field text zooming */
 
 .form-control {
