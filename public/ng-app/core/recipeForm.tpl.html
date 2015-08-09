@@ -101,9 +101,9 @@
 				</div>
 
 				<div class="input-group recipeForm-ingredients-item-ingredient">
-					<label for="ingredient-{{$index}}" class="input-group-addon">Ingredient</label>
-					<input id="ingredient-{{$index}}"
-						   name="ingredient-{{$index}}"
+					<label for="ingredient-{{ing.id}}" class="input-group-addon">Ingredient</label>
+					<input id="ingredient-{{ing.id}}"
+						   name="ingredient-{{ing.id}}"
 						   type="text"
 						   placeholder="ingredient {{$index + 1}}"
 						   ng-model="ing.ingredient"
