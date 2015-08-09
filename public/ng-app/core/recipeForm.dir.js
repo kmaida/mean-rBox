@@ -23,9 +23,9 @@
 			// is this a touch device? if so, disable drag and drop
 			rf.isTouchDevice = !!Modernizr.touchevents;
 
-			// is using Safari?
-			var _ua = navigator.userAgent;
-			rf.isSafari = _ua.indexOf('Safari') != -1 && _ua.indexOf('Chrome') == -1;
+			// is using Firefox or Safari?
+			rf.isFirefox = typeof InstallTrigger !== 'undefined';
+			rf.isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
 
 			// TODO: having inputs be draggable="true" on Safari removes cursor
 			// TODO: This has been disabled temporarily; find a better solution!
