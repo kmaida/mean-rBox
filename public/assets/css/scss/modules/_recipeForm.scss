@@ -60,45 +60,52 @@
 			}
 		}
 	}
-	ul[dnd-list].dndEnabled {
-		min-height: 34px;
-		position: relative;
-
-		&.recipeForm-ingredients-list {
-			@include mq($mq-large) {
-				max-width: 590px;
-
-				&.safari {
-					max-width: 607px;
-				}
-			}
-		}
-		li {
-			margin-left: 42px;
-			position: relative;
-		}
+	ul[dnd-list] {
 		.dndHandle {
-			cursor: move;
-			position: absolute;
-				left: -42px;
-		}
-		.dndDraggingSource {
 			display: none;
 		}
-		.dndPlaceholder {
-			background-color: $color-drag-placeholder;
-			border-radius: 4px;
-			display: block;
-			margin-bottom: 8px;
+
+		&.dndEnabled {
 			min-height: 34px;
-		}
-		&.recipeForm-ingredients-list .dndPlaceholder {
-			@include mq($mq-small) {
-				min-height: 71px;
-			}
-		}
-		& > li {
 			position: relative;
+
+			&.recipeForm-ingredients-list {
+				@include mq($mq-large) {
+					max-width: 590px;
+
+					&.safari {
+						max-width: 607px;
+					}
+				}
+			}
+			li {
+				margin-left: 42px;
+				position: relative;
+			}
+			.dndHandle {
+				cursor: move;
+				display: block;
+				position: absolute;
+				left: -42px;
+			}
+			.dndDraggingSource {
+				display: none;
+			}
+			.dndPlaceholder {
+				background-color: $color-drag-placeholder;
+				border-radius: 4px;
+				display: block;
+				margin-bottom: 8px;
+				min-height: 34px;
+			}
+			&.recipeForm-ingredients-list .dndPlaceholder {
+				@include mq($mq-small) {
+					min-height: 71px;
+				}
+			}
+			& > li {
+				position: relative;
+			}
 		}
 	}
 	&-servings input,
