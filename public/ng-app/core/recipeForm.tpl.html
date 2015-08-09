@@ -73,6 +73,7 @@
 		</p>
 
 		<ul class="recipeForm-ingredients-list"
+			ng-class="{'safari': rf.isSafari}"
 			dnd-list="rf.recipeData.ingredients"
 			dnd-allowed-types="rf.allowedTypes.ingredients"
 			dnd-disable-if="rf.isTouchDevice">

@@ -23,7 +23,9 @@
 			// is this a touch device? if so, disable drag and drop
 			rf.isTouchDevice = !!Modernizr.touchevents;
 
-			alert(rf.isTouchDevice);
+			// is using Safari?
+			var _ua = navigator.userAgent;
+			rf.isSafari = _ua.indexOf('Safari') != -1 && _ua.indexOf('Chrome') == -1;
 
 			/**
 			 * Generates a unique 5-character ID;

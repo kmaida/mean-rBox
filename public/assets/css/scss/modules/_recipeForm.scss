@@ -36,7 +36,11 @@
 	&-ingredients {
 		&-list {
 			@include mq($mq-large) {
-				max-width: 547px;
+				max-width: 548px;
+
+				&.safari {
+					max-width: 565px;
+				}
 			}
 		}
 		&-item {
@@ -53,7 +57,7 @@
 			}
 		}
 	}
-	ul[dnd-list] {
+	.no-touchevents & ul[dnd-list] {
 		min-height: 34px;
 		position: relative;
 
