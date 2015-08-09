@@ -41,6 +41,9 @@
 				&.safari {
 					max-width: 565px;
 				}
+				&.firefox {
+					max-width: none;
+				}
 			}
 		}
 		&-item {
@@ -57,10 +60,28 @@
 			}
 		}
 	}
-	.no-touchevents & ul[dnd-list] {
+	ul[dnd-list].dndEnabled {
 		min-height: 34px;
 		position: relative;
 
+		&.recipeForm-ingredients-list {
+			@include mq($mq-large) {
+				max-width: 590px;
+
+				&.safari {
+					max-width: 607px;
+				}
+			}
+		}
+		li {
+			margin-left: 42px;
+			position: relative;
+		}
+		.dndHandle {
+			cursor: move;
+			position: absolute;
+				left: -42px;
+		}
 		.dndDraggingSource {
 			display: none;
 		}
@@ -78,9 +99,6 @@
 		}
 		& > li {
 			position: relative;
-		}
-		.input-group-addon {
-			cursor: move;
 		}
 	}
 	&-servings input,

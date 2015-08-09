@@ -68,54 +68,62 @@
 					ng-click="rf.insertChar(char)">{{char}}</button>
 		</div>
 
-		<p class="recipeForm-ingredients-instructions-dnd">
-			<small>Ingredients can be reordered by dragging their labels.</small>
+		<p class="recipeForm-ingredients-instructions-dnd" ng-if="!rf.isTouchDevice && !rf.isFirefox">
+			<small>Ingredients can be reordered by dragging the handle.</small>
 		</p>
 
 		<ul class="recipeForm-ingredients-list"
-			ng-class="{'safari': rf.isSafari}"
 			dnd-list="rf.recipeData.ingredients"
 			dnd-allowed-types="rf.allowedTypes.ingredients"
-			dnd-disable-if="rf.isTouchDevice">
+			dnd-disable-if="rf.isTouchDevice || rf.isFirefox"
+			ng-class="{'dndEnabled': !rf.isTouchDevice && !rf.isFirefox, 'safari': rf.isSafari, 'firefox': rf.isFirefox}">
+
 			<li class="form-inline recipeForm-ingredients-item"
 				ng-repeat="ing in rf.recipeData.ingredients"
 				dnd-draggable="ing"
 				dnd-moved="rf.recipeData.ingredients.splice($index, 1)"
 				dnd-selected="rf.selected.ing = ing"
 				dnd-type="ing.type"
-				dnd-disable-if="rf.isTouchDevice"
+				dnd-disable-if="rf.isTouchDevice || rf.isFirefox"
 				ng-class="{'last': $last, 'selected': rf.selected.ing === ing}">
 
-				<div class="input-group recipeForm-ingredients-item-amt">
-					<label for="ingredientAmt-{{ing.id}}" class="input-group-addon">Amount</label>
-					<input id="ingredientAmt-{{ing.id}}"
-						   name="ingredientAmt-{{ing.id}}"
-						   type="text"
-						   placeholder="1 c, ¼ tsp, pinch"
-						   ng-model="ing.amt"
-						   draggable="{{rf.isSafari || rf.isTouchDevice ? 'false' : 'true'}}"
-						   class="form-control recipeForm-ingredients-item-amt-input"
-						   ng-focus="rf.insertCharInput($event, $index)"
-						   ng-keyup="rf.insertCharInput($event, $index)"
-						   ng-click="rf.insertCharInput($event, $index)">
+				<div class="dndHandle btn btn-info" ng-if="!rf.isFirefox">
+					<strong>:::</strong>
 				</div>
 
-				<div class="input-group recipeForm-ingredients-item-ingredient">
-					<label for="ingredient-{{ing.id}}" class="input-group-addon">Ingredient</label>
-					<input id="ingredient-{{ing.id}}"
-						   name="ingredient-{{ing.id}}"
-						   type="text"
-						   placeholder="ingredient {{$index + 1}}"
-						   ng-model="ing.ingredient"
-						   draggable="{{rf.isSafari || rf.isTouchDevice ? 'false' : 'true'}}"
-						   class="form-control"
-						   ng-focus="rf.clearChar()">
-					<div class="input-group-btn">
-						<button class="btn btn-danger"
-								ng-click="rfl.removeItem(rf.recipeData.ingredients, $index)"
-								ng-disabled="rf.recipeData.ingredients.length === 1">
-							<i class="fa fa-times"></i>
-						</button>
+				<div class="nodrag-wrapper"
+					 dnd-nodrag
+					 dnd-disable-if="rf.isTouchDevice || rf.isFirefox">
+
+					<div class="input-group recipeForm-ingredients-item-amt">
+						<label for="ingredientAmt-{{ing.id}}" class="input-group-addon">Amount</label>
+						<input id="ingredientAmt-{{ing.id}}"
+							   name="ingredientAmt-{{ing.id}}"
+							   type="text"
+							   placeholder="1 c, ¼ tsp, pinch"
+							   ng-model="ing.amt"
+							   class="form-control recipeForm-ingredients-item-amt-input"
+							   ng-focus="rf.insertCharInput($event, $index)"
+							   ng-keyup="rf.insertCharInput($event, $index)"
+							   ng-click="rf.insertCharInput($event, $index)">
+					</div>
+
+					<div class="input-group recipeForm-ingredients-item-ingredient">
+						<label for="ingredient-{{ing.id}}" class="input-group-addon">Ingredient</label>
+						<input id="ingredient-{{ing.id}}"
+							   name="ingredient-{{ing.id}}"
+							   type="text"
+							   placeholder="ingredient {{$index + 1}}"
+							   ng-model="ing.ingredient"
+							   class="form-control"
+							   ng-focus="rf.clearChar()">
+						<div class="input-group-btn">
+							<button class="btn btn-danger"
+									ng-click="rfl.removeItem(rf.recipeData.ingredients, $index)"
+									ng-disabled="rf.recipeData.ingredients.length === 1">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
 					</div>
 				</div>
 			</li>
@@ -133,14 +141,15 @@
 	<div class="form-group recipeForm-directions">
 		<label>Directions<span class="req">*</span></label>
 
-		<p class="recipeForm-directions-instructions-dnd">
-			<small>Direction steps can be reordered by dragging their number labels.</small>
+		<p class="recipeForm-directions-instructions-dnd" ng-if="!rf.isTouchDevice && !rf.isFirefox">
+			<small>Direction steps can be reordered by dragging the handle.</small>
 		</p>
 
 		<ul class="recipeForm-directions-list"
 			dnd-list="rf.recipeData.directions"
 			dnd-allowed-types="rf.allowedTypes.directions"
-			dnd-disable-if="rf.isTouchDevice">
+			dnd-disable-if="rf.isTouchDevice || rf.isFirefox"
+			ng-class="{'dndEnabled': !rf.isTouchDevice && !rf.isFirefox}">
 
 			<li class="recipeForm-directions-step"
 				ng-repeat="step in rf.recipeData.directions"
@@ -148,16 +157,22 @@
 				dnd-moved="rf.recipeData.directions.splice($index, 1)"
 				dnd-selected="rf.selected.ing = step"
 				dnd-type="step.type"
-				dnd-disable-if="rf.isTouchDevice"
+				dnd-disable-if="rf.isTouchDevice || rf.isFirefox"
 				ng-class="{'last': $last, 'selected': rf.selected.step === step}">
-				<div class="input-group">
+
+				<div class="dndHandle btn btn-info" ng-if="!rf.isFirefox">
+					<strong>:::</strong>
+				</div>
+
+				<div class="input-group"
+					 dnd-nodrag
+					 dnd-disable-if="rf.isTouchDevice || rf.isFirefox">
 					<div class="input-group-addon">{{$index + 1}}.</div>
 					<input id="directions-{{step.id}}"
 						   name="directions-{{step.id}}"
 						   type="text"
 						   placeholder="Directions for step {{$index + 1}}"
 						   ng-model="step.step"
-						   draggable="{{rf.isSafari || rf.isTouchDevice ? 'false' : 'true'}}"
 						   class="form-control"
 						   ng-focus="rf.clearChar()">
 					<div class="input-group-btn">
