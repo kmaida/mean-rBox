@@ -74,13 +74,15 @@
 
 		<ul class="recipeForm-ingredients-list"
 			dnd-list="rf.recipeData.ingredients"
-			dnd-allowed-types="rf.allowedTypes.ingredients">
+			dnd-allowed-types="rf.allowedTypes.ingredients"
+			dnd-disable-if="rf.isTouchDevice">
 			<li class="form-inline recipeForm-ingredients-item"
 				ng-repeat="ing in rf.recipeData.ingredients"
 				dnd-draggable="ing"
 				dnd-moved="rf.recipeData.ingredients.splice($index, 1)"
 				dnd-selected="rf.selected.ing = ing"
 				dnd-type="ing.type"
+				dnd-disable-if="rf.isTouchDevice"
 				ng-class="{'last': $last, 'selected': rf.selected.ing === ing}">
 
 				<div class="input-group recipeForm-ingredients-item-amt">
@@ -136,7 +138,8 @@
 
 		<ul class="recipeForm-directions-list"
 			dnd-list="rf.recipeData.directions"
-			dnd-allowed-types="rf.allowedTypes.directions">
+			dnd-allowed-types="rf.allowedTypes.directions"
+			dnd-disable-if="rf.isTouchDevice">
 
 			<li class="recipeForm-directions-step"
 				ng-repeat="step in rf.recipeData.directions"
@@ -144,6 +147,7 @@
 				dnd-moved="rf.recipeData.directions.splice($index, 1)"
 				dnd-selected="rf.selected.ing = step"
 				dnd-type="step.type"
+				dnd-disable-if="rf.isTouchDevice"
 				ng-class="{'last': $last, 'selected': rf.selected.step === step}">
 				<div class="input-group">
 					<div class="input-group-addon">{{$index + 1}}.</div>

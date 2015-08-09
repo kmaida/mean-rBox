@@ -20,6 +20,11 @@
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 			rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
 
+			// is this a touch device? if so, disable drag and drop
+			rf.isTouchDevice = !!Modernizr.touch;
+
+			alert(rf.isTouchDevice);
+
 			/**
 			 * Generates a unique 5-character ID;
 			 * On $scope to share between controller and link
