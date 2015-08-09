@@ -58,7 +58,7 @@
 			recipe.stepChecked = [];
 
 			/**
-			 * Create array of checked / unchecked items
+			 * Create array to keep track of checked / unchecked items
 			 *
 			 * @param checkedArr
 			 * @param sourceArr

@@ -16,32 +16,55 @@
 	&-category {
 		text-transform: capitalize;
 	}
+	i {
+		margin-right: 3px;
+	}
 }
 .recipe-ingredients {
 	ul {
 		list-style: outside none;
-		padding-left: 20px;
+		padding-left: 0;
+
+		@include mq($mq-large) {
+			padding-left: 20px;
+		}
 	}
 	li {
-		padding: 3px 0;
-
-		i {
-			color: $text-muted;
-			font-size: 18px;
-			vertical-align: middle;
-		}
-		&.checked {
-			i {
-				color: $brand-success;
-			}
-			span {
-				text-decoration: line-through;
-			}
-		}
+		padding: 5px 0;
 	}
 }
 .recipe-directions {
+	ol {
+		padding-left: 40px;
+
+		@include mq($mq-large) {
+			padding-left: 62px;
+		}
+	}
 	li {
-		padding: 5px 0;
+		font-weight: bold;
+		padding: 6px 0;
+		position: relative;
+
+		i {
+			position: absolute;
+				left: -42px;
+				top: 9px;
+		}
+		span {
+			font-weight: normal;
+		}
+	}
+}
+.recipe-ingredients li,
+.recipe-directions li {
+	&.checked {
+		i {
+			color: $brand-success;
+		}
+		span {
+			color: $text-muted;
+			text-decoration: line-through;
+		}
 	}
 }

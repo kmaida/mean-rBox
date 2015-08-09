@@ -57,8 +57,8 @@
 						id="#ing-{{$index}}"
 						ng-click="recipe.toggleCheck('ing', $index)"
 						ng-class="{'checked': recipe.ingChecked[$index]}">
-						<i class="fa"
-						   ng-class="{'fa-circle-o': !recipe.ingChecked[$index], 'fa-check-circle': recipe.ingChecked[$index]}"></i>
+						<i class="fa fa-fw"
+						   ng-class="{'fa-circle-thin': !recipe.ingChecked[$index], 'fa-check-circle': recipe.ingChecked[$index]}"></i>
 						<span>
 							{{::ing.amt}}
 							{{::ing.ingredient}}
@@ -71,7 +71,13 @@
 				<h2>Directions</h2>
 
 				<ol>
-					<li ng-repeat="step in recipe.recipe.directions" ng-bind-html="step.step"></li>
+					<li ng-repeat="step in recipe.recipe.directions"
+						ng-click="recipe.toggleCheck('step', $index)"
+						ng-class="{'checked': recipe.stepChecked[$index]}">
+						<i class="fa fa-fw"
+						   ng-class="{'fa-circle-thin': !recipe.stepChecked[$index], 'fa-check-circle': recipe.stepChecked[$index]}"></i>
+						<span ng-bind-html="step.step"></span>
+					</li>
 				</ol>
 			</section>
 
