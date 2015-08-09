@@ -21,7 +21,7 @@
 			rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
 
 			// is this a touch device? if so, disable drag and drop
-			rf.isTouchDevice = !!Modernizr.touch;
+			rf.isTouchDevice = !!Modernizr.touchevents;
 
 			alert(rf.isTouchDevice);
 
