@@ -27,6 +27,9 @@
 			var _ua = navigator.userAgent;
 			rf.isSafari = _ua.indexOf('Safari') != -1 && _ua.indexOf('Chrome') == -1;
 
+			// TODO: having inputs be draggable="true" on Safari removes cursor
+			// TODO: This has been disabled temporarily; find a better solution!
+
 			/**
 			 * Generates a unique 5-character ID;
 			 * On $scope to share between controller and link

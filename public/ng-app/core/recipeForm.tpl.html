@@ -93,7 +93,7 @@
 						   type="text"
 						   placeholder="1 c, ¼ tsp, pinch"
 						   ng-model="ing.amt"
-						   draggable="true"
+						   draggable="{{rf.isSafari || rf.isTouchDevice ? 'false' : 'true'}}"
 						   class="form-control recipeForm-ingredients-item-amt-input"
 						   ng-focus="rf.insertCharInput($event, $index)"
 						   ng-keyup="rf.insertCharInput($event, $index)"
@@ -107,7 +107,7 @@
 						   type="text"
 						   placeholder="ingredient {{$index + 1}}"
 						   ng-model="ing.ingredient"
-						   draggable="true"
+						   draggable="{{rf.isSafari || rf.isTouchDevice ? 'false' : 'true'}}"
 						   class="form-control"
 						   ng-focus="rf.clearChar()">
 					<div class="input-group-btn">
@@ -157,7 +157,7 @@
 						   type="text"
 						   placeholder="Directions for step {{$index + 1}}"
 						   ng-model="step.step"
-						   draggable="true"
+						   draggable="{{rf.isSafari || rf.isTouchDevice ? 'false' : 'true'}}"
 						   class="form-control"
 						   ng-focus="rf.clearChar()">
 					<div class="input-group-btn">
