@@ -24,6 +24,24 @@
 		&-list {
 			list-style: outside none;
 			padding-left: 0;
+
+			li {
+				.input-group-addon,
+				.input-group-btn .btn,
+				input {
+					transition: all 250ms ease;
+				}
+				&.moved {
+					.input-group-addon,
+					.btn,
+					input {
+						background: $brand-success;
+						border-color: #555;
+						color: #fff;
+						transition: all 250ms ease;
+					}
+				}
+			}
 		}
 		.touchevents &-instructions-dnd {
 			display: none;
@@ -108,6 +126,59 @@
 			}
 			& > li {
 				position: relative;
+			}
+		}
+		&.hasMove {
+			.move-item {
+				margin: 0 0 5px;
+
+				@include mq($mq-large) {
+					margin: 0;
+				}
+				@include mq($mq-small) {
+					display: none;
+
+					&.showMove {
+						display: inline-block;
+					}
+				}
+			}
+
+			&.recipeForm-directions-list {
+				.move-item {
+					margin-top: 3px;
+				}
+
+				@include mq($mq-large) {
+					.nodrag-wrapper {
+						display: inline-block;
+						width: calc(100% - 81px);
+					}
+					.move-item {
+						margin: 0;
+						vertical-align: top;
+						width: 77px;
+					}
+				}
+			}
+		}
+	}
+	.rearrange-items-toggle {
+		@include mq($mq-large) {
+			display: none;
+		}
+		a {
+			&:hover {
+				text-decoration: none;
+			}
+			i {
+				transition: all 250ms ease 0s;
+				transform: rotateZ(45deg);
+
+				&.showMove {
+					transition: all 250ms ease 0s;
+					transform: rotateZ(0deg);
+				}
 			}
 		}
 	}

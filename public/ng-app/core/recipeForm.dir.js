@@ -20,16 +20,6 @@
 			rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 			rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
 
-			// is this a touch device? if so, disable drag and drop
-			rf.isTouchDevice = !!Modernizr.touchevents;
-
-			// is using Firefox or Safari?
-			rf.isFirefox = typeof InstallTrigger !== 'undefined';
-			rf.isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-
-			rf.enableDND = !rf.isFirefox && !rf.isTouchDevice;
-			rf.disableDND = rf.isFirefox || rf.isTouchDevice;
-
 			/**
 			 * Generates a unique 5-character ID;
 			 * On $scope to share between controller and link
@@ -47,17 +37,36 @@
 				return _id;
 			};
 
+			// is this a touch device?
+			rf.isTouchDevice = !!Modernizr.touchevents;
+
+			// is using Firefox or Safari?
+			rf.isFirefox = typeof InstallTrigger !== 'undefined';
+			rf.isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
+
+			// indicate if drag and drop should be enabled or disabled
+			rf.enableDND = !rf.isFirefox && !rf.isTouchDevice;
+			rf.disableDND = rf.isFirefox || rf.isTouchDevice;
+
 			// for drag and drop, to restrict dragging into the wrong section
 			rf.allowedTypes = {
 				ingredients: ['ing'],
 				directions: ['step']
 			};
 
+			// keep track of drag and drop selected items
+			rf.selected = {
+				ing: null,
+				item: null
+			};
+
+			// build lists
 			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: $scope.generateId(), type: 'ing'}];
 			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: $scope.generateId(), type: 'step'}];
 
 			rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
 
+			// manage time fields
 			rf.timeRegex = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
 			rf.timeError = 'Please enter a number in minutes. Multiply hours by 60.';
 
@@ -72,12 +81,6 @@
 
 			// fetch special characters
 			rf.chars = Recipe.insertChar;
-
-			// keep track of drag and drop selected items
-			rf.selected = {
-				ing: null,
-				item: null
-			};
 
 			// setup special characters private vars
 			var _lastInput;
@@ -396,6 +399,29 @@
 			$scope.rfl.removeItem = function(model, i) {
 				model.splice(i, 1);
 			};
+
+			/**
+			 * Move item up or down
+			 *
+			 * @param $event
+			 * @param model {object} rf.recipeData model
+			 * @param oldIndex {index} current index
+			 * @param newIndex {number} new index
+			 */
+			$scope.rfl.moveItem = function($event, model, oldIndex, newIndex) {
+				var _item = angular.element($event.target).closest('li');
+
+				model.move(oldIndex, newIndex);
+
+				_item.addClass('moved');
+
+				$timeout(function() {
+					_item.removeClass('moved');
+				}, 700);
+			};
+
+			$scope.rfl.moveIngredients = false;
+			$scope.rfl.moveDirections = false;
 		}
 
 		return {
