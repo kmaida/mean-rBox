@@ -64,7 +64,6 @@
 		.dndHandle {
 			display: none;
 		}
-
 		&.dndEnabled {
 			min-height: 34px;
 			position: relative;
@@ -79,14 +78,17 @@
 				}
 			}
 			li {
-				margin-left: 42px;
 				position: relative;
 			}
 			.dndHandle {
 				cursor: move;
-				display: block;
-				position: absolute;
-				left: -42px;
+				display: inline-block;
+				vertical-align: top;
+				width: 38px;
+			}
+			.nodrag-wrapper {
+				display: inline-block;
+				width: calc(100% - 42px);
 			}
 			.dndDraggingSource {
 				display: none;
@@ -96,6 +98,7 @@
 				border-radius: 4px;
 				display: block;
 				margin-bottom: 8px;
+				margin-left: 0;
 				min-height: 34px;
 			}
 			&.recipeForm-ingredients-list .dndPlaceholder {

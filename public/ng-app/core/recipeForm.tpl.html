@@ -68,15 +68,15 @@
 					ng-click="rf.insertChar(char)">{{char}}</button>
 		</div>
 
-		<p class="recipeForm-ingredients-instructions-dnd" ng-if="!rf.isTouchDevice && !rf.isFirefox">
+		<p class="recipeForm-ingredients-instructions-dnd" ng-if="rf.enableDND">
 			<small>Ingredients can be reordered by dragging the handle.</small>
 		</p>
 
 		<ul class="recipeForm-ingredients-list"
 			dnd-list="rf.recipeData.ingredients"
 			dnd-allowed-types="rf.allowedTypes.ingredients"
-			dnd-disable-if="rf.isTouchDevice || rf.isFirefox"
-			ng-class="{'dndEnabled': !rf.isTouchDevice && !rf.isFirefox, 'safari': rf.isSafari, 'firefox': rf.isFirefox}">
+			dnd-disable-if="rf.disableDND"
+			ng-class="{'dndEnabled': rf.enableDND, 'safari': rf.isSafari, 'firefox': rf.isFirefox}">
 
 			<li class="form-inline recipeForm-ingredients-item"
 				ng-repeat="ing in rf.recipeData.ingredients"
@@ -84,7 +84,7 @@
 				dnd-moved="rf.recipeData.ingredients.splice($index, 1)"
 				dnd-selected="rf.selected.ing = ing"
 				dnd-type="ing.type"
-				dnd-disable-if="rf.isTouchDevice || rf.isFirefox"
+				dnd-disable-if="rf.disableDND"
 				ng-class="{'last': $last, 'selected': rf.selected.ing === ing}">
 
 				<div class="dndHandle btn btn-info">
@@ -93,7 +93,7 @@
 
 				<div class="nodrag-wrapper"
 					 dnd-nodrag
-					 dnd-disable-if="rf.isTouchDevice || rf.isFirefox">
+					 dnd-disable-if="rf.disableDND">
 
 					<div class="input-group recipeForm-ingredients-item-amt">
 						<label for="ingredientAmt-{{ing.id}}" class="input-group-addon">Amount</label>
@@ -141,15 +141,15 @@
 	<div class="form-group recipeForm-directions">
 		<label>Directions<span class="req">*</span></label>
 
-		<p class="recipeForm-directions-instructions-dnd" ng-if="!rf.isTouchDevice && !rf.isFirefox">
+		<p class="recipeForm-directions-instructions-dnd" ng-if="rf.enableDND">
 			<small>Direction steps can be reordered by dragging the handle.</small>
 		</p>
 
 		<ul class="recipeForm-directions-list"
 			dnd-list="rf.recipeData.directions"
 			dnd-allowed-types="rf.allowedTypes.directions"
-			dnd-disable-if="rf.isTouchDevice || rf.isFirefox"
-			ng-class="{'dndEnabled': !rf.isTouchDevice && !rf.isFirefox}">
+			dnd-disable-if="rf.disableDND"
+			ng-class="{'dndEnabled': rf.enableDND}">
 
 			<li class="recipeForm-directions-step"
 				ng-repeat="step in rf.recipeData.directions"
@@ -157,30 +157,32 @@
 				dnd-moved="rf.recipeData.directions.splice($index, 1)"
 				dnd-selected="rf.selected.ing = step"
 				dnd-type="step.type"
-				dnd-disable-if="rf.isTouchDevice || rf.isFirefox"
+				dnd-disable-if="rf.disableDND"
 				ng-class="{'last': $last, 'selected': rf.selected.step === step}">
 
 				<div class="dndHandle btn btn-info">
 					<strong>:::</strong>
 				</div>
 
-				<div class="input-group"
+				<div class="nodrag-wrapper"
 					 dnd-nodrag
-					 dnd-disable-if="rf.isTouchDevice || rf.isFirefox">
-					<div class="input-group-addon">{{$index + 1}}.</div>
-					<input id="directions-{{step.id}}"
-						   name="directions-{{step.id}}"
-						   type="text"
-						   placeholder="Directions for step {{$index + 1}}"
-						   ng-model="step.step"
-						   class="form-control"
-						   ng-focus="rf.clearChar()">
-					<div class="input-group-btn">
-						<button class="btn btn-danger"
-								ng-click="rfl.removeItem(rf.recipeData.directions, $index)"
-								ng-disabled="rf.recipeData.directions.length === 1">
-							<i class="fa fa-times"></i>
-						</button>
+					 dnd-disable-if="rf.disableDND">
+					<div class="input-group">
+						<div class="input-group-addon">{{$index + 1}}.</div>
+						<input id="directions-{{step.id}}"
+							   name="directions-{{step.id}}"
+							   type="text"
+							   placeholder="Directions for step {{$index + 1}}"
+							   ng-model="step.step"
+							   class="form-control"
+							   ng-focus="rf.clearChar()">
+						<div class="input-group-btn">
+							<button class="btn btn-danger"
+									ng-click="rfl.removeItem(rf.recipeData.directions, $index)"
+									ng-disabled="rf.recipeData.directions.length === 1">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
 					</div>
 				</div>
 			</li>

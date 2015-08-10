@@ -27,8 +27,8 @@
 			rf.isFirefox = typeof InstallTrigger !== 'undefined';
 			rf.isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
 
-			// TODO: having inputs be draggable="true" on Safari removes cursor
-			// TODO: This has been disabled temporarily; find a better solution!
+			rf.enableDND = !rf.isFirefox && !rf.isTouchDevice;
+			rf.disableDND = rf.isFirefox || rf.isTouchDevice;
 
 			/**
 			 * Generates a unique 5-character ID;
