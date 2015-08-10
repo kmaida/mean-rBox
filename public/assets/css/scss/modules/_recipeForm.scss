@@ -164,10 +164,14 @@
 		}
 	}
 	.rearrange-items-toggle {
+		padding: 6px 0;
+
 		@include mq($mq-large) {
 			display: none;
 		}
 		a {
+			padding: 8px 0;
+
 			&:hover {
 				text-decoration: none;
 			}
