@@ -164,26 +164,8 @@
 		}
 	}
 	.rearrange-items-toggle {
-		padding: 6px 0;
-
 		@include mq($mq-large) {
 			display: none;
-		}
-		a {
-			padding: 8px 0;
-
-			&:hover {
-				text-decoration: none;
-			}
-			i {
-				transition: all 250ms ease 0s;
-				transform: rotateZ(45deg);
-
-				&.showMove {
-					transition: all 250ms ease 0s;
-					transform: rotateZ(0deg);
-				}
-			}
 		}
 	}
 	&-servings input,

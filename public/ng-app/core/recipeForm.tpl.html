@@ -148,11 +148,11 @@
 		</ul>
 
 		<p class="rearrange-items-toggle" ng-if="rf.disableDND">
-			<a ng-click="rfl.moveIngredients = !rfl.moveIngredients">
-				<i class="fa fa-times"
-				   ng-class="{'showMove': rfl.moveIngredients}"></i>
+			<button class="btn btn-default" blur-on-end ng-click="rfl.moveIngredients = !rfl.moveIngredients">
+				<i class="fa"
+				   ng-class="{'fa-eye': !rfl.moveIngredients, 'fa-eye-slash': rfl.moveIngredients}"></i>
 				{{!rfl.moveIngredients ? 'Show' : 'Hide'}} Move Controls
-			</a>
+			</button>
 		</p>
 
 		<p>
@@ -232,11 +232,11 @@
 		</ul>
 
 		<p class="rearrange-items-toggle" ng-if="rf.disableDND">
-			<a ng-click="rfl.moveDirections = !rfl.moveDirections">
-				<i class="fa fa-times"
-				   ng-class="{'showMove': rfl.moveDirections}"></i>
+			<button class="btn btn-default" blur-on-end ng-click="rfl.moveDirections = !rfl.moveDirections">
+				<i class="fa"
+				   ng-class="{'fa-eye': !rfl.moveDirections, 'fa-eye-slash': rfl.moveDirections}"></i>
 				{{!rfl.moveDirections ? 'Show' : 'Hide'}} Move Controls
-			</a>
+			</button>
 		</p>
 
 		<p>
