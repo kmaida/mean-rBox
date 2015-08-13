@@ -78,12 +78,12 @@
 				<!-- MOVE -->
 				<span class="btn-group move-item"
 					  ng-class="{'showMove': rfl.moveIngredients}">
-					<a class="btn btn-info"
+					<a class="btn btn-warning"
 					   ng-click="rfl.moveItem($event, rf.recipeData.ingredients, $index, $index - 1)"
 					   ng-disabled="$first">
 						<i class="fa fa-arrow-up"></i>
 					</a>
-					<a class="btn btn-info"
+					<a class="btn btn-warning"
 					   ng-click="rfl.moveItem($event, rf.recipeData.ingredients, $index, $index + 1)"
 					   ng-disabled="$last">
 						<i class="fa fa-arrow-down"></i>
@@ -158,12 +158,12 @@
 				<!-- MOVE -->
 				<span class="btn-group move-item"
 					  ng-class="{'showMove': rfl.moveDirections}">
-					<a class="btn btn-info"
+					<a class="btn btn-warning"
 					   ng-click="rfl.moveItem($event, rf.recipeData.directions, $index, $index - 1)"
 					   ng-disabled="$first">
 						<i class="fa fa-arrow-up"></i>
 					</a>
-					<a class="btn btn-info"
+					<a class="btn btn-warning"
 					   ng-click="rfl.moveItem($event, rf.recipeData.directions, $index, $index + 1)"
 					   ng-disabled="$last">
 						<i class="fa fa-arrow-down"></i>
