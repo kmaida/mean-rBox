@@ -68,34 +68,30 @@
 					ng-click="rf.insertChar(char)">{{char}}</button>
 		</div>
 
-		<p class="recipeForm-ingredients-instructions-dnd" ng-if="rf.enableDND">
-			<small>Ingredients can be reordered by dragging the handle.</small>
-		</p>
-
-		<ul class="recipeForm-ingredients-list"
-			dnd-list="rf.recipeData.ingredients"
-			dnd-allowed-types="rf.allowedTypes.ingredients"
-			dnd-disable-if="rf.disableDND"
-			ng-class="{'dndEnabled': rf.enableDND, 'safari': rf.isSafari, 'firefox': rf.isFirefox, 'hasMove': rf.disableDND}">
+		<ul class="recipeForm-ingredients-list">
 
 			<li class="form-inline recipeForm-ingredients-item"
 				ng-repeat="ing in rf.recipeData.ingredients"
 				id="ingredient-{{ing.id}}"
-				dnd-draggable="ing"
-				dnd-moved="rf.recipeData.ingredients.splice($index, 1)"
-				dnd-selected="rf.selected.ing = ing"
-				dnd-type="ing.type"
-				dnd-disable-if="rf.disableDND"
 				ng-class="{'last': $last, 'selected': rf.selected.ing === ing}">
 
-				<div class="dndHandle btn btn-info">
-					<strong>:::</strong>
-				</div>
+				<!-- MOVE -->
+				<span class="btn-group move-item"
+					  ng-class="{'showMove': rfl.moveIngredients}">
+					<a class="btn btn-info"
+					   ng-click="rfl.moveItem($event, rf.recipeData.ingredients, $index, $index - 1)"
+					   ng-disabled="$first">
+						<i class="fa fa-arrow-up"></i>
+					</a>
+					<a class="btn btn-info"
+					   ng-click="rfl.moveItem($event, rf.recipeData.ingredients, $index, $index + 1)"
+					   ng-disabled="$last">
+						<i class="fa fa-arrow-down"></i>
+					</a>
+				</span>
 
-				<div class="nodrag-wrapper"
-					 dnd-nodrag
-					 dnd-disable-if="rf.disableDND">
-
+				<!-- INPUTS -->
+				<div class="input-wrapper">
 					<div class="input-group recipeForm-ingredients-item-amt">
 						<label for="ingredientAmt-{{ing.id}}" class="input-group-addon">Amount</label>
 						<input id="ingredientAmt-{{ing.id}}"
@@ -126,28 +122,12 @@
 							</button>
 						</div>
 					</div>
-
-					<!-- MOVE -->
-					<span ng-if="rf.disableDND"
-						  class="btn-group move-item"
-						  ng-class="{'showMove': rfl.moveIngredients}">
-						<a class="btn btn-info"
-						   ng-click="rfl.moveItem($event, rf.recipeData.ingredients, $index, $index - 1)"
-						   ng-disabled="$first">
-							<i class="fa fa-arrow-up"></i>
-						</a>
-						<a class="btn btn-info"
-						   ng-click="rfl.moveItem($event, rf.recipeData.ingredients, $index, $index + 1)"
-						   ng-disabled="$last">
-							<i class="fa fa-arrow-down"></i>
-						</a>
-					</span>
-
 				</div>
+
 			</li>
 		</ul>
 
-		<p class="rearrange-items-toggle" ng-if="rf.disableDND">
+		<p class="rearrange-items-toggle">
 			<button class="btn btn-default"
 					blur-on-end
 					ng-click="rfl.moveIngredients = !rfl.moveIngredients">
@@ -169,32 +149,29 @@
 	<div class="form-group recipeForm-directions">
 		<label>Directions<span class="req">*</span></label>
 
-		<p class="recipeForm-directions-instructions-dnd" ng-if="rf.enableDND">
-			<small>Direction steps can be reordered by dragging the handle.</small>
-		</p>
-
-		<ul class="recipeForm-directions-list"
-			dnd-list="rf.recipeData.directions"
-			dnd-allowed-types="rf.allowedTypes.directions"
-			dnd-disable-if="rf.disableDND"
-			ng-class="{'dndEnabled': rf.enableDND, 'hasMove': rf.disableDND}">
+		<ul class="recipeForm-directions-list">
 
 			<li class="recipeForm-directions-step"
 				ng-repeat="step in rf.recipeData.directions"
-				dnd-draggable="step"
-				dnd-moved="rf.recipeData.directions.splice($index, 1)"
-				dnd-selected="rf.selected.ing = step"
-				dnd-type="step.type"
-				dnd-disable-if="rf.disableDND"
 				ng-class="{'last': $last, 'selected': rf.selected.step === step}">
 
-				<div class="dndHandle btn btn-info">
-					<strong>:::</strong>
-				</div>
+				<!-- MOVE -->
+				<span class="btn-group move-item"
+					  ng-class="{'showMove': rfl.moveDirections}">
+					<a class="btn btn-info"
+					   ng-click="rfl.moveItem($event, rf.recipeData.directions, $index, $index - 1)"
+					   ng-disabled="$first">
+						<i class="fa fa-arrow-up"></i>
+					</a>
+					<a class="btn btn-info"
+					   ng-click="rfl.moveItem($event, rf.recipeData.directions, $index, $index + 1)"
+					   ng-disabled="$last">
+						<i class="fa fa-arrow-down"></i>
+					</a>
+				</span>
 
-				<div class="nodrag-wrapper"
-					 dnd-nodrag
-					 dnd-disable-if="rf.disableDND">
+				<!-- INPUTS -->
+				<div class="input-wrapper">
 					<div class="input-group">
 						<div class="input-group-addon">{{$index + 1}}.</div>
 						<input id="directions-{{step.id}}"
@@ -214,26 +191,10 @@
 					</div>
 				</div>
 
-				<!-- MOVE -->
-				<span ng-if="rf.disableDND"
-					  class="btn-group move-item"
-					  ng-class="{'showMove': rfl.moveDirections}">
-					<a class="btn btn-info"
-					   ng-click="rfl.moveItem($event, rf.recipeData.directions, $index, $index - 1)"
-					   ng-disabled="$first">
-						<i class="fa fa-arrow-up"></i>
-					</a>
-					<a class="btn btn-info"
-					   ng-click="rfl.moveItem($event, rf.recipeData.directions, $index, $index + 1)"
-					   ng-disabled="$last">
-						<i class="fa fa-arrow-down"></i>
-					</a>
-				</span>
-
 			</li>
 		</ul>
 
-		<p class="rearrange-items-toggle" ng-if="rf.disableDND">
+		<p class="rearrange-items-toggle">
 			<button class="btn btn-default"
 					blur-on-end
 					ng-click="rfl.moveDirections = !rfl.moveDirections">

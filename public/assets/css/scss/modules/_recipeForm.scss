@@ -25,6 +25,49 @@
 			list-style: outside none;
 			padding-left: 0;
 
+			.input-wrapper {
+				@include mq($mq-large) {
+					display: inline-block;
+				}
+			}
+			.move-item {
+				margin: 0 0 5px;
+
+				@include mq($mq-large) {
+					margin: 0;
+					vertical-align: top;
+					width: 53px;
+				}
+				@include mq($mq-small) {
+					display: none;
+
+					&.showMove {
+						display: inline-block;
+					}
+				}
+
+				.btn {
+					padding-left: 6px;
+					padding-right: 6px;
+				}
+			}
+			&.recipeForm-directions-list {
+				.input-wrapper {
+					width: 100%;
+
+					@include mq($mq-large) {
+						width: calc(100% - 57px);
+					}
+				}
+				.move-item {
+					margin-top: 3px;
+
+					@include mq($mq-large) {
+						margin-top: 0;
+					}
+				}
+			}
+
 			li {
 				.input-group-addon,
 				.input-group-btn .btn,
@@ -43,27 +86,12 @@
 				}
 			}
 		}
-		.touchevents &-instructions-dnd {
-			display: none;
-		}
 	}
 	&-ingredients-item,
 	&-directions-step {
 		margin-bottom: 8px;
 	}
 	&-ingredients {
-		&-list {
-			@include mq($mq-large) {
-				max-width: 548px;
-
-				&.safari {
-					max-width: 565px;
-				}
-				&.firefox {
-					max-width: none;
-				}
-			}
-		}
 		&-item {
 			&-amt,
 			&-ingredient {
@@ -75,91 +103,6 @@
 			}
 			&-amt-input {
 				cursor: text;
-			}
-		}
-	}
-	ul[dnd-list] {
-		.dndHandle {
-			display: none;
-		}
-		&.dndEnabled {
-			min-height: 34px;
-			position: relative;
-
-			&.recipeForm-ingredients-list {
-				@include mq($mq-large) {
-					max-width: 590px;
-
-					&.safari {
-						max-width: 607px;
-					}
-				}
-			}
-			li {
-				position: relative;
-			}
-			.dndHandle {
-				cursor: move;
-				display: inline-block;
-				vertical-align: top;
-				width: 38px;
-			}
-			.nodrag-wrapper {
-				display: inline-block;
-				width: calc(100% - 42px);
-			}
-			.dndDraggingSource {
-				display: none;
-			}
-			.dndPlaceholder {
-				background-color: $color-drag-placeholder;
-				border-radius: 4px;
-				display: block;
-				margin-bottom: 8px;
-				margin-left: 0;
-				min-height: 34px;
-			}
-			&.recipeForm-ingredients-list .dndPlaceholder {
-				@include mq($mq-small) {
-					min-height: 71px;
-				}
-			}
-			& > li {
-				position: relative;
-			}
-		}
-		&.hasMove {
-			.move-item {
-				margin: 0 0 5px;
-
-				@include mq($mq-large) {
-					margin: 0;
-				}
-				@include mq($mq-small) {
-					display: none;
-
-					&.showMove {
-						display: inline-block;
-					}
-				}
-			}
-
-			&.recipeForm-directions-list {
-				.move-item {
-					margin-top: 3px;
-				}
-
-				@include mq($mq-large) {
-					.nodrag-wrapper {
-						display: inline-block;
-						width: calc(100% - 81px);
-					}
-					.move-item {
-						margin: 0;
-						vertical-align: top;
-						width: 77px;
-					}
-				}
 			}
 		}
 	}

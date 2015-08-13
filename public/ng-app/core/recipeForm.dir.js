@@ -40,26 +40,6 @@
 			// is this a touch device?
 			rf.isTouchDevice = !!Modernizr.touchevents;
 
-			// is using Firefox or Safari?
-			rf.isFirefox = typeof InstallTrigger !== 'undefined';
-			rf.isSafari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
-
-			// indicate if drag and drop should be enabled or disabled
-			rf.enableDND = !rf.isFirefox && !rf.isTouchDevice;
-			rf.disableDND = rf.isFirefox || rf.isTouchDevice;
-
-			// for drag and drop, to restrict dragging into the wrong section
-			rf.allowedTypes = {
-				ingredients: ['ing'],
-				directions: ['step']
-			};
-
-			// keep track of drag and drop selected items
-			rf.selected = {
-				ing: null,
-				item: null
-			};
-
 			// build lists
 			rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: $scope.generateId(), type: 'ing'}];
 			rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: $scope.generateId(), type: 'step'}];
