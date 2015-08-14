@@ -40,10 +40,6 @@
 				}
 				@include mq($mq-small) {
 					display: none;
-
-					&.showMove {
-						display: inline-block;
-					}
 				}
 
 				.btn {
@@ -51,20 +47,43 @@
 					padding-right: 6px;
 				}
 			}
+			&.showMoveControls {
+				@include mq($mq-small) {
+					.move-item {
+						display: inline-block;
+						vertical-align: top;
+
+						&.btn-group-vertical {
+							.btn {
+								border-radius: 0 0 4px 4px;
+								padding: 7.5px 6px;
+
+								&:first-child {
+									border-radius: 4px 4px 0 0;
+								}
+							}
+						}
+					}
+					.input-wrapper {
+						display: inline-block;
+						width: calc(100% - 31px);
+					}
+				}
+			}
 			&.recipeForm-directions-list {
 				.input-wrapper {
-					width: 100%;
-
 					@include mq($mq-large) {
 						width: calc(100% - 57px);
 					}
 				}
 				.move-item {
-					margin-top: 3px;
-
 					@include mq($mq-large) {
-						margin-top: 0;
+						margin-top: 9px;
 					}
+				}
+				&.showMoveControls .move-item.btn-group-vertical .btn {
+					padding-top: 9.5px;
+					padding-bottom: 9.5px;
 				}
 			}
 
@@ -77,7 +96,7 @@
 				&.moved {
 					.input-group-addon,
 					.btn,
-					input {
+					.form-control {
 						background: $brand-success;
 						border-color: #555;
 						color: #fff;
@@ -103,6 +122,23 @@
 			}
 			&-amt-input {
 				cursor: text;
+			}
+		}
+	}
+	&-directions-step {
+		textarea {
+			height: 80px;
+
+			@include mq($mq-large) {
+				height: 52px;
+			}
+		}
+		.input-group-btn {
+			width: 37px;
+
+			.btn {
+				position: absolute;
+					top: 0; bottom: 0;
 			}
 		}
 	}

@@ -5,9 +5,9 @@
 		.module('rBox')
 		.directive('recipeForm', recipeForm);
 
-	recipeForm.$inject = ['recipeData', 'Recipe', 'Slug', '$location', '$timeout', 'Upload'];
+	recipeForm.$inject = ['recipeData', 'Recipe', 'Slug', '$location', '$timeout', 'Upload', 'mediaCheck', 'MQ'];
 
-	function recipeForm(recipeData, Recipe, Slug, $location, $timeout, Upload) {
+	function recipeForm(recipeData, Recipe, Slug, $location, $timeout, Upload, mediaCheck, MQ) {
 
 		recipeFormCtrl.$inject = ['$scope'];
 
@@ -379,6 +379,17 @@
 			$scope.rfl.removeItem = function(model, i) {
 				model.splice(i, 1);
 			};
+
+			mediaCheck.init({
+				scope: $scope,
+				mq: MQ.LARGE,
+				enter: function(mq) {
+					$scope.rfl.isLargeView = true;
+				},
+				exit: function(mq) {
+					$scope.rfl.isLargeView = false;
+				}
+			});
 
 			/**
 			 * Move item up or down

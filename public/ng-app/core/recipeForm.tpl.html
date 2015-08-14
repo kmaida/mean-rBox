@@ -68,16 +68,17 @@
 					ng-click="rf.insertChar(char)">{{char}}</button>
 		</div>
 
-		<ul class="recipeForm-ingredients-list">
+		<ul class="recipeForm-ingredients-list"
+			ng-class="{'showMoveControls': rfl.moveIngredients}">
 
 			<li class="form-inline recipeForm-ingredients-item"
 				ng-repeat="ing in rf.recipeData.ingredients"
 				id="ingredient-{{ing.id}}"
-				ng-class="{'last': $last, 'selected': rf.selected.ing === ing}">
+				ng-class="{'last': $last}">
 
 				<!-- MOVE -->
 				<span class="btn-group move-item"
-					  ng-class="{'showMove': rfl.moveIngredients}">
+					  ng-class="{'btn-group-vertical': rfl.moveIngredients && !rfl.isLargeView}">
 					<a class="btn btn-warning"
 					   ng-click="rfl.moveItem($event, rf.recipeData.ingredients, $index, $index - 1)"
 					   ng-disabled="$first">
@@ -149,15 +150,15 @@
 	<div class="form-group recipeForm-directions">
 		<label>Directions<span class="req">*</span></label>
 
-		<ul class="recipeForm-directions-list">
+		<ul class="recipeForm-directions-list" ng-class="{'showMoveControls': rfl.moveDirections}">
 
 			<li class="recipeForm-directions-step"
 				ng-repeat="step in rf.recipeData.directions"
-				ng-class="{'last': $last, 'selected': rf.selected.step === step}">
+				ng-class="{'last': $last}">
 
 				<!-- MOVE -->
 				<span class="btn-group move-item"
-					  ng-class="{'showMove': rfl.moveDirections}">
+					  ng-class="{'btn-group-vertical': rfl.moveDirections && !rfl.isLargeView}">
 					<a class="btn btn-warning"
 					   ng-click="rfl.moveItem($event, rf.recipeData.directions, $index, $index - 1)"
 					   ng-disabled="$first">
@@ -174,13 +175,12 @@
 				<div class="input-wrapper">
 					<div class="input-group">
 						<div class="input-group-addon">{{$index + 1}}.</div>
-						<input id="directions-{{step.id}}"
+						<textarea id="directions-{{step.id}}"
 							   name="directions-{{step.id}}"
-							   type="text"
 							   placeholder="Directions for step {{$index + 1}}"
 							   ng-model="step.step"
 							   class="form-control"
-							   ng-focus="rf.clearChar()">
+							   ng-focus="rf.clearChar()"></textarea>
 						<div class="input-group-btn">
 							<button class="btn btn-danger"
 									ng-click="rfl.removeItem(rf.recipeData.directions, $index)"
