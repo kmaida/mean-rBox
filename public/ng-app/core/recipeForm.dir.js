@@ -154,7 +154,7 @@
 			rf.updateFile = function(files) {
 				if (files && files.length) {
 					if (files[0].size > 300000) {
-						rf.uploadError = 'Filesize over 300kb - photo was not uploaded.';
+						rf.uploadError = 'Filesize over 500kb - photo was not uploaded.';
 						rf.removePhoto();
 					} else {
 						rf.uploadError = false;
