@@ -55,14 +55,18 @@
 				<ul>
 					<li ng-repeat="ing in recipe.recipe.ingredients"
 						id="#ing-{{$index}}"
-						ng-click="recipe.toggleCheck('ing', $index)"
-						ng-class="{'checked': recipe.ingChecked[$index]}">
-						<i class="fa fa-fw"
-						   ng-class="{'fa-circle-thin': !recipe.ingChecked[$index], 'fa-check-circle': recipe.ingChecked[$index]}"></i>
-						<span>
-							{{::ing.amt}}
-							{{::ing.ingredient}}
+						ng-click="!ing.isHeading ? recipe.toggleCheck('ing', $index) : null"
+						ng-class="{'checked': recipe.ingChecked[$index], 'heading': ing.isHeading}">
+
+						<span ng-if="!ing.isHeading">
+							<i class="fa fa-fw"
+							   ng-class="{'fa-circle-thin': !recipe.ingChecked[$index], 'fa-check-circle': recipe.ingChecked[$index]}"></i>
+							<span>{{::ing.amt}} {{::ing.ingredient}}</span>
 						</span>
+
+						<h3 class="recipe-ingredients-heading" ng-if="ing.isHeading">
+							{{::ing.headingText}}
+						</h3>
 					</li>
 				</ul>
 			</section>

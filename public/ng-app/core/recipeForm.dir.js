@@ -202,6 +202,7 @@
 			/**
 			 * Clean empty items out of array before saving
 			 * Ingredients or Directions
+			 * Also clears out empty headings
 			 *
 			 * @param modelName {string} ingredients / directions
 			 * @private
@@ -211,7 +212,7 @@
 				var _check = modelName === 'ingredients' ? 'ingredient' : 'step';
 
 				angular.forEach(_array, function(obj, i) {
-					if (!!obj[_check] === false) {
+					if (!!obj[_check] === false && !obj.isHeading || obj.isHeading && !!obj.headingText === false) {
 						_array.splice(i, 1);
 					}
 				});
@@ -353,19 +354,24 @@
 			 * @param $event {object} click event
 			 * @param model {object} rf.recipeData model
 			 * @param type {string} ing -or- step
+			 * @param isHeading {boolean}
 			 */
-			$scope.rfl.addItem = function($event, model, type) {
+			$scope.rfl.addItem = function($event, model, type, isHeading) {
 				var _newItem = {
 					id: $scope.generateId(),
 					type: type
 				};
+
+				if (isHeading) {
+					_newItem.isHeading = true;
+				}
 
 				model.push(_newItem);
 
 				$timeout(function() {
 					var _newestInput = angular.element($event.target).parent('p').prev('.last').find('input').eq(0);
 					_newestInput.click();
-					_newestInput.focus();
+					_newestInput.focus();   // TODO: focus isn't highlighting properly
 				});
 			};
 

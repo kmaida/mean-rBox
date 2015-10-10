@@ -124,6 +124,15 @@
 				cursor: text;
 			}
 		}
+		&-heading {
+			&-input {
+				font-weight: bold;
+
+				@include mq($mq-large) {
+					width: 261px !important;
+				}
+			}
+		}
 	}
 	&-directions-step {
 		textarea {

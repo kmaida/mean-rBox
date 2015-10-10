@@ -31,6 +31,13 @@
 	}
 	li {
 		padding: 5px 0;
+
+		&.heading {
+			cursor: default;
+		}
+	}
+	&-heading {
+		font-size: 18px;
 	}
 }
 .recipe-directions {

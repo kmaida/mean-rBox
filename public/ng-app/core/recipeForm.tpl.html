@@ -92,7 +92,7 @@
 				</span>
 
 				<!-- INPUTS -->
-				<div class="input-wrapper">
+				<div class="input-wrapper" ng-if="!ing.isHeading">
 					<div class="input-group recipeForm-ingredients-item-amt">
 						<label for="ingredientAmt-{{ing.id}}" class="input-group-addon">Amount</label>
 						<input id="ingredientAmt-{{ing.id}}"
@@ -125,6 +125,23 @@
 					</div>
 				</div>
 
+				<div class="input-wrapper" ng-if="ing.isHeading">
+					<div class="input-group recipeForm-ingredients-heading">
+						<label for="ingredient-heading-{{ing.id}}" class="input-group-addon">Heading</label>
+						<input id="ingredient-heading-{{ing.id}}" name="ingredient-heading-{{ing.id}}" type="text"
+							   placeholder="Heading"
+							   ng-model="ing.headingText"
+							   class="form-control recipeForm-ingredients-heading-input"
+							   ng-focus="rf.clearChar()">
+						<div class="input-group-btn">
+							<button class="btn btn-danger"
+									ng-click="rfl.removeItem(rf.recipeData.ingredients, $index)">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+
 			</li>
 		</ul>
 
@@ -143,6 +160,12 @@
 					blur-on-end
 					ng-click="rfl.addItem($event, rf.recipeData.ingredients, 'ing')">
 				<i class="fa fa-plus"></i> Add Another Ingredient
+			</button>
+
+			<button class="btn btn-info"
+					blur-on-end
+					ng-click="rfl.addItem($event, rf.recipeData.ingredients, 'ing', true)">
+				<i class="fa fa-plus"></i> Add A Heading
 			</button>
 		</p>
 	</div>
@@ -360,7 +383,7 @@
 
 	<button class="btn"
 			ng-class="{'btn-primary': !rf.saved, 'btn-success': rf.saved === true, 'btn-danger': rf.saved === 'error'}"
-			ng-disabled="recipeForm.$invalid || !rf.recipeData.ingredients[0].ingredient || !rf.recipeData.directions[0].step"
+			ng-disabled="recipeForm.$invalid || (!rf.recipeData.ingredients[0].ingredient && !rf.recipeData.ingredients[0].isHeading) || !rf.recipeData.directions[0].step"
 			ng-click="rf.saveRecipe()">
 		<i class="fa"
 		   ng-class="{'fa-download': !rf.saved, 'fa-check': rf.saved === true, 'fa-ban': rf.saved === 'error'}"></i> {{rf.saveBtnText}}
