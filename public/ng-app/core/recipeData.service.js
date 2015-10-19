@@ -15,6 +15,8 @@
 	 * @private
 	 */
 	function _getRes(response) {
+		console.log(response);
+
 		if (typeof response.data === 'object') {
 			return response.data;
 		} else {
