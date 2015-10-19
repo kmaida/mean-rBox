@@ -80,8 +80,6 @@
 					home.mapTags[recipe.tags[t]] += 1;
 				}
 			});
-
-			console.log(data);
 		}
 
 		/**
@@ -91,7 +89,7 @@
 		 * @private
 		 */
 		function _publicRecipesFailure(error) {
-			console.log(error);
+			console.log('There was an error retrieving recipes:', error);
 		}
 
 		recipeData.getPublicRecipes()
