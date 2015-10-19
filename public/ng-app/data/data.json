@@ -1,10 +1,4 @@
 {
   "title": "rBox",
-  "summary": "MEAN stack recipe box app",
-  "sampleContent": [
-    { "fruit": "apples", "color": "red" },
-    { "fruit": "bananas", "color": "yellow" },
-    { "fruit": "kiwi fruits", "color": "green" },
-    { "fruit": "peaches", "color": "pink" }
-  ]
+  "summary": "MEAN stack recipe box app"
 }
