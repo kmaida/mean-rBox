@@ -7,7 +7,7 @@
 		.service('recipeData', recipeData);
 
 	/**
-	 * GET promise response function
+	 * HTTP promise response function
 	 * Checks typeof data returned and succeeds if JS object, throws error if not
 	 *
 	 * @param response {*} data from $http
@@ -15,13 +15,21 @@
 	 * @private
 	 */
 	function _getRes(response) {
-		console.log(response);
-
 		if (typeof response.data === 'object') {
 			return response.data;
 		} else {
 			throw new Error('retrieved data is not typeof object.');
 		}
+	}
+
+	/**
+	 * HTTP promise response error
+	 *
+	 * @param error {*} promise error
+	 * @private
+	 */
+	function _resError(error) {
+		throw new Error('promise failed; could not retrieve data from API.', error);
 	}
 
 	recipeData.$inject = ['$http'];
@@ -36,7 +44,7 @@
 		this.getRecipe = function(slug) {
 			return $http
 				.get('/api/recipe/' + slug)
-				.then(_getRes);
+				.then(_getRes, _resError);
 		};
 
 		/**
@@ -48,7 +56,7 @@
 		this.createRecipe = function(recipeData) {
 			return $http
 				.post('/api/recipe/new', recipeData)
-				.then(_getRes);
+				.then(_getRes, _resError);
 		};
 
 		/**
@@ -82,7 +90,7 @@
 		this.getPublicRecipes = function() {
 			return $http
 				.get('/api/recipes')
-				.then(_getRes);
+				.then(_getRes, _resError);
 		};
 
 		/**
@@ -93,7 +101,7 @@
 		this.getMyRecipes = function() {
 			return $http
 				.get('/api/recipes/me')
-				.then(_getRes);
+				.then(_getRes, _resError);
 		};
 
 		/**
@@ -105,7 +113,7 @@
 		this.getAuthorRecipes = function(userId) {
 			return $http
 				.get('/api/recipes/author/' + userId)
-				.then(_getRes);
+				.then(_getRes, _resError);
 		};
 
 		/**
@@ -117,11 +125,11 @@
 		this.fileRecipe = function(recipeId) {
 			return $http
 				.put('/api/recipe/' + recipeId + '/file')
-				.then(_getRes);
+				.then(_getRes, _resError);
 		};
 
 		/**
-		 * Get my filed recipes
+		 * Get my filed recipes (POST)
 		 *
 		 * @param recipeIds {Array} array of user's filed recipe IDs
 		 * @returns {promise}
@@ -129,7 +137,7 @@
 		this.getFiledRecipes = function(recipeIds) {
 			return $http
 				.post('/api/recipes/me/filed', recipeIds)
-				.then(_getRes);
+				.then(_getRes, _resError);
 		};
 
 		this.cleanUploads = function(files) {
