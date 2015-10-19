@@ -60,6 +60,8 @@
 		 */
 		function _localDataSuccess(data) {
 			home.localData = data;
+
+			console.log('fetched local data');
 		}
 		localData.getJSON().then(_localDataSuccess);
 
