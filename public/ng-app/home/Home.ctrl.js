@@ -80,6 +80,8 @@
 					home.mapTags[recipe.tags[t]] += 1;
 				}
 			});
+
+			console.log(data);
 		}
 
 		/**
