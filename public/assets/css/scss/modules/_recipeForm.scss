@@ -68,6 +68,16 @@
 						display: inline-block;
 						width: calc(100% - 31px);
 					}
+					.recipeForm-ingredients-heading {
+						&-input,
+						.btn {
+							height: 71px;
+
+							@include mq($mq-large) {
+								height: auto;
+							}
+						}
+					}
 				}
 			}
 			&.recipeForm-directions-list {
@@ -105,6 +115,9 @@
 				}
 			}
 		}
+		.btn-info {
+			margin-bottom: 4px;
+		}
 	}
 	&-ingredients-item,
 	&-directions-step {
@@ -125,6 +138,9 @@
 			}
 		}
 		&-heading {
+			.input-group-addon {
+				font-weight: bold;
+			}
 			&-input {
 				font-weight: bold;
 
