@@ -81,8 +81,19 @@
 				}
 			});
 		}
+
+		/**
+		 * Failure to return public recipes
+		 *
+		 * @param error
+		 * @private
+		 */
+		function _publicRecipesFailure(error) {
+			console.log(error);
+		}
+
 		recipeData.getPublicRecipes()
-			.then(_publicRecipesSuccess);
+			.then(_publicRecipesSuccess, _publicRecipesFailure);
 
 		/**
 		 * Successful promise getting user
