@@ -5,19 +5,25 @@
 		.module('rBox')
 		.controller('HeaderCtrl', headerCtrl);
 
-	headerCtrl.$inject = ['$scope', '$location', '$auth', 'userData'];
+	headerCtrl.$inject = ['$scope', '$location', '$auth', 'userData', 'Utils'];
 
-	function headerCtrl($scope, $location, $auth, userData) {
+	function headerCtrl($scope, $location, $auth, userData, Utils) {
 		// controllerAs ViewModel
 		var header = this;
+
+		// bindable members
+		header.logout = logout;
+		header.isAuthenticated = Utils.isAuthenticated;
+		header.indexIsActive = indexIsActive;
+		header.navIsActive = navIsActive;
 
 		/**
 		 * Log the user out of whatever authentication they've signed in with
 		 */
-		header.logout = function() {
+		function logout() {
 			header.adminUser = undefined;
 			$auth.logout('/login');
-		};
+		}
 
 		/**
 		 * If user is authenticated and adminUser is undefined,
@@ -41,7 +47,7 @@
 			}
 
 			// if user is authenticated, get user data
-			if ($auth.isAuthenticated() && header.user === undefined) {
+			if (Utils.isAuthenticated() && header.user === undefined) {
 				userData.getUser()
 					.then(_getUserSuccess);
 			}
@@ -50,25 +56,15 @@
 		$scope.$on('$locationChangeSuccess', _checkUserAdmin);
 
 		/**
-		 * Is the user authenticated?
-		 * Needs to be a function so it is re-executed
-		 *
-		 * @returns {boolean}
-		 */
-		header.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
-
-		/**
 		 * Currently active nav item when '/' index
 		 *
 		 * @param {string} path
 		 * @returns {boolean}
 		 */
-		header.indexIsActive = function(path) {
+		function indexIsActive(path) {
 			// path should be '/'
 			return $location.path() === path;
-		};
+		}
 
 		/**
 		 * Currently active nav item
@@ -76,9 +72,9 @@
 		 * @param {string} path
 		 * @returns {boolean}
 		 */
-		header.navIsActive = function(path) {
+		function navIsActive(path) {
 			return $location.path().substr(0, path.length) === path;
-		};
+		}
 	}
 
 })();

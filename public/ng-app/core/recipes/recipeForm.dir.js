@@ -5,9 +5,9 @@
 		.module('rBox')
 		.directive('recipeForm', recipeForm);
 
-	recipeForm.$inject = ['$timeout', 'mediaCheck', 'MQ'];
+	recipeForm.$inject = ['$timeout'];
 
-	function recipeForm($timeout, mediaCheck, MQ) {
+	function recipeForm($timeout) {
 		// return directive
 		return {
 			restrict: 'EA',
@@ -74,12 +74,22 @@
 			$scope.$on('enter-mobile', _enterMobile);
 			$scope.$on('exit-mobile', _exitMobile);
 
-			function _exitMobile(mq) {
-				$scope.rfl.isLargeView = true;
+			/**
+			 * Enter mobile - unset large view
+			 *
+			 * @private
+			 */
+			function _enterMobile() {
+				$scope.rfl.isLargeView = false;
 			}
 
-			function _enterMobile(mq) {
-				$scope.rfl.isLargeView = false;
+			/**
+			 * Exit mobile - set large view
+			 *
+			 * @private
+			 */
+			function _exitMobile() {
+				$scope.rfl.isLargeView = true;
 			}
 
 			/**

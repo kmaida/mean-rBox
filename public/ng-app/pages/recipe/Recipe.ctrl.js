@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('RecipeCtrl', RecipeCtrl);
 
-	RecipeCtrl.$inject = ['Page', '$auth', '$routeParams', 'recipeData', 'userData'];
+	RecipeCtrl.$inject = ['Page', 'Utils', '$routeParams', 'recipeData', 'userData'];
 
-	function RecipeCtrl(Page, $auth, $routeParams, recipeData, userData) {
+	function RecipeCtrl(Page, Utils, $routeParams, recipeData, userData) {
 		// controllerAs ViewModel
 		var recipe = this;
 		var recipeSlug = $routeParams.slug;
@@ -27,7 +27,7 @@
 			recipe.fileText = 'File this recipe';
 			recipe.unfileText = 'Remove from Filed Recipes';
 		}
-		if ($auth.isAuthenticated()) {
+		if (Utils.isAuthenticated()) {
 			userData.getUser()
 				.then(_getUserSuccess);
 		}

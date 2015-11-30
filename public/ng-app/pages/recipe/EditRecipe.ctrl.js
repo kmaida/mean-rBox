@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('EditRecipeCtrl', EditRecipeCtrl);
 
-	EditRecipeCtrl.$inject = ['Page', '$auth', '$routeParams', 'recipeData', 'userData', '$location', '$timeout'];
+	EditRecipeCtrl.$inject = ['Page', 'Utils', '$routeParams', 'recipeData', 'userData', '$location', '$timeout'];
 
-	function EditRecipeCtrl(Page, $auth, $routeParams, recipeData, userData, $location, $timeout) {
+	function EditRecipeCtrl(Page, Utils, $routeParams, recipeData, userData, $location, $timeout) {
 		// controllerAs ViewModel
 		var edit = this;
 		var _recipeSlug = $routeParams.slug;
@@ -37,14 +37,7 @@
 			edit.currentTab = query;
 		};
 
-		/**
-		 * Is the user authenticated?
-		 *
-		 * @returns {boolean}
-		 */
-		edit.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
+		edit.isAuthenticated = Utils.isAuthenticated;
 
 		function _getUserSuccess(data) {
 			edit.user = data;

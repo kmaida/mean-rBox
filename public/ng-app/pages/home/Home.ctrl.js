@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('HomeCtrl', HomeCtrl);
 
-	HomeCtrl.$inject = ['$scope', 'Page', 'recipeData', 'Recipe', '$auth', 'userData', '$location'];
+	HomeCtrl.$inject = ['$scope', 'Page', 'recipeData', 'Recipe', 'Utils', 'userData', '$location'];
 
-	function HomeCtrl($scope, Page, recipeData, Recipe, $auth, userData, $location) {
+	function HomeCtrl($scope, Page, recipeData, Recipe, Utils, userData, $location) {
 		// controllerAs ViewModel
 		var home = this;
 
@@ -117,10 +117,10 @@
 		}
 
 		// if user is authenticated, get user data
-		if ($auth.isAuthenticated() && home.user === undefined) {
+		if (Utils.isAuthenticated() && home.user === undefined) {
 			userData.getUser()
 				.then(_getUserSuccess);
-		} else if (!$auth.isAuthenticated()) {
+		} else if (!Utils.isAuthenticated()) {
 			home.welcomeMsg = 'Welcome to <strong>rBox</strong>! Browse through the public recipe box or <a href="/login">Login</a> to file or contribute recipes.';
 		}
 	}

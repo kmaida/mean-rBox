@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('AccountCtrl', AccountCtrl);
 
-	AccountCtrl.$inject = ['$scope', 'Page', '$auth', 'userData', '$timeout', 'OAUTH', 'User', '$location'];
+	AccountCtrl.$inject = ['$scope', 'Page', 'Utils', '$auth', 'userData', '$timeout', 'OAUTH', 'User', '$location'];
 
-	function AccountCtrl($scope, Page, $auth, userData, $timeout, OAUTH, User, $location) {
+	function AccountCtrl($scope, Page, Utils, $auth, userData, $timeout, OAUTH, User, $location) {
 		// controllerAs ViewModel
 		var account = this;
 		var _tab = $location.search().view;
@@ -39,14 +39,7 @@
 		// all available login services
 		account.logins = OAUTH.LOGINS;
 
-		/**
-		 * Is the user authenticated?
-		 *
-		 * @returns {boolean}
-		 */
-		account.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
+		account.isAuthenticated = Utils.isAuthenticated;
 
 		/**
 		 * Get user's profile information

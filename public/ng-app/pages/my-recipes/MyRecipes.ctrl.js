@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('MyRecipesCtrl', MyRecipesCtrl);
 
-	MyRecipesCtrl.$inject = ['Page', '$auth', 'recipeData', 'userData', '$location', 'mediaCheck', '$scope', 'MQ', '$timeout'];
+	MyRecipesCtrl.$inject = ['Page', 'Utils', 'recipeData', 'userData', '$location', 'mediaCheck', '$scope', 'MQ', '$timeout'];
 
-	function MyRecipesCtrl(Page, $auth, recipeData, userData, $location, mediaCheck, $scope, MQ, $timeout) {
+	function MyRecipesCtrl(Page, Utils, recipeData, userData, $location, mediaCheck, $scope, MQ, $timeout) {
 		// controllerAs ViewModel
 		var myRecipes = this;
 		var _tab = $location.search().view;
@@ -62,14 +62,7 @@
 			myRecipes.currentTab = query;
 		};
 
-		/**
-		 * Is the user authenticated?
-		 *
-		 * @returns {boolean}
-		 */
-		myRecipes.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
+		myRecipes.isAuthenticated = Utils.isAuthenticated;
 
 		/**
 		 * Successful promise getting user's data

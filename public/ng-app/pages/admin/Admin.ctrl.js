@@ -5,22 +5,15 @@
 		.module('rBox')
 		.controller('AdminCtrl', AdminCtrl);
 
-	AdminCtrl.$inject = ['Page', '$auth', 'userData', 'User'];
+	AdminCtrl.$inject = ['Page', 'Utils', 'userData', 'User'];
 
-	function AdminCtrl(Page, $auth, userData, User) {
+	function AdminCtrl(Page, Utils, userData, User) {
 		// controllerAs ViewModel
 		var admin = this;
 
 		Page.setTitle('Admin');
 
-		/**
-		 * Determines if the user is authenticated
-		 *
-		 * @returns {boolean}
-		 */
-		admin.isAuthenticated = function() {
-			return $auth.isAuthenticated();
-		};
+		admin.isAuthenticated = Utils.isAuthenticated;
 
 		/**
 		 * Function for successful API call getting user list
