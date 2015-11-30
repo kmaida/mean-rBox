@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('LoginCtrl', LoginCtrl);
 
-	LoginCtrl.$inject = ['Page', '$auth', 'OAUTH', '$rootScope', '$location', 'localData'];
+	LoginCtrl.$inject = ['Page', '$auth', 'OAUTH', '$rootScope', '$location'];
 
-	function LoginCtrl(Page, $auth, OAUTH, $rootScope, $location, localData) {
+	function LoginCtrl(Page, $auth, OAUTH, $rootScope, $location) {
 		// controllerAs ViewModel
 		var login = this;
 
@@ -23,17 +23,6 @@
 		login.isAuthenticated = function() {
 			return $auth.isAuthenticated();
 		};
-
-		/**
-		 * Function to run when local data successful
-		 *
-		 * @param data {JSON}
-		 * @private
-		 */
-		function _localDataSuccess(data) {
-			login.localData = data;
-		}
-		localData.getJSON().then(_localDataSuccess);
 
 		/**
 		 * Authenticate the user via Oauth with the specified provider

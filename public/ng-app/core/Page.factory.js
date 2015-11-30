@@ -6,19 +6,33 @@
 		.factory('Page', Page);
 
 	function Page() {
+		// private vars
+		var siteTitle = 'rBox';
 		var pageTitle = 'All Recipes';
 
-		function title() {
-			return pageTitle;
+		// callable members
+		return {
+			getTitle: getTitle,
+			setTitle: setTitle
+		};
+
+		/**
+		 * Title function
+		 * Sets site title and page title
+		 *
+		 * @returns {string} site title + page title
+		 */
+		function getTitle() {
+			return siteTitle + ' | ' + pageTitle;
 		}
 
+		/**
+		 * Set page title
+		 *
+		 * @param newTitle {string}
+		 */
 		function setTitle(newTitle) {
 			pageTitle = newTitle;
-		}
-
-		return {
-			title: title,
-			setTitle: setTitle
 		}
 	}
 })();

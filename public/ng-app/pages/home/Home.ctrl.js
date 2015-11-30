@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('HomeCtrl', HomeCtrl);
 
-	HomeCtrl.$inject = ['Page', 'localData', 'recipeData', 'Recipe', '$auth', 'userData', '$location'];
+	HomeCtrl.$inject = ['Page', 'recipeData', 'Recipe', '$auth', 'userData', '$location'];
 
-	function HomeCtrl(Page, localData, recipeData, Recipe, $auth, userData, $location) {
+	function HomeCtrl(Page, recipeData, Recipe, $auth, userData, $location) {
 		// controllerAs ViewModel
 		var home = this;
 
@@ -51,19 +51,6 @@
 		for (var n = 0; n < home.tags.length; n++) {
 			home.mapTags[home.tags[n]] = 0;
 		}
-
-		/**
-		 * Get local data from static JSON
-		 *
-		 * @param data (successful promise returns)
-		 * @returns {object} data
-		 */
-		function _localDataSuccess(data) {
-			home.localData = data;
-
-			console.log('fetched local data');
-		}
-		localData.getJSON().then(_localDataSuccess);
 
 		/**
 		 * Successful promise returned from getting public recipes

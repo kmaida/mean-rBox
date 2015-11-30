@@ -5,16 +5,11 @@
 		.module('rBox')
 		.controller('HeaderCtrl', headerCtrl);
 
-	headerCtrl.$inject = ['$scope', '$location', 'localData', '$auth', 'userData'];
+	headerCtrl.$inject = ['$scope', '$location', '$auth', 'userData'];
 
-	function headerCtrl($scope, $location, localData, $auth, userData) {
+	function headerCtrl($scope, $location, $auth, userData) {
 		// controllerAs ViewModel
 		var header = this;
-
-		function _localDataSuccess(data) {
-			header.localData = data;
-		}
-		localData.getJSON().then(_localDataSuccess);
 
 		/**
 		 * Log the user out of whatever authentication they've signed in with
