@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('HomeCtrl', HomeCtrl);
 
-	HomeCtrl.$inject = ['Page', 'recipeData', 'Recipe', '$auth', 'userData', '$location'];
+	HomeCtrl.$inject = ['$scope', 'Page', 'recipeData', 'Recipe', '$auth', 'userData', '$location'];
 
-	function HomeCtrl(Page, recipeData, Recipe, $auth, userData, $location) {
+	function HomeCtrl($scope, Page, recipeData, Recipe, $auth, userData, $location) {
 		// controllerAs ViewModel
 		var home = this;
 
@@ -26,6 +26,27 @@
 			}
 		];
 		home.currentTab = _tab ? _tab : 'recipe-boxes';
+
+		$scope.$on('enter-mobile', _enterMobile);
+		$scope.$on('exit-mobile', _exitMobile);
+
+		/**
+		 * Enter mobile - view is small
+		 *
+		 * @private
+		 */
+		function _enterMobile() {
+			home.viewformat = 'small';
+		}
+
+		/**
+		 * Exit mobile - view is large
+		 *
+		 * @private
+		 */
+		function _exitMobile() {
+			home.viewformat = 'large';
+		}
 
 		/**
 		 * Change tab

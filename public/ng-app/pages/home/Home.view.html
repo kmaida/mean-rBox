@@ -1,4 +1,4 @@
-<article id="content-wrapper" class="content-wrapper home-wrapper" view-switch>
+<article id="content-wrapper" class="content-wrapper home-wrapper">
 	<section id="content-main" class="content-main home-content clearfix" ng-cloak>
 
 		<h1 class="content-heading">All Recipes</h1>
@@ -17,7 +17,7 @@
 			<p class="lead">Select a dish category or tag to find recipe options quickly.</p>
 
 			<ul class="list categories-list"
-				ng-class="{'nav-pills nav nav-justified': vs.viewformat === 'large', 'list-inline': vs.viewformat === 'small'}">
+				ng-class="{'nav-pills nav nav-justified': home.viewformat === 'large', 'list-inline': home.viewformat === 'small'}">
 				<li ng-repeat="cat in home.categories track by $index">
 					<a ng-href="/recipes/category/{{cat | lowercase}}" ng-class="{disabled: !home.mapCategories[cat]}">
 						{{cat}}s<span ng-if="home.mapCategories[cat]" class="badge">{{home.mapCategories[cat]}}</span>
