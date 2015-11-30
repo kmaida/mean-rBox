@@ -27,24 +27,30 @@
 		];
 		myRecipes.currentTab = _tab ? _tab : 'recipe-box';
 
-		mediaCheck.init({
-			scope: $scope,
-			mq: MQ.SMALL,
-			enter: function() {
-				$timeout(function() {
-					myRecipes.tabs[0].name = 'Recipe Box';
-					myRecipes.tabs[1].name = 'Filed';
-					myRecipes.tabs[2].name = 'New Recipe';
-				});
-			},
-			exit: function() {
-				$timeout(function() {
-					myRecipes.tabs[0].name = 'My Recipe Box';
-					myRecipes.tabs[1].name = 'Filed Recipes';
-					myRecipes.tabs[2].name = 'Add New Recipe';
-				});
-			}
-		});
+		$scope.$on('enter-mobile', _enterMobile);
+		$scope.$on('exit-mobile', _exitMobile);
+
+		/**
+		 * Enter mobile - set shorter tab names
+		 *
+		 * @private
+		 */
+		function _enterMobile() {
+			myRecipes.tabs[0].name = 'Recipe Box';
+			myRecipes.tabs[1].name = 'Filed';
+			myRecipes.tabs[2].name = 'New Recipe';
+		}
+
+		/**
+		 * Exit mobile - set longer tab names
+		 *
+		 * @private
+		 */
+		function _exitMobile() {
+			myRecipes.tabs[0].name = 'My Recipe Box';
+			myRecipes.tabs[1].name = 'Filed Recipes';
+			myRecipes.tabs[2].name = 'Add New Recipe';
+		}
 
 		/**
 		 * Change tab
