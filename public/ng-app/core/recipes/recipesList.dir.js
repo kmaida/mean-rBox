@@ -36,12 +36,21 @@
 				function() {
 					return angular.element('.recipesList-list-item').length;
 				},
-				function(newVal, oldVal) {
-					if (newVal) {
-						$scope.rll.displayedResults = newVal;
-					}
-				}
+				_$watchRecipesList
 			);
+
+			/**
+			 * $watch recipesList list items
+			 *
+			 * @param newVal
+			 * @param oldVal
+			 * @private
+			 */
+			function _$watchRecipesList(newVal, oldVal) {
+				if (newVal) {
+					$scope.rll.displayedResults = newVal;
+				}
+			}
 		}
 	}
 
@@ -93,12 +102,6 @@
 		// set all filters to empty
 		rl.filterPredicates = {};
 
-		function _resetFilterPredicates() {
-			rl.filterPredicates.cat = '';
-			rl.filterPredicates.tag = '';
-			rl.filterPredicates.diet = '';
-		}
-
 		// set up sort predicate and reversals
 		rl.sortPredicate = 'name';
 
@@ -108,18 +111,35 @@
 			nIng: false
 		};
 
+		rl.toggleSort = toggleSort;
+		rl.loadMore = loadMore;
+		rl.toggleSearchFilter = toggleSearchFilter;
+		rl.clearSearchFilter = clearSearchFilter;
+		rl.activeSearchFilters = activeSearchFilters;
+
+		/**
+		 * Reset filter predicates
+		 *
+		 * @private
+		 */
+		function _resetFilterPredicates() {
+			rl.filterPredicates.cat = '';
+			rl.filterPredicates.tag = '';
+			rl.filterPredicates.diet = '';
+		}
+
 		/**
 		 * Toggle sort asc/desc
 		 *
 		 * @param predicate {string}
 		 */
-		rl.toggleSort = function(predicate) {
+		function toggleSort(predicate) {
 			if (_lastSortedBy === predicate) {
 				rl.reverseObj[predicate] = !rl.reverseObj[predicate];
 			}
 			rl.reverse = rl.reverseObj[predicate];
 			_lastSortedBy = predicate;
-		};
+		}
 
 		/**
 		 * Reset results showing to initial default on search/filter
@@ -134,39 +154,56 @@
 		/**
 		 * Load More results
 		 */
-		rl.loadMore = function() {
+		function loadMore() {
 			rl.nResultsShowing = rl.nResultsShowing += _resultsSet;
-		};
+		}
 
-		// watch search query and if it exists, clear filters and reset results showing
-		$scope.$watch('rl.query', function(newVal, oldVal) {
+		$scope.$watch('rl.query', _$watchQuery);
+
+		/**
+		 * $watch search query and if it exists, clear filters and reset results showing
+		 *
+		 * @param newVal
+		 * @param oldVal
+		 * @private
+		 */
+		function _$watchQuery(newVal, oldVal) {
 			if (rl.query) {
 				_resetFilterPredicates();
 				_resetResultsShowing();
 			}
-		});
+		}
 
-		// watch filters and if any of them change, reset the results showing
-		$scope.$watch('rl.filterPredicates', function(newVal, oldVal) {
+		$scope.$watch('rl.filterPredicates', _$watchPredicates);
+
+		/**
+		 * $watch filterPredicates
+		 * watch filters and if any of them change, reset the results showing
+		 *
+		 * @param newVal
+		 * @param oldVal
+		 * @private
+		 */
+		function _$watchPredicates(newVal, oldVal) {
 			if (!!newVal && newVal !== oldVal) {
 				_resetResultsShowing();
 			}
-		});
+		}
 
 		/**
 		 * Toggle search/filter section open/closed
 		 */
-		rl.toggleSearchFilter = function() {
+		function toggleSearchFilter() {
 			rl.showSearchFilter = !rl.showSearchFilter;
-		};
+		}
 
 		/**
 		 * Clear search query and all filters
 		 */
-		rl.clearSearchFilter = function() {
+		function clearSearchFilter() {
 			_resetFilterPredicates();
 			rl.query = '';
-		};
+		}
 
 		/**
 		 * Show number of currently active search + filter items
@@ -175,7 +212,7 @@
 		 * @param filtersObj {object}
 		 * @returns {number}
 		 */
-		rl.activeSearchFilters = function(query, filtersObj) {
+		function activeSearchFilters(query, filtersObj) {
 			var total = 0;
 
 			if (query) {
@@ -188,6 +225,6 @@
 			});
 
 			return total;
-		};
+		}
 	}
 }());
