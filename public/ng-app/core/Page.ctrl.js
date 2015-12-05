@@ -12,7 +12,6 @@
 
 		// private variables
 		var _handlingRouteChangeError = false;
-		// Set up functionality to run on enter/exit of media query
 		var _mc = mediaCheck.init({
 			scope: $scope,
 			media: {
@@ -26,7 +25,7 @@
 		_init();
 
 		/**
-		 * INIT function executes procedural code
+		 * INIT
 		 *
 		 * @private
 		 */
