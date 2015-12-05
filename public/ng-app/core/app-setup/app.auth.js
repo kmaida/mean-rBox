@@ -31,7 +31,17 @@
 	authRun.$inject = ['$rootScope', '$location', '$auth'];
 
 	function authRun($rootScope, $location, $auth) {
-		$rootScope.$on('$routeChangeStart', function(event, next, current) {    // eslint-disable-line angular/on-watch
+		/**
+		 * $on $routeChangeStart
+		 * Check authentication
+		 * Redirect appropriately
+		 *
+		 * @param event
+		 * @param next
+		 * @param current
+		 * @private
+		 */
+		function _$routeChangeStart(event, next, current) {
 			if (next && next.$$route && next.$$route.secure && !$auth.isAuthenticated()) {  // eslint-disable-line angular/no-private-call
 				$rootScope.authPath = $location.path();
 
@@ -40,7 +50,9 @@
 					$location.path('/login');
 				});
 			}
-		});
+		}
+
+		$rootScope.$on('$routeChangeStart', _$routeChangeStart);    // eslint-disable-line angular/on-watch
 	}
 
 }());
