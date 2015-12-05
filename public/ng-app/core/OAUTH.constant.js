@@ -27,4 +27,4 @@
 	angular
 		.module('rBox')
 		.constant('OAUTH', OAUTH);
-})();
+}());

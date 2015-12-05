@@ -11,9 +11,12 @@
 		// controllerAs ViewModel
 		var home = this;
 
-		Page.setTitle('All Recipes');
-
 		var _tab = $location.search().view;
+		var i;
+		var n;
+		var t;
+
+		Page.setTitle('All Recipes');
 
 		home.tabs = [
 			{
@@ -63,13 +66,13 @@
 
 		// build hashmap of categories
 		home.mapCategories = {};
-		for (var i = 0; i < home.categories.length; i++) {
+		for (i = 0; i < home.categories.length; i++) {
 			home.mapCategories[home.categories[i]] = 0;
 		}
 
 		// build hashmap of tags
 		home.mapTags = {};
-		for (var n = 0; n < home.tags.length; n++) {
+		for (n = 0; n < home.tags.length; n++) {
 			home.mapTags[home.tags[n]] = 0;
 		}
 
@@ -86,7 +89,7 @@
 			angular.forEach(home.recipes, function(recipe) {
 				home.mapCategories[recipe.category] += 1;
 
-				for (var t = 0; t < recipe.tags.length; t++) {
+				for (t = 0; t < recipe.tags.length; t++) {
 					home.mapTags[recipe.tags[t]] += 1;
 				}
 			});
@@ -117,11 +120,11 @@
 		}
 
 		// if user is authenticated, get user data
-		if (Utils.isAuthenticated() && home.user === undefined) {
+		if (Utils.isAuthenticated() && angular.isUndefined(home.user)) {
 			userData.getUser()
 				.then(_getUserSuccess);
 		} else if (!Utils.isAuthenticated()) {
 			home.welcomeMsg = 'Welcome to <strong>rBox</strong>! Browse through the public recipe box or <a href="/login">Login</a> to file or contribute recipes.';
 		}
 	}
-})();
+}());

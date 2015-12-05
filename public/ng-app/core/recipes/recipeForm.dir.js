@@ -135,6 +135,11 @@
 		var _isEdit = !!rf.recipe;
 		var _originalSlug = _isEdit ? rf.recipe.slug : null;
 
+		// setup special characters private vars
+		var _lastInput;
+		var _ingIndex;
+		var _caretPos;
+
 		rf.recipeData = _isEdit ? rf.recipe : {};
 		rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 		rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
@@ -148,8 +153,9 @@
 		$scope.generateId = function() {
 			var _id = '';
 			var _charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			var i;
 
-			for (var i = 0; i < 5; i++) {
+			for (i = 0; i < 5; i++) {
 				_id += _charset.charAt(Math.floor(Math.random() * _charset.length));
 			}
 
@@ -181,11 +187,6 @@
 		// fetch special characters
 		rf.chars = Recipe.insertChar;
 
-		// setup special characters private vars
-		var _lastInput;
-		var _ingIndex;
-		var _caretPos;
-
 		/**
 		 * Set selection range
 		 *
@@ -195,13 +196,14 @@
 		 * @private
 		 */
 		function _setSelectionRange(input, selectionStart, selectionEnd) {
+			var range = input.createTextRange();
+
 			if (input.setSelectionRange) {
 				input.click();
 				input.focus();
 				input.setSelectionRange(selectionStart, selectionEnd);
 			}
 			else if (input.createTextRange) {
-				var range = input.createTextRange();
 				range.collapse(true);
 				range.moveEnd('character', selectionEnd);
 				range.moveStart('character', selectionStart);
@@ -241,8 +243,10 @@
 		 * @param char {string} special character
 		 */
 		rf.insertChar = function(char) {
+			var _textVal;
+
 			if (_lastInput) {
-				var _textVal = rf.recipeData.ingredients[_ingIndex].amt === undefined ? '' : rf.recipeData.ingredients[_ingIndex].amt;
+				_textVal = angular.isUndefined(rf.recipeData.ingredients[_ingIndex].amt) ? '' : rf.recipeData.ingredients[_ingIndex].amt;
 
 				rf.recipeData.ingredients[_ingIndex].amt = _textVal.substring(0, _caretPos) + char + _textVal.substring(_caretPos);
 
@@ -422,34 +426,34 @@
 			// once successfully uploaded image, save recipe with reference to saved image
 			if (rf.uploadedFile) {
 				Upload
-				.upload({
-					url: '/api/recipe/upload',
-					file: rf.uploadedFile
-				})
-				.progress(function(evt) {
-					var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-					rf.uploadError = false;
-					rf.uploadInProgress = true;
-					rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+					.upload({
+						url: '/api/recipe/upload',
+						file: rf.uploadedFile
+					})
+					.progress(function(evt) {
+						var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+						rf.uploadError = false;
+						rf.uploadInProgress = true;
+						rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
 
-					console.log(rf.uploadProgress);
-				})
-				.success(function(data, status, headers, config) {
-					$timeout(function () {
+						console.log(rf.uploadProgress);
+					})
+					.success(function(data, status, headers, config) {
+						$timeout(function() {
+							rf.uploadInProgress = false;
+							rf.recipeData.photo = data.filename;
+
+							_saveRecipe();
+						});
+					})
+					.error(function(err) {
 						rf.uploadInProgress = false;
-						rf.recipeData.photo = data.filename;
+						rf.uploadError = err.message || err;
 
-						_saveRecipe();
+						console.log('Error uploading file:', err.message || err);
+
+						_recipeSaveError();
 					});
-				})
-				.error(function(err) {
-					rf.uploadInProgress = false;
-					rf.uploadError = err.message || err;
-
-					console.log('Error uploading file:', err.message || err);
-
-					_recipeSaveError();
-				});
 
 			} else {
 				// no uploaded file, save recipe
@@ -458,4 +462,4 @@
 
 		};
 	}
-})();
+}());

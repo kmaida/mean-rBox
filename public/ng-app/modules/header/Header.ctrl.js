@@ -47,7 +47,7 @@
 			}
 
 			// if user is authenticated, get user data
-			if (Utils.isAuthenticated() && header.user === undefined) {
+			if (Utils.isAuthenticated() && angular.isUndefined(header.user)) {
 				userData.getUser()
 					.then(_getUserSuccess);
 			}
@@ -77,4 +77,4 @@
 		}
 	}
 
-})();
+}());

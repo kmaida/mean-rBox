@@ -139,4 +139,4 @@
 				.post('/api/recipe/clean-uploads', files);
 		}
 	}
-})();
+}());

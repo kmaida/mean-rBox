@@ -15,4 +15,4 @@
 	angular
 		.module('rBox')
 		.constant('OAUTHCLIENTS', OAUTHCLIENTS);
-})();
+}());

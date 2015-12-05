@@ -8,7 +8,7 @@
 	function trimStr() {
 		return function(str, chars) {
 			var trimmedStr = str;
-			var _chars = chars === undefined ? 50 : chars;
+			var _chars = angular.isUndefined(chars) ? 50 : chars;
 
 			if (str.length > _chars) {
 				trimmedStr = str.substr(0, _chars) + '...';
@@ -17,4 +17,4 @@
 			return trimmedStr;
 		};
 	}
-})();
+}());

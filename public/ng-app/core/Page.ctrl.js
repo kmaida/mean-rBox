@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('PageCtrl', PageCtrl);
 
-	PageCtrl.$inject = ['Page', '$scope', 'MQ', 'mediaCheck'];
+	PageCtrl.$inject = ['Page', '$scope', 'MQ', 'mediaCheck', '$log'];
 
-	function PageCtrl(Page, $scope, MQ, mediaCheck) {
+	function PageCtrl(Page, $scope, MQ, mediaCheck, $log) {
 		var page = this;
 
 		// private variables
@@ -87,7 +87,7 @@
 		 * @private
 		 */
 		function _routeChangeStart($event, next, current) {
-			if (next.$$route && next.$$route.resolve) {
+			if (next.$$route && next.$$route.resolve) { // eslint-disable-line angular/no-private-call
 				_loadingOn();
 			}
 		}
@@ -105,7 +105,7 @@
 		function _routeChangeSuccess($event, current, previous) {
 			mc.matchCurrent(MQ.SMALL);
 
-			if (current.$$route && current.$$route.resolve) {
+			if (current.$$route && current.$$route.resolve) {   // eslint-disable-line angular/no-private-call
 				_loadingOff();
 			}
 		}
@@ -121,6 +121,9 @@
 		 * @private
 		 */
 		function _routeChangeError($event, current, previous, rejection) {
+			var destination = (current && (current.title || current.name || current.loadedTemplateUrl)) || 'unknown target';
+			var msg = 'Error routing to ' + destination + '. ' + (rejection.msg || '');
+
 			if (_handlingRouteChangeError) {
 				return;
 			}
@@ -128,10 +131,7 @@
 			_handlingRouteChangeError = true;
 			_loadingOff();
 
-			var destination = (current && (current.title || current.name || current.loadedTemplateUrl)) || 'unknown target';
-			var msg = 'Error routing to ' + destination + '. ' + (rejection.msg || '');
-
-			console.log(msg);
+			$log.error(msg);
 
 			/**
 			 * On routing error, show an error.
@@ -139,4 +139,4 @@
 			alert('An error occurred. Please try again.');
 		}
 	}
-})();
+}());

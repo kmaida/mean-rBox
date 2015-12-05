@@ -116,6 +116,6 @@
 			edit.deleteBtnText = 'Deleting...';
 			recipeData.deleteRecipe(edit.recipe._id)
 				.then(_deleteSuccess, _deleteError);
-		}
+		};
 	}
-})();
+}());

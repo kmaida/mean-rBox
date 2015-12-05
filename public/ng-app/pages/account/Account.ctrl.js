@@ -131,7 +131,7 @@
 				account.btnSaveText = 'Error saving!';
 			}
 
-			if (!!account.user.displayName) {
+			if (account.user.displayName) {
 				// Set status to Saving... and update upon success or error in callbacks
 				account.btnSaveText = 'Saving...';
 
@@ -172,4 +172,4 @@
 
 		account.getProfile();
 	}
-})();
+}());

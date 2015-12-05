@@ -46,4 +46,4 @@
 
 		userData.getAllUsers().then(_getAllUsersSuccess, _getAllUsersError);
 	}
-})();
+}());

@@ -5,9 +5,9 @@
 		.module('rBox')
 		.controller('MyRecipesCtrl', MyRecipesCtrl);
 
-	MyRecipesCtrl.$inject = ['Page', 'Utils', 'recipeData', 'userData', '$location', 'mediaCheck', '$scope', 'MQ', '$timeout'];
+	MyRecipesCtrl.$inject = ['Page', 'Utils', 'recipeData', 'userData', '$location', '$scope'];
 
-	function MyRecipesCtrl(Page, Utils, recipeData, userData, $location, mediaCheck, $scope, MQ, $timeout) {
+	function MyRecipesCtrl(Page, Utils, recipeData, userData, $location, $scope) {
 		// controllerAs ViewModel
 		var myRecipes = this;
 		var _tab = $location.search().view;
@@ -71,8 +71,8 @@
 		 * @private
 		 */
 		function _getUserSuccess(data) {
-			myRecipes.user = data;
 			var savedRecipesObj = {savedRecipes: data.savedRecipes};
+			myRecipes.user = data;
 
 			/**
 			 * Successful promise returning user's saved recipes
@@ -101,4 +101,4 @@
 		recipeData.getMyRecipes()
 			.then(_recipesSuccess);
 	}
-})();
+}());

@@ -10,4 +10,4 @@
 	angular
 		.module('rBox')
 		.constant('MQ', MQ);
-})();
+}());

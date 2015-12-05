@@ -10,15 +10,22 @@
 			var _hour = 60;
 			var _min = min * 1;
 			var _gtHour = _min / _hour >= 1;
+			var _hPlusMin = _min % _hour;
+			var _hasMinutes = _hPlusMin !== 0;
+			var _hours = Math.floor(_min / _hour);
+			var _hoursText = _hours === 1 ? ' hour' : ' hours';
+			var _minutes = _hasMinutes ? ', ' + _hPlusMin + _minText(_hPlusMin) : '';
+			var _noHMinText = _min === 1 ? ' minute' : ' minutes';
 			var timeStr = null;
 
 			/**
 			 * Get minute/s text from minutes
 			 *
 			 * @param minutes {number}
+			 * @private
 			 * @returns {string}
 			 */
-			function minText(minutes) {
+			function _minText(minutes) {
 				if (_hasMinutes && minutes === 1) {
 					return ' minute';
 				} else if (_hasMinutes && minutes !== 1) {
@@ -27,19 +34,12 @@
 			}
 
 			if (_gtHour) {
-				var hPlusMin = _min % _hour;
-				var _hasMinutes = hPlusMin !== 0;
-				var hours = Math.floor(_min / _hour);
-				var hoursText = hours === 1 ? ' hour' : ' hours';
-				var minutes = _hasMinutes ? ', ' + hPlusMin + minText(hPlusMin) : '';
-
-				timeStr = hours + hoursText + minutes;
+				timeStr = _hours + _hoursText + _minutes;
 			} else {
-				var noHMinText = _min === 1 ? ' minute' : ' minutes';
-				timeStr = _min + noHMinText;
+				timeStr = _min + _noHMinText;
 			}
 
 			return timeStr;
 		};
 	}
-})();
+}());

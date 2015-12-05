@@ -41,4 +41,4 @@
 		recipeData.getPublicRecipes()
 			.then(_recipesSuccess);
 	}
-})();
+}());

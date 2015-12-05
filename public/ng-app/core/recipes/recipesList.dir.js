@@ -68,6 +68,15 @@
 				_watchRecipes();
 			}
 		});
+		var _lastSortedBy = 'name';
+		var _resultsSet = 15;   // number of recipes to show/add in a set
+
+		var _openFiltersOnload = $scope.$watch('rl.openFilters', function(newVal, oldVal) {
+			if (angular.isDefined(newVal)) {
+				rl.showSearchFilter = newVal === 'true';
+				_openFiltersOnload();
+			}
+		});
 
 		// conditionally show category / tag filters
 		// always show special diet filter
@@ -98,7 +107,6 @@
 			totalTime: false,
 			nIng: false
 		};
-		var _lastSortedBy = 'name';
 
 		/**
 		 * Toggle sort asc/desc
@@ -112,9 +120,6 @@
 			rl.reverse = rl.reverseObj[predicate];
 			_lastSortedBy = predicate;
 		};
-
-		// number of recipes to show/add in a set
-		var _resultsSet = 15;
 
 		/**
 		 * Reset results showing to initial default on search/filter
@@ -135,7 +140,7 @@
 
 		// watch search query and if it exists, clear filters and reset results showing
 		$scope.$watch('rl.query', function(newVal, oldVal) {
-			if (!!rl.query) {
+			if (rl.query) {
 				_resetFilterPredicates();
 				_resetResultsShowing();
 			}
@@ -145,13 +150,6 @@
 		$scope.$watch('rl.filterPredicates', function(newVal, oldVal) {
 			if (!!newVal && newVal !== oldVal) {
 				_resetResultsShowing();
-			}
-		});
-
-		var _openFiltersOnload = $scope.$watch('rl.openFilters', function(newVal, oldVal) {
-			if (newVal !== undefined) {
-				rl.showSearchFilter = newVal === 'true';
-				_openFiltersOnload();
 			}
 		});
 
@@ -192,4 +190,4 @@
 			return total;
 		};
 	}
-})();
+}());

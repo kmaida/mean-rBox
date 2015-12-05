@@ -1,10 +1,6 @@
 (function() {
 	'use strict';
 
-	angular
-		.module('rBox')
-		.factory('Recipe', Recipe);
-
 	var dietary = [
 		'Gluten-free',
 		'Vegan',
@@ -46,6 +42,10 @@
 		'vegetable'
 	];
 
+	angular
+		.module('rBox')
+		.factory('Recipe', Recipe);
+
 	function Recipe() {
 		// callable members
 		return {
@@ -55,4 +55,4 @@
 			tags: tags
 		};
 	}
-})();
+}());

@@ -39,6 +39,8 @@
 		 * @private
 		 */
 		function _recipeSuccess(data) {
+			var i;
+
 			recipe.recipe = data;
 			Page.setTitle(recipe.recipe.name);
 
@@ -65,7 +67,7 @@
 			 * @private
 			 */
 			function _createCheckedArrays(checkedArr, sourceArr) {
-				for (var i = 0; i < sourceArr.length; i++) {
+				for (i = 0; i < sourceArr.length; i++) {
 					checkedArr[i] = false;
 				}
 			}
@@ -128,4 +130,4 @@
 				.then(_fileSuccess, _fileError);
 		};
 	}
-})();
+}());

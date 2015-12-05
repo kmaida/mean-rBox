@@ -44,4 +44,4 @@
 		recipeData.getAuthorRecipes(_aid)
 			.then(_recipesSuccess);
 	}
-})();
+}());
