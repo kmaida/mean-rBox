@@ -26,10 +26,31 @@
 		 * recipeForm LINK function
 		 *
 		 * @param $scope
+		 * @param $element
+		 * @param $attrs
+		 * @param rf {controllerAs}
 		 */
-		function recipeFormLink($scope) {
+		function recipeFormLink($scope, $element, $attrs, rf) {
 			// set up $scope object for namespacing
 			$scope.rfl = {};
+
+			$scope.rfl.addItem = addItem;
+			$scope.rfl.removeItem = removeItem;
+			$scope.rfl.moveItem = moveItem;
+			$scope.rfl.moveIngredients = false;
+			$scope.rfl.moveDirections = false;
+
+			_init();
+
+			/**
+			 * INIT
+			 *
+			 * @private
+			 */
+			function _init() {
+				$scope.$on('enter-mobile', _enterMobile);
+				$scope.$on('exit-mobile', _exitMobile);
+			}
 
 			/**
 			 * Add new item
@@ -41,9 +62,9 @@
 			 * @param type {string} ing -or- step
 			 * @param isHeading {boolean}
 			 */
-			$scope.rfl.addItem = function($event, model, type, isHeading) {
+			function addItem($event, model, type, isHeading) {
 				var _newItem = {
-					id: $scope.generateId(),
+					id: rf.generateId(),
 					type: type
 				};
 
@@ -58,7 +79,7 @@
 					_newestInput.click();
 					_newestInput.focus();   // TODO: focus isn't highlighting properly
 				});
-			};
+			}
 
 			/**
 			 * Remove item
@@ -67,12 +88,9 @@
 			 * @param model {object} rf.recipeData model
 			 * @param i {index}
 			 */
-			$scope.rfl.removeItem = function(model, i) {
+			function removeItem(model, i) {
 				model.splice(i, 1);
-			};
-
-			$scope.$on('enter-mobile', _enterMobile);
-			$scope.$on('exit-mobile', _exitMobile);
+			}
 
 			/**
 			 * Enter mobile - unset large view
@@ -100,7 +118,7 @@
 			 * @param oldIndex {index} current index
 			 * @param newIndex {number} new index
 			 */
-			$scope.rfl.moveItem = function($event, model, oldIndex, newIndex) {
+			function moveItem($event, model, oldIndex, newIndex) {
 				var _item = angular.element($event.target).closest('li');
 
 				model.move(oldIndex, newIndex);
@@ -110,10 +128,7 @@
 				$timeout(function() {
 					_item.removeClass('moved');
 				}, 700);
-			};
-
-			$scope.rfl.moveIngredients = false;
-			$scope.rfl.moveDirections = false;
+			}
 		}
 	}
 
@@ -144,30 +159,14 @@
 		rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 		rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
 
-		/**
-		 * Generates a unique 5-character ID;
-		 * On $scope to share between controller and link
-		 *
-		 * @returns {string}
-		 */
-		$scope.generateId = function() {
-			var _id = '';
-			var _charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			var i;
-
-			for (i = 0; i < 5; i++) {
-				_id += _charset.charAt(Math.floor(Math.random() * _charset.length));
-			}
-
-			return _id;
-		};
+		rf.generateId = generateId;
 
 		// is this a touch device?
 		rf.isTouchDevice = !!Modernizr.touchevents;
 
 		// build lists
-		rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: $scope.generateId(), type: 'ing'}];
-		rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: $scope.generateId(), type: 'step'}];
+		rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: generateId(), type: 'ing'}];
+		rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: generateId(), type: 'step'}];
 
 		rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
 
@@ -186,6 +185,37 @@
 
 		// fetch special characters
 		rf.chars = Recipe.insertChar;
+
+		rf.insertCharInput = insertCharInput;
+		rf.insertChar = insertChar;
+		rf.clearChar = clearChar;
+
+		rf.uploadedFile = null;
+		rf.updateFile = updateFile;
+		rf.removePhoto = removePhoto;
+
+		rf.tagMap = {};
+		rf.addRemoveTag = addRemoveTag;
+
+		rf.saveRecipe = saveRecipe;
+
+				/**
+		 * Generates a unique 5-character ID;
+		 * On $scope to share between controller and link
+		 *
+		 * @returns {string}
+		 */
+		function generateId() {
+			var _id = '';
+			var _charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			var i;
+
+			for (i = 0; i < 5; i++) {
+				_id += _charset.charAt(Math.floor(Math.random() * _charset.length));
+			}
+
+			return _id;
+		}
 
 		/**
 		 * Set selection range
@@ -228,13 +258,13 @@
 		 * @param $event {object}
 		 * @param index {number}
 		 */
-		rf.insertCharInput = function($event, index) {
+		function insertCharInput($event, index) {
 			$timeout(function() {
 				_ingIndex = index;
 				_lastInput = angular.element('#' + $event.target.id);
 				_caretPos = _lastInput[0].selectionStart;
 			});
-		};
+		}
 
 		/**
 		 * Insert character at last caret position
@@ -242,7 +272,7 @@
 		 *
 		 * @param char {string} special character
 		 */
-		rf.insertChar = function(char) {
+		function insertChar(char) {
 			var _textVal;
 
 			if (_lastInput) {
@@ -255,26 +285,24 @@
 					_setCaretToPos(_lastInput[0], _caretPos);
 				});
 			}
-		};
+		}
 
 		/**
 		 * Clear caret position and last input
 		 * So that special characters don't end up in undesired fields
 		 */
-		rf.clearChar = function() {
+		function clearChar() {
 			_ingIndex = null;
 			_lastInput = null;
 			_caretPos = null;
-		};
-
-		rf.uploadedFile = null;
+		}
 
 		/**
 		 * Upload image file
 		 *
 		 * @param files {Array} array of files to upload
 		 */
-		rf.updateFile = function(files) {
+		function updateFile(files) {
 			if (files && files.length) {
 				if (files[0].size > 300000) {
 					rf.uploadError = 'Filesize over 500kb - photo was not uploaded.';
@@ -284,19 +312,18 @@
 					rf.uploadedFile = files[0];    // only single upload allowed
 				}
 			}
-		};
+		}
 
 		/**
 		 * Remove uploaded photo from front-end
 		 */
-		rf.removePhoto = function() {
+		function removePhoto() {
 			rf.recipeData.photo = null;
 			rf.uploadedFile = null;
 			angular.element('#recipePhoto').val('');
-		};
+		}
 
 		// create map of touched tags
-		rf.tagMap = {};
 		if (_isEdit && rf.recipeData.tags.length) {
 			angular.forEach(rf.recipeData.tags, function(tag, i) {
 				rf.tagMap[tag] = true;
@@ -308,7 +335,7 @@
 		 *
 		 * @param tag {string} tag name
 		 */
-		rf.addRemoveTag = function(tag) {
+		function addRemoveTag(tag) {
 			var _activeTagIndex = rf.recipeData.tags.indexOf(tag);
 
 			if (_activeTagIndex > -1) {
@@ -320,7 +347,7 @@
 				rf.recipeData.tags.push(tag);
 				rf.tagMap[tag] = true;
 			}
-		};
+		}
 
 		/**
 		 * Clean empty items out of array before saving
@@ -413,7 +440,7 @@
 		 * Save recipe
 		 * Click on submit
 		 */
-		rf.saveRecipe = function() {
+		function saveRecipe() {
 			rf.uploadError = false;
 			rf.saveBtnText = _isEdit ? 'Updating...' : 'Saving...';
 
@@ -460,6 +487,6 @@
 				_saveRecipe();
 			}
 
-		};
+		}
 	}
 }());
