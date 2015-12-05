@@ -132,12 +132,11 @@
 		}
 	}
 
-	recipeFormCtrl.$inject = ['$scope', 'recipeData', 'Recipe', 'Slug', '$location', '$timeout', 'Upload'];
+	recipeFormCtrl.$inject = ['recipeData', 'Recipe', 'Slug', '$location', '$timeout', 'Upload'];
 
 	/**
 	 * recipeForm CONTROLLER function
 	 *
-	 * @param $scope
 	 * @param recipeData
 	 * @param Recipe
 	 * @param Slug
@@ -145,7 +144,7 @@
 	 * @param $timeout
 	 * @param Upload
 	 */
-	function recipeFormCtrl($scope, recipeData, Recipe, Slug, $location, $timeout, Upload) {
+	function recipeFormCtrl(recipeData, Recipe, Slug, $location, $timeout, Upload) {
 		var rf = this;
 		var _isEdit = !!rf.recipe;
 		var _originalSlug = _isEdit ? rf.recipe.slug : null;
@@ -159,6 +158,7 @@
 		rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 		rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
 
+		// share generateId function with Link
 		rf.generateId = generateId;
 
 		// is this a touch device?
@@ -199,7 +199,25 @@
 
 		rf.saveRecipe = saveRecipe;
 
-				/**
+		_init();
+
+		/**
+		 * INIT
+		 *
+		 * @private
+		 */
+		function _init() {
+			// create map of touched tags
+			if (_isEdit && rf.recipeData.tags.length) {
+				angular.forEach(rf.recipeData.tags, function(tag, i) {
+					rf.tagMap[tag] = true;
+				});
+			}
+
+			_resetSaveBtn();
+		}
+
+		/**
 		 * Generates a unique 5-character ID;
 		 * On $scope to share between controller and link
 		 *
@@ -323,13 +341,6 @@
 			angular.element('#recipePhoto').val('');
 		}
 
-		// create map of touched tags
-		if (_isEdit && rf.recipeData.tags.length) {
-			angular.forEach(rf.recipeData.tags, function(tag, i) {
-				rf.tagMap[tag] = true;
-			});
-		}
-
 		/**
 		 * Add / remove tag
 		 *
@@ -378,8 +389,6 @@
 			rf.uploadError = false;
 			rf.saveBtnText = _isEdit ? 'Update Recipe' : 'Save Recipe';
 		}
-
-		_resetSaveBtn();
 
 		/**
 		 * Recipe created or saved successfully
@@ -449,6 +458,54 @@
 			_cleanEmpties('ingredients');
 			_cleanEmpties('directions');
 
+			/**
+			 * Upload progress callback
+			 *
+			 * @param evt {event}
+			 * @private
+			 */
+			function _uploadProgressCB(evt) {
+				var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+				rf.uploadError = false;
+				rf.uploadInProgress = true;
+				rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+
+				console.log(rf.uploadProgress);
+			}
+
+			/**
+			 * Upload error callback
+			 *
+			 * @param err {object}
+			 * @private
+			 */
+			function _uploadErrorCB(err) {
+				rf.uploadInProgress = false;
+				rf.uploadError = err.message || err;
+
+				console.log('Error uploading file:', err.message || err);
+
+				_recipeSaveError();
+			}
+
+			/**
+			 * Upload success callback
+			 *
+			 * @param data
+			 * @param status
+			 * @param headers
+			 * @param config
+			 * @private
+			 */
+			function _uploadSuccessCB(data, status, headers, config) {
+				$timeout(function() {
+					rf.uploadInProgress = false;
+					rf.recipeData.photo = data.filename;
+
+					_saveRecipe();
+				});
+			}
+
 			// save uploaded file, if there is one
 			// once successfully uploaded image, save recipe with reference to saved image
 			if (rf.uploadedFile) {
@@ -457,36 +514,14 @@
 						url: '/api/recipe/upload',
 						file: rf.uploadedFile
 					})
-					.progress(function(evt) {
-						var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-						rf.uploadError = false;
-						rf.uploadInProgress = true;
-						rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
-
-						console.log(rf.uploadProgress);
-					})
-					.success(function(data, status, headers, config) {
-						$timeout(function() {
-							rf.uploadInProgress = false;
-							rf.recipeData.photo = data.filename;
-
-							_saveRecipe();
-						});
-					})
-					.error(function(err) {
-						rf.uploadInProgress = false;
-						rf.uploadError = err.message || err;
-
-						console.log('Error uploading file:', err.message || err);
-
-						_recipeSaveError();
-					});
+					.progress(_uploadProgressCB)
+					.success(_uploadSuccessCB)
+					.error(_uploadErrorCB);
 
 			} else {
 				// no uploaded file, save recipe
 				_saveRecipe();
 			}
-
 		}
 	}
 }());
