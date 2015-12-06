@@ -64,9 +64,9 @@
 							<span>{{::ing.amt}} {{::ing.ingredient}}</span>
 						</span>
 
-						<h3 class="recipe-ingredients-heading" ng-if="ing.isHeading">
-							{{::ing.headingText}}
-						</h3>
+						<h3 class="recipe-ingredients-heading"
+							ng-if="ing.isHeading"
+							ng-bind="::ing.headingText"></h3>
 					</li>
 				</ul>
 			</section>
