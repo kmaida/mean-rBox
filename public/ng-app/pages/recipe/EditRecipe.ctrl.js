@@ -5,16 +5,17 @@
 		.module('rBox')
 		.controller('EditRecipeCtrl', EditRecipeCtrl);
 
-	EditRecipeCtrl.$inject = ['Page', 'Utils', '$routeParams', 'recipeData', 'userData', '$location', '$timeout'];
+	EditRecipeCtrl.$inject = ['$scope', 'Page', 'Utils', '$routeParams', 'recipeData', 'userData', '$location', '$timeout'];
 
-	function EditRecipeCtrl(Page, Utils, $routeParams, recipeData, userData, $location, $timeout) {
+	function EditRecipeCtrl($scope, Page, Utils, $routeParams, recipeData, userData, $location, $timeout) {
 		// controllerAs ViewModel
 		var edit = this;
+
+		// private variables
 		var _recipeSlug = $routeParams.slug;
 		var _tab = $location.search().view;
 
-		Page.setTitle('Edit Recipe');
-
+		// bindable members
 		edit.tabs = [
 			{
 				name: 'Edit Recipe',
@@ -26,24 +27,50 @@
 			}
 		];
 		edit.currentTab = _tab ? _tab : 'edit';
+		edit.changeTab = changeTab;
+		edit.isAuthenticated = Utils.isAuthenticated;
+		edit.deleteRecipe = deleteRecipe;
+
+		_init();
+
+		/**
+		 * INIT
+		 *
+		 * @private
+		 */
+		function _init() {
+			Page.setTitle('Edit Recipe');
+
+			_activate();
+			_resetDeleteBtn();
+		}
+
+		function _activate() {
+			$scope.$emit('loading-on');
+
+			userData.getUser().then(_getUserSuccess);
+			recipeData.getRecipe(_recipeSlug).then(_recipeSuccess, _recipeError);
+		}
 
 		/**
 		 * Change tab
 		 *
 		 * @param query {string} tab to switch to
 		 */
-		edit.changeTab = function(query) {
+		function changeTab(query) {
 			$location.search('view', query);
 			edit.currentTab = query;
-		};
+		}
 
-		edit.isAuthenticated = Utils.isAuthenticated;
-
+		/**
+		 * Successfully retrieved user
+		 *
+		 * @param data
+		 * @private
+		 */
 		function _getUserSuccess(data) {
 			edit.user = data;
 		}
-		userData.getUser()
-			.then(_getUserSuccess);
 
 		/**
 		 * Successful promise returning user's recipe data
@@ -55,20 +82,23 @@
 			edit.recipe = data;
 			edit.originalName = edit.recipe.name;
 			Page.setTitle('Edit ' + edit.originalName);
+
+			$scope.$emit('loading-off');
 		}
 
 		/**
 		 * Error retrieving recipe
 		 *
+		 * @param err {object}
 		 * @private
 		 */
 		function _recipeError(err) {
 			edit.recipe = 'error';
 			Page.setTitle('Error');
 			edit.errorMsg = err.data.message;
+
+			$scope.$emit('loading-off');
 		}
-		recipeData.getRecipe(_recipeSlug)
-			.then(_recipeSuccess, _recipeError);
 
 		/**
 		 * Reset delete button
@@ -79,8 +109,6 @@
 			edit.deleted = false;
 			edit.deleteBtnText = 'Delete Recipe';
 		}
-
-		_resetDeleteBtn();
 
 		/**
 		 * Successful promise after deleting recipe
@@ -112,10 +140,12 @@
 			$timeout(_resetDeleteBtn, 2500);
 		}
 
-		edit.deleteRecipe = function() {
+		/**
+		 * Delete recipe
+		 */
+		function deleteRecipe() {
 			edit.deleteBtnText = 'Deleting...';
-			recipeData.deleteRecipe(edit.recipe._id)
-				.then(_deleteSuccess, _deleteError);
-		};
+			recipeData.deleteRecipe(edit.recipe._id).then(_deleteSuccess, _deleteError);
+		}
 	}
 }());

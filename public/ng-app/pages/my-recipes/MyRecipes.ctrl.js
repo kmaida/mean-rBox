@@ -55,7 +55,7 @@
 			$scope.$emit('loading-on');
 
 			userData.getUser().then(_getUserSuccess);
-			recipeData.getMyRecipes().then(_recipesSuccess);
+			recipeData.getMyRecipes().then(_recipesSuccess, _recipesError);
 		}
 
 		/**
@@ -122,6 +122,17 @@
 		function _recipesSuccess(data) {
 			myRecipes.recipes = data;
 
+			$scope.$emit('loading-off');
+		}
+
+		/**
+		 * Error returning user's recipe data
+		 *
+		 * @param error {object}
+		 * @private
+		 */
+		function _recipesError(error) {
+			console.log('Error loading recipes', error);
 			$scope.$emit('loading-off');
 		}
 	}
