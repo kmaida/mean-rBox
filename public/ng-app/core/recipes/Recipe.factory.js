@@ -52,7 +52,25 @@
 			dietary: dietary,
 			insertChar: insertChar,
 			categories: categories,
-			tags: tags
+			tags: tags,
+			generateId: generateId
 		};
+
+		/**
+		 * Generates a unique 5-character ID;
+		 *
+		 * @returns {string}
+		 */
+		function generateId() {
+			var _id = '';
+			var _charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+			var i;
+
+			for (i = 0; i < 5; i++) {
+				_id += _charset.charAt(Math.floor(Math.random() * _charset.length));
+			}
+
+			return _id;
+		}
 	}
 }());

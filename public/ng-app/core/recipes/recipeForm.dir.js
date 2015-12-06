@@ -5,9 +5,9 @@
 		.module('rBox')
 		.directive('recipeForm', recipeForm);
 
-	recipeForm.$inject = ['$timeout'];
+	recipeForm.$inject = ['$timeout', 'Recipe'];
 
-	function recipeForm($timeout) {
+	function recipeForm($timeout, Recipe) {
 		// return directive
 		return {
 			restrict: 'EA',
@@ -64,7 +64,7 @@
 			 */
 			function addItem($event, model, type, isHeading) {
 				var _newItem = {
-					id: rf.generateId(),
+					id: Recipe.generateId(),
 					type: type
 				};
 
@@ -159,10 +159,9 @@
 		rf.recipeData = _isEdit ? rf.recipe : {};
 		rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 		rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
-		rf.generateId = generateId;
 		rf.isTouchDevice = !!Modernizr.touchevents;
-		rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: generateId(), type: 'ing'}];
-		rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: generateId(), type: 'step'}];
+		rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: Recipe.generateId(), type: 'ing'}];
+		rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: Recipe.generateId(), type: 'step'}];
 		rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
 		rf.timeRegex = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
 		rf.timeError = 'Please enter a number in minutes. Multiply hours by 60.';
@@ -199,24 +198,6 @@
 		}
 
 		/**
-		 * Generates a unique 5-character ID;
-		 * On $scope to share between controller and link
-		 *
-		 * @returns {string}
-		 */
-		function generateId() {
-			var _id = '';
-			var _charset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-			var i;
-
-			for (i = 0; i < 5; i++) {
-				_id += _charset.charAt(Math.floor(Math.random() * _charset.length));
-			}
-
-			return _id;
-		}
-
-		/**
 		 * Set selection range
 		 *
 		 * @param input
@@ -231,8 +212,8 @@
 				input.click();
 				input.focus();
 				input.setSelectionRange(selectionStart, selectionEnd);
-			}
-			else if (input.createTextRange) {
+				
+			} else if (input.createTextRange) {
 				range.collapse(true);
 				range.moveEnd('character', selectionEnd);
 				range.moveStart('character', selectionStart);
@@ -381,22 +362,22 @@
 			rf.saved = true;
 			rf.saveBtnText = _isEdit ? 'Updated!' : 'Saved!';
 
-			/**
-			 * Go to new slug (if new) or updated slug (if slug changed)
-			 *
-			 * @private
-			 */
-			function _goToNewSlug() {
-				var _path = !_isEdit ? recipe.slug : rf.recipeData.slug + '/edit';
-
-				$location.path('/recipe/' + _path);
-			}
-
 			if (!_isEdit || _isEdit && _originalSlug !== rf.recipeData.slug) {
 				$timeout(_goToNewSlug, 1000);
 			} else {
 				$timeout(_resetSaveBtn, 2000);
 			}
+		}
+
+		/**
+		 * Go to new slug (if new) or updated slug (if slug changed)
+		 *
+		 * @private
+		 */
+		function _goToNewSlug() {
+			var _path = !_isEdit ? recipe.slug : rf.recipeData.slug + '/edit';
+
+			$location.path('/recipe/' + _path);
 		}
 
 		/**
@@ -412,17 +393,16 @@
 		}
 
 		/**
-		 * Save recipe data
+		 * Determine if edit/new
+		 * Either create or update recipe accordingly
 		 *
 		 * @private
 		 */
-		function _saveRecipe() {
+		function _goSaveRecipe() {
 			if (!_isEdit) {
-				recipeData.createRecipe(rf.recipeData)
-				.then(_recipeSaved, _recipeSaveError);
+				recipeData.createRecipe(rf.recipeData).then(_recipeSaved, _recipeSaveError);
 			} else {
-				recipeData.updateRecipe(rf.recipe._id, rf.recipeData)
-				.then(_recipeSaved, _recipeSaveError);
+				recipeData.updateRecipe(rf.recipe._id, rf.recipeData).then(_recipeSaved, _recipeSaveError);
 			}
 		}
 
@@ -439,54 +419,6 @@
 			_cleanEmpties('ingredients');
 			_cleanEmpties('directions');
 
-			/**
-			 * Upload progress callback
-			 *
-			 * @param evt {event}
-			 * @private
-			 */
-			function _uploadProgressCB(evt) {
-				var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-				rf.uploadError = false;
-				rf.uploadInProgress = true;
-				rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
-
-				console.log(rf.uploadProgress);
-			}
-
-			/**
-			 * Upload error callback
-			 *
-			 * @param err {object}
-			 * @private
-			 */
-			function _uploadErrorCB(err) {
-				rf.uploadInProgress = false;
-				rf.uploadError = err.message || err;
-
-				console.log('Error uploading file:', err.message || err);
-
-				_recipeSaveError();
-			}
-
-			/**
-			 * Upload success callback
-			 *
-			 * @param data
-			 * @param status
-			 * @param headers
-			 * @param config
-			 * @private
-			 */
-			function _uploadSuccessCB(data, status, headers, config) {
-				$timeout(function() {
-					rf.uploadInProgress = false;
-					rf.recipeData.photo = data.filename;
-
-					_saveRecipe();
-				});
-			}
-
 			// save uploaded file, if there is one
 			// once successfully uploaded image, save recipe with reference to saved image
 			if (rf.uploadedFile) {
@@ -501,8 +433,56 @@
 
 			} else {
 				// no uploaded file, save recipe
-				_saveRecipe();
+				_goSaveRecipe();
 			}
+		}
+
+		/**
+		 * Upload progress callback
+		 *
+		 * @param evt {event}
+		 * @private
+		 */
+		function _uploadProgressCB(evt) {
+			var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+			rf.uploadError = false;
+			rf.uploadInProgress = true;
+			rf.uploadProgress = progressPercentage + '% ' + evt.config.file.name;
+
+			console.log(rf.uploadProgress);
+		}
+
+		/**
+		 * Upload success callback
+		 *
+		 * @param data
+		 * @param status
+		 * @param headers
+		 * @param config
+		 * @private
+		 */
+		function _uploadSuccessCB(data, status, headers, config) {
+			$timeout(function() {
+				rf.uploadInProgress = false;
+				rf.recipeData.photo = data.filename;
+
+				_goSaveRecipe();
+			});
+		}
+
+		/**
+		 * Upload error callback
+		 *
+		 * @param err {object}
+		 * @private
+		 */
+		function _uploadErrorCB(err) {
+			rf.uploadInProgress = false;
+			rf.uploadError = err.message || err;
+
+			console.log('Error uploading file:', err.message || err);
+
+			_recipeSaveError();
 		}
 	}
 }());
