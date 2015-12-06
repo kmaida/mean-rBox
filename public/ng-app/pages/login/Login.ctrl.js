@@ -11,56 +11,68 @@
 		// controllerAs ViewModel
 		var login = this;
 
-		Page.setTitle('Login');
-
+		// bindable members
 		login.logins = OAUTH.LOGINS;
 		login.isAuthenticated = Utils.isAuthenticated;
+		login.authenticate = authenticate;
+		login.logout = logout;
+
+		_init();
+
+		/**
+		 * INIT
+		 *
+		 * @private
+		 */
+		function _init() {
+			Page.setTitle('Login');
+		}
 
 		/**
 		 * Authenticate the user via Oauth with the specified provider
 		 *
 		 * @param {string} provider - (twitter, facebook, github, google)
 		 */
-		login.authenticate = function(provider) {
+		function authenticate(provider) {
 			login.loggingIn = true;
-
-			/**
-			 * Successfully authenticated
-			 * Go to initially intended authenticated path
-			 *
-			 * @param response {promise}
-			 * @private
-			 */
-			function _authSuccess(response) {
-				login.loggingIn = false;
-
-				if ($rootScope.authPath) {
-					$location.path($rootScope.authPath);
-				}
-			}
-
-			/**
-			 * Error authenticating
-			 *
-			 * @param response {promise}
-			 * @private
-			 */
-			function _authCatch(response) {
-				console.log(response.data);
-				login.loggingIn = 'error';
-				login.loginMsg = '';
-			}
 
 			$auth.authenticate(provider)
 				.then(_authSuccess)
 				.catch(_authCatch);
-		};
+		}
+
+		/**
+		 * Successfully authenticated
+		 * Go to initially intended authenticated path
+		 *
+		 * @param response {promise}
+		 * @private
+		 */
+		function _authSuccess(response) {
+			login.loggingIn = false;
+
+			if ($rootScope.authPath) {
+				$location.path($rootScope.authPath);
+			}
+		}
+
+		/**
+		 * Error authenticating
+		 *
+		 * @param response {promise}
+		 * @private
+		 */
+		function _authCatch(response) {
+			console.log(response.data);
+			login.loggingIn = 'error';
+			login.loginMsg = '';
+		}
 
 		/**
 		 * Log the user out of whatever authentication they've signed in with
 		 */
-		login.logout = function() {
+		function logout() {
 			$auth.logout('/login');
-		};
+		}
 	}
 }());

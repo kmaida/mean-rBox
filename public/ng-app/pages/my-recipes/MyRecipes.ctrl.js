@@ -10,10 +10,11 @@
 	function MyRecipesCtrl(Page, Utils, recipeData, userData, $location, $scope) {
 		// controllerAs ViewModel
 		var myRecipes = this;
+
+		// private variables
 		var _tab = $location.search().view;
 
-		Page.setTitle('My Recipes');
-
+		// bindable members
 		myRecipes.tabs = [
 			{
 				query: 'recipe-box'
@@ -26,9 +27,36 @@
 			}
 		];
 		myRecipes.currentTab = _tab ? _tab : 'recipe-box';
+		myRecipes.changeTab = changeTab;
+		myRecipes.isAuthenticated = Utils.isAuthenticated;
 
-		$scope.$on('enter-mobile', _enterMobile);
-		$scope.$on('exit-mobile', _exitMobile);
+		_init();
+
+		/**
+		 * INIT
+		 *
+		 * @private
+		 */
+		function _init() {
+			Page.setTitle('My Recipes');
+
+			$scope.$on('enter-mobile', _enterMobile);
+			$scope.$on('exit-mobile', _exitMobile);
+
+			_activate();
+		}
+
+		/**
+		 * ACTIVATE
+		 *
+		 * @private
+		 */
+		function _activate() {
+			$scope.$emit('loading-on');
+
+			userData.getUser().then(_getUserSuccess);
+			recipeData.getMyRecipes().then(_recipesSuccess);
+		}
 
 		/**
 		 * Enter mobile - set shorter tab names
@@ -57,12 +85,10 @@
 		 *
 		 * @param query {string} tab to switch to
 		 */
-		myRecipes.changeTab = function(query) {
+		function changeTab(query) {
 			$location.search('view', query);
 			myRecipes.currentTab = query;
-		};
-
-		myRecipes.isAuthenticated = Utils.isAuthenticated;
+		}
 
 		/**
 		 * Successful promise getting user's data
@@ -74,20 +100,18 @@
 			var savedRecipesObj = {savedRecipes: data.savedRecipes};
 			myRecipes.user = data;
 
-			/**
-			 * Successful promise returning user's saved recipes
-			 *
-			 * @param recipes {promise}.data
-			 * @private
-			 */
-			function _filedSuccess(recipes) {
-				myRecipes.filedRecipes = recipes;
-			}
-			recipeData.getFiledRecipes(savedRecipesObj)
-				.then(_filedSuccess);
+			recipeData.getFiledRecipes(savedRecipesObj).then(_filedSuccess);
 		}
-		userData.getUser()
-			.then(_getUserSuccess);
+
+		/**
+		 * Successful promise returning user's saved recipes
+		 *
+		 * @param recipes {promise}.data
+		 * @private
+		 */
+		function _filedSuccess(recipes) {
+			myRecipes.filedRecipes = recipes;
+		}
 
 		/**
 		 * Successful promise returning user's recipe data
@@ -97,8 +121,8 @@
 		 */
 		function _recipesSuccess(data) {
 			myRecipes.recipes = data;
+
+			$scope.$emit('loading-off');
 		}
-		recipeData.getMyRecipes()
-			.then(_recipesSuccess);
 	}
 }());
