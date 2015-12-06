@@ -45,7 +45,19 @@
 			Page.setTitle('My Account');
 			_btnSaveReset();
 			$scope.$watch('account.user.displayName', _$watchDisplayName);
-			account.getProfile();
+
+			_activate();
+		}
+
+		/**
+		 * ACTIVATE
+		 *
+		 * @returns {*}
+		 * @private
+		 */
+		function _activate() {
+			$scope.$emit('loading-on');
+			return account.getProfile();
 		}
 
 		/**
@@ -77,6 +89,8 @@
 			account.administrator = account.user.isAdmin;
 			account.linkedAccounts = User.getLinkedAccounts(account.user, 'account');
 			account.showAccount = true;
+
+			$scope.$emit('loading-off');
 		}
 
 		/**
