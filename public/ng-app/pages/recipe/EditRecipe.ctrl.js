@@ -40,7 +40,6 @@
 		 */
 		function _init() {
 			Page.setTitle('Edit Recipe');
-
 			_activate();
 			_resetDeleteBtn();
 		}

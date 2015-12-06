@@ -31,7 +31,6 @@
 		 */
 		function _init() {
 			Page.setTitle(ra.heading);
-
 			_activate();
 		}
 

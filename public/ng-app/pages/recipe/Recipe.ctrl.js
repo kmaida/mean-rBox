@@ -29,7 +29,6 @@
 		 */
 		function _init() {
 			Page.setTitle('Recipe');
-
 			_activate();
 		}
 
