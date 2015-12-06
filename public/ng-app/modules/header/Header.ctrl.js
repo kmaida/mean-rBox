@@ -17,6 +17,18 @@
 		header.indexIsActive = indexIsActive;
 		header.navIsActive = navIsActive;
 
+		_init();
+
+		/**
+		 * INIT
+		 *
+		 * @private
+		 */
+		function _init() {
+			_checkUserAdmin();
+			$scope.$on('$locationChangeSuccess', _checkUserAdmin);
+		}
+
 		/**
 		 * Log the user out of whatever authentication they've signed in with
 		 */
@@ -52,8 +64,6 @@
 					.then(_getUserSuccess);
 			}
 		}
-		_checkUserAdmin();
-		$scope.$on('$locationChangeSuccess', _checkUserAdmin);
 
 		/**
 		 * Currently active nav item when '/' index
