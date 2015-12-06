@@ -145,58 +145,39 @@
 	 * @param Upload
 	 */
 	function recipeFormCtrl(recipeData, Recipe, Slug, $location, $timeout, Upload) {
+		// controllerAs ViewModel
 		var rf = this;
+
+		// private variables
 		var _isEdit = !!rf.recipe;
 		var _originalSlug = _isEdit ? rf.recipe.slug : null;
-
-		// setup special characters private vars
 		var _lastInput;
 		var _ingIndex;
 		var _caretPos;
 
+		// bindable members
 		rf.recipeData = _isEdit ? rf.recipe : {};
 		rf.recipeData.userId = _isEdit ? rf.recipe.userId : rf.userId;
 		rf.recipeData.photo = _isEdit ? rf.recipe.photo : null;
-
-		// share generateId function with Link
 		rf.generateId = generateId;
-
-		// is this a touch device?
 		rf.isTouchDevice = !!Modernizr.touchevents;
-
-		// build lists
 		rf.recipeData.ingredients = _isEdit ? rf.recipe.ingredients : [{id: generateId(), type: 'ing'}];
 		rf.recipeData.directions = _isEdit ? rf.recipe.directions : [{id: generateId(), type: 'step'}];
-
 		rf.recipeData.tags = _isEdit ? rf.recipeData.tags : [];
-
-		// manage time fields
 		rf.timeRegex = /^[+]?([0-9]+(?:[\.][0-9]*)?|\.[0-9]+)$/;
 		rf.timeError = 'Please enter a number in minutes. Multiply hours by 60.';
-
-		// fetch categories options list
 		rf.categories = Recipe.categories;
-
-		// fetch tags options list
 		rf.tags = Recipe.tags;
-
-		// fetch dietary options list
 		rf.dietary = Recipe.dietary;
-
-		// fetch special characters
 		rf.chars = Recipe.insertChar;
-
 		rf.insertCharInput = insertCharInput;
 		rf.insertChar = insertChar;
 		rf.clearChar = clearChar;
-
 		rf.uploadedFile = null;
 		rf.updateFile = updateFile;
 		rf.removePhoto = removePhoto;
-
 		rf.tagMap = {};
 		rf.addRemoveTag = addRemoveTag;
-
 		rf.saveRecipe = saveRecipe;
 
 		_init();
