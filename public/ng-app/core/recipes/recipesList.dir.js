@@ -117,6 +117,19 @@
 		rl.clearSearchFilter = clearSearchFilter;
 		rl.activeSearchFilters = activeSearchFilters;
 
+		_init();
+
+		/**
+		 * INIT
+		 *
+		 * @private
+		 */
+		function _init() {
+			_resetResultsShowing();
+			$scope.$watch('rl.query', _$watchQuery);
+			$scope.$watch('rl.filterPredicates', _$watchPredicates);
+		}
+
 		/**
 		 * Reset filter predicates
 		 *
@@ -149,7 +162,6 @@
 		function _resetResultsShowing() {
 			rl.nResultsShowing = _resultsSet;
 		}
-		_resetResultsShowing();
 
 		/**
 		 * Load More results
@@ -158,23 +170,17 @@
 			rl.nResultsShowing = rl.nResultsShowing += _resultsSet;
 		}
 
-		$scope.$watch('rl.query', _$watchQuery);
-
 		/**
 		 * $watch search query and if it exists, clear filters and reset results showing
 		 *
-		 * @param newVal
-		 * @param oldVal
 		 * @private
 		 */
-		function _$watchQuery(newVal, oldVal) {
+		function _$watchQuery() {
 			if (rl.query) {
 				_resetFilterPredicates();
 				_resetResultsShowing();
 			}
 		}
-
-		$scope.$watch('rl.filterPredicates', _$watchPredicates);
 
 		/**
 		 * $watch filterPredicates
