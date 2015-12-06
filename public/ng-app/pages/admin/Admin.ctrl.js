@@ -5,15 +5,39 @@
 		.module('rBox')
 		.controller('AdminCtrl', AdminCtrl);
 
-	AdminCtrl.$inject = ['Page', 'Utils', 'userData', 'User'];
+	AdminCtrl.$inject = ['$scope', 'Page', 'Utils', 'userData', 'User'];
 
-	function AdminCtrl(Page, Utils, userData, User) {
+	function AdminCtrl($scope, Page, Utils, userData, User) {
 		// controllerAs ViewModel
 		var admin = this;
 
-		Page.setTitle('Admin');
-
+		// bindable members
 		admin.isAuthenticated = Utils.isAuthenticated;
+		admin.users = null;
+		admin.showAdmin = false;
+
+		_init();
+
+		/**
+		 * INIT
+		 *
+		 * @private
+		 */
+		function _init() {
+			Page.setTitle('Admin');
+			_activate();
+		}
+
+		/**
+		 * ACTIVATE
+		 *
+		 * @private
+		 */
+		function _activate() {
+			$scope.$emit('loading-on');
+
+			return userData.getAllUsers().then(_getAllUsersSuccess, _getAllUsersError);
+		}
 
 		/**
 		 * Function for successful API call getting user list
@@ -31,6 +55,8 @@
 			});
 
 			admin.showAdmin = true;
+
+			$scope.$emit('loading-off');
 		}
 
 		/**
@@ -43,7 +69,5 @@
 		function _getAllUsersError(error) {
 			admin.showAdmin = false;
 		}
-
-		userData.getAllUsers().then(_getAllUsersSuccess, _getAllUsersError);
 	}
 }());
