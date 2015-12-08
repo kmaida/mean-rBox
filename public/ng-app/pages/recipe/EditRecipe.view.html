@@ -1,0 +1,60 @@
+<article id="content-wrapper" class="content-wrapper editRecipe-wrapper">
+	<section id="content-main" class="content-main editRecipe-content clearfix" ng-cloak>
+
+		<div ng-if="edit.isAuthenticated() && edit.recipe && edit.recipe !== 'error'">
+			<h1 class="content-heading">Edit {{::edit.recipe.name}}</h1>
+
+			<div ng-if="edit.user._id === edit.recipe.userId">
+
+				<ul class="nav nav-tabs editTabs">
+					<li role="presentation" ng-repeat="tab in edit.tabs" ng-class="{active: edit.currentTab === tab.query}">
+						<a ng-click="edit.changeTab(tab.query)">{{tab.name}}</a>
+					</li>
+				</ul>
+
+				<!-- Edit Recipe -->
+				<section ng-if="edit.currentTab === 'edit'" class="editRecipe">
+					<h2><i class="fa fa-pencil-square-o fa-fw"></i>Edit Recipe</h2>
+					<p class="lead">View <a ng-href="/recipe/{{::edit.recipe.slug}}">{{::edit.recipe.name}}</a> recipe.</p>
+
+					<recipe-form user-id="edit.user._id" recipe="edit.recipe"></recipe-form>
+
+					<p class="editRecipe-footer-viewRecipe">
+						<em>View <a ng-href="/recipe/{{::edit.recipe.slug}}">{{::edit.recipe.name}}</a>.</em>
+					</p>
+				</section>
+
+				<!-- Delete Recipe -->
+				<section ng-if="edit.currentTab === 'delete'" class="deleteRecipe">
+					<h2><i class="fa fa-trash fa-fw"></i>Delete Recipe</h2>
+
+					<p class="lead">To permanently delete this recipe, please type its name below.</p>
+
+					<div class="form-group">
+						<label for="confirmDelete">Recipe Name</label>
+						<input id="confirmDelete"
+							   type="text"
+							   class="form-control"
+							   ng-model="edit.deleteConfirm">
+					</div>
+					<button class="btn"
+							ng-class="{'btn-danger': !edit.deleted || edit.deleted === 'error', 'btn-success': edit.deleted}"
+							ng-click="edit.deleteRecipe()"
+							ng-disabled="edit.originalName !== edit.deleteConfirm">
+						<i class="fa"
+						   ng-class="{'fa-trash': !edit.deleted, 'fa-check': edit.deleted === true, 'fa-ban': edit.deleted === 'error'}"></i> {{edit.deleteBtnText}}</button>
+				</section>
+			</div>
+
+			<!-- not authorized to edit -->
+			<div ng-if="edit.user && edit.user._id !== edit.recipe.userId" class="alert alert-danger">
+				<i class="fa fa-warning"></i> You cannot edit someone else's recipe!
+			</div>
+		</div>
+
+		<!-- recipe not found -->
+		<div ng-if="edit.recipe && edit.recipe === 'error'" class="alert alert-danger">
+			<i class="fa fa-warning"></i> {{edit.errorMsg}}
+		</div>
+	</section>
+</article>
