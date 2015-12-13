@@ -52,7 +52,7 @@ var jsModuleFile = path.jsAngular.src + 'core/app-setup/app.module.js';
 var files = {};
 
 files.scssSrc = [path.css.src + '**/*.scss'];
-files.jsUserSrcAngular = [path.jsAngular.src + '**/*.js', '!' + path.jsAngular.src + jsAngularScript];
+files.jsUserSrcAngular = [path.jsAngular.src + '**/*.js', '!' + path.jsAngular.src + 'core/app-setup/OAUTHCLIENTS.SAMPLE.constant.js', '!' + path.jsAngular.src + jsAngularScript];
 files.jsUserSrcAssets = [path.js.src + '**/*.js', '!' + path.js.src + jsUserScript, '!' + path.js.src + 'vendor/*'];
 files.jsUserSrcAll = files.jsUserSrcAngular.concat(files.jsUserSrcAssets);
 files.jsVendorSrc = [path.jsVendor.src + 'jquery.js', path.jsVendor.src + 'angular.js', path.jsVendor.src + '**/*.js', '!' + path.jsVendor.src + 'modernizr.min.js', '!' + path.jsVendor.src + 'vendor.js'];
