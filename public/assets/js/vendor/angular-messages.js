@@ -1,5 +1,5 @@
 /**
- * @license AngularJS v1.4.4
+ * @license AngularJS v1.4.8
  * (c) 2010-2015 Google, Inc. http://angularjs.org
  * License: MIT
  */
@@ -320,166 +320,169 @@
 	 *   </file>
 	 * </example>
 	 */
-		.directive('ngMessages', ['$animate', function($animate) {
-			var ACTIVE_CLASS = 'ng-active';
-			var INACTIVE_CLASS = 'ng-inactive';
+	.directive('ngMessages', ['$animate', function($animate) {
+		var ACTIVE_CLASS = 'ng-active';
+		var INACTIVE_CLASS = 'ng-inactive';
 
-			return {
-				require: 'ngMessages',
-				restrict: 'AE',
-				controller: ['$element', '$scope', '$attrs', function($element, $scope, $attrs) {
-					var ctrl = this;
-					var latestKey = 0;
+		return {
+			require: 'ngMessages',
+			restrict: 'AE',
+			controller: ['$element', '$scope', '$attrs', function($element, $scope, $attrs) {
+				var ctrl = this;
+				var latestKey = 0;
+				var nextAttachId = 0;
 
-					var messages = this.messages = {};
-					var renderLater, cachedCollection;
+				this.getAttachId = function getAttachId() { return nextAttachId++; };
 
-					this.render = function(collection) {
-						collection = collection || {};
+				var messages = this.messages = {};
+				var renderLater, cachedCollection;
 
-						renderLater = false;
-						cachedCollection = collection;
+				this.render = function(collection) {
+					collection = collection || {};
 
-						// this is true if the attribute is empty or if the attribute value is truthy
-						var multiple = isAttrTruthy($scope, $attrs.ngMessagesMultiple) ||
+					renderLater = false;
+					cachedCollection = collection;
+
+					// this is true if the attribute is empty or if the attribute value is truthy
+					var multiple = isAttrTruthy($scope, $attrs.ngMessagesMultiple) ||
 							isAttrTruthy($scope, $attrs.multiple);
 
-						var unmatchedMessages = [];
-						var matchedKeys = {};
-						var messageItem = ctrl.head;
-						var messageFound = false;
-						var totalMessages = 0;
+					var unmatchedMessages = [];
+					var matchedKeys = {};
+					var messageItem = ctrl.head;
+					var messageFound = false;
+					var totalMessages = 0;
 
-						// we use != instead of !== to allow for both undefined and null values
-						while (messageItem != null) {
-							totalMessages++;
-							var messageCtrl = messageItem.message;
+					// we use != instead of !== to allow for both undefined and null values
+					while (messageItem != null) {
+						totalMessages++;
+						var messageCtrl = messageItem.message;
 
-							var messageUsed = false;
-							if (!messageFound) {
-								forEach(collection, function(value, key) {
-									if (!messageUsed && truthy(value) && messageCtrl.test(key)) {
-										// this is to prevent the same error name from showing up twice
-										if (matchedKeys[key]) return;
-										matchedKeys[key] = true;
+						var messageUsed = false;
+						if (!messageFound) {
+							forEach(collection, function(value, key) {
+								if (!messageUsed && truthy(value) && messageCtrl.test(key)) {
+									// this is to prevent the same error name from showing up twice
+									if (matchedKeys[key]) return;
+									matchedKeys[key] = true;
 
-										messageUsed = true;
-										messageCtrl.attach();
-									}
-								});
-							}
-
-							if (messageUsed) {
-								// unless we want to display multiple messages then we should
-								// set a flag here to avoid displaying the next message in the list
-								messageFound = !multiple;
-							} else {
-								unmatchedMessages.push(messageCtrl);
-							}
-
-							messageItem = messageItem.next;
-						}
-
-						forEach(unmatchedMessages, function(messageCtrl) {
-							messageCtrl.detach();
-						});
-
-						unmatchedMessages.length !== totalMessages
-							? $animate.setClass($element, ACTIVE_CLASS, INACTIVE_CLASS)
-							: $animate.setClass($element, INACTIVE_CLASS, ACTIVE_CLASS);
-					};
-
-					$scope.$watchCollection($attrs.ngMessages || $attrs['for'], ctrl.render);
-
-					this.reRender = function() {
-						if (!renderLater) {
-							renderLater = true;
-							$scope.$evalAsync(function() {
-								if (renderLater) {
-									cachedCollection && ctrl.render(cachedCollection);
+									messageUsed = true;
+									messageCtrl.attach();
 								}
 							});
 						}
-					};
 
-					this.register = function(comment, messageCtrl) {
-						var nextKey = latestKey.toString();
-						messages[nextKey] = {
-							message: messageCtrl
-						};
-						insertMessageNode($element[0], comment, nextKey);
-						comment.$$ngMessageNode = nextKey;
-						latestKey++;
-
-						ctrl.reRender();
-					};
-
-					this.deregister = function(comment) {
-						var key = comment.$$ngMessageNode;
-						delete comment.$$ngMessageNode;
-						removeMessageNode($element[0], comment, key);
-						delete messages[key];
-						ctrl.reRender();
-					};
-
-					function findPreviousMessage(parent, comment) {
-						var prevNode = comment;
-						var parentLookup = [];
-						while (prevNode && prevNode !== parent) {
-							var prevKey = prevNode.$$ngMessageNode;
-							if (prevKey && prevKey.length) {
-								return messages[prevKey];
-							}
-
-							// dive deeper into the DOM and examine its children for any ngMessage
-							// comments that may be in an element that appears deeper in the list
-							if (prevNode.childNodes.length && parentLookup.indexOf(prevNode) == -1) {
-								parentLookup.push(prevNode);
-								prevNode = prevNode.childNodes[prevNode.childNodes.length - 1];
-							} else {
-								prevNode = prevNode.previousSibling || prevNode.parentNode;
-							}
-						}
-					}
-
-					function insertMessageNode(parent, comment, key) {
-						var messageNode = messages[key];
-						if (!ctrl.head) {
-							ctrl.head = messageNode;
+						if (messageUsed) {
+							// unless we want to display multiple messages then we should
+							// set a flag here to avoid displaying the next message in the list
+							messageFound = !multiple;
 						} else {
-							var match = findPreviousMessage(parent, comment);
-							if (match) {
-								messageNode.next = match.next;
-								match.next = messageNode;
-							} else {
-								messageNode.next = ctrl.head;
-								ctrl.head = messageNode;
-							}
+							unmatchedMessages.push(messageCtrl);
 						}
+
+						messageItem = messageItem.next;
 					}
 
-					function removeMessageNode(parent, comment, key) {
-						var messageNode = messages[key];
+					forEach(unmatchedMessages, function(messageCtrl) {
+						messageCtrl.detach();
+					});
 
+					unmatchedMessages.length !== totalMessages
+							? $animate.setClass($element, ACTIVE_CLASS, INACTIVE_CLASS)
+							: $animate.setClass($element, INACTIVE_CLASS, ACTIVE_CLASS);
+				};
+
+				$scope.$watchCollection($attrs.ngMessages || $attrs['for'], ctrl.render);
+
+				this.reRender = function() {
+					if (!renderLater) {
+						renderLater = true;
+						$scope.$evalAsync(function() {
+							if (renderLater) {
+								cachedCollection && ctrl.render(cachedCollection);
+							}
+						});
+					}
+				};
+
+				this.register = function(comment, messageCtrl) {
+					var nextKey = latestKey.toString();
+					messages[nextKey] = {
+						message: messageCtrl
+					};
+					insertMessageNode($element[0], comment, nextKey);
+					comment.$$ngMessageNode = nextKey;
+					latestKey++;
+
+					ctrl.reRender();
+				};
+
+				this.deregister = function(comment) {
+					var key = comment.$$ngMessageNode;
+					delete comment.$$ngMessageNode;
+					removeMessageNode($element[0], comment, key);
+					delete messages[key];
+					ctrl.reRender();
+				};
+
+				function findPreviousMessage(parent, comment) {
+					var prevNode = comment;
+					var parentLookup = [];
+					while (prevNode && prevNode !== parent) {
+						var prevKey = prevNode.$$ngMessageNode;
+						if (prevKey && prevKey.length) {
+							return messages[prevKey];
+						}
+
+						// dive deeper into the DOM and examine its children for any ngMessage
+						// comments that may be in an element that appears deeper in the list
+						if (prevNode.childNodes.length && parentLookup.indexOf(prevNode) == -1) {
+							parentLookup.push(prevNode);
+							prevNode = prevNode.childNodes[prevNode.childNodes.length - 1];
+						} else {
+							prevNode = prevNode.previousSibling || prevNode.parentNode;
+						}
+					}
+				}
+
+				function insertMessageNode(parent, comment, key) {
+					var messageNode = messages[key];
+					if (!ctrl.head) {
+						ctrl.head = messageNode;
+					} else {
 						var match = findPreviousMessage(parent, comment);
 						if (match) {
-							match.next = messageNode.next;
+							messageNode.next = match.next;
+							match.next = messageNode;
 						} else {
-							ctrl.head = messageNode.next;
+							messageNode.next = ctrl.head;
+							ctrl.head = messageNode;
 						}
 					}
-				}]
-			};
+				}
 
-			function isAttrTruthy(scope, attr) {
-				return (isString(attr) && attr.length === 0) || //empty attribute
+				function removeMessageNode(parent, comment, key) {
+					var messageNode = messages[key];
+
+					var match = findPreviousMessage(parent, comment);
+					if (match) {
+						match.next = messageNode.next;
+					} else {
+						ctrl.head = messageNode.next;
+					}
+				}
+			}]
+		};
+
+		function isAttrTruthy(scope, attr) {
+			return (isString(attr) && attr.length === 0) || //empty attribute
 					truthy(scope.$eval(attr));
-			}
+		}
 
-			function truthy(val) {
-				return isString(val) ? val.length : !!val;
-			}
-		}])
+		function truthy(val) {
+			return isString(val) ? val.length : !!val;
+		}
+	}])
 
 	/**
 	 * @ngdoc directive
@@ -511,29 +514,29 @@
 	 *
 	 * @param {string} ngMessagesInclude|src a string value corresponding to the remote template.
 	 */
-		.directive('ngMessagesInclude',
-		['$templateRequest', '$document', '$compile', function($templateRequest, $document, $compile) {
+	.directive('ngMessagesInclude',
+			['$templateRequest', '$document', '$compile', function($templateRequest, $document, $compile) {
 
-			return {
-				restrict: 'AE',
-				require: '^^ngMessages', // we only require this for validation sake
-				link: function($scope, element, attrs) {
-					var src = attrs.ngMessagesInclude || attrs.src;
-					$templateRequest(src).then(function(html) {
-						$compile(html)($scope, function(contents) {
-							element.after(contents);
+				return {
+					restrict: 'AE',
+					require: '^^ngMessages', // we only require this for validation sake
+					link: function($scope, element, attrs) {
+						var src = attrs.ngMessagesInclude || attrs.src;
+						$templateRequest(src).then(function(html) {
+							$compile(html)($scope, function(contents) {
+								element.after(contents);
 
-							// the anchor is placed for debugging purposes
-							var anchor = jqLite($document[0].createComment(' ngMessagesInclude: ' + src + ' '));
-							element.after(anchor);
+								// the anchor is placed for debugging purposes
+								var anchor = jqLite($document[0].createComment(' ngMessagesInclude: ' + src + ' '));
+								element.after(anchor);
 
-							// we don't want to pollute the DOM anymore by keeping an empty directive element
-							element.remove();
+								// we don't want to pollute the DOM anymore by keeping an empty directive element
+								element.remove();
+							});
 						});
-					});
-				}
-			};
-		}])
+					}
+				};
+			}])
 
 	/**
 	 * @ngdoc directive
@@ -567,7 +570,7 @@
 	 *
 	 * @param {expression} ngMessage|when a string value corresponding to the message key.
 	 */
-		.directive('ngMessage', ngMessageDirectiveFactory('AE'))
+	.directive('ngMessage', ngMessageDirectiveFactory('AE'))
 
 
 	/**
@@ -599,7 +602,7 @@
 	 *
 	 * @param {expression} ngMessageExp|whenExp an expression value corresponding to the message key.
 	 */
-		.directive('ngMessageExp', ngMessageDirectiveFactory('A'));
+	.directive('ngMessageExp', ngMessageDirectiveFactory('A'));
 
 	function ngMessageDirectiveFactory(restrict) {
 		return ['$animate', function($animate) {
@@ -616,10 +619,10 @@
 					var dynamicExp = attrs.ngMessageExp || attrs.whenExp;
 					var assignRecords = function(items) {
 						records = items
-							? (isArray(items)
-							? items
-							: items.split(/[\s,]+/))
-							: null;
+								? (isArray(items)
+								? items
+								: items.split(/[\s,]+/))
+								: null;
 						ngMessagesCtrl.reRender();
 					};
 
@@ -641,11 +644,15 @@
 									$animate.enter(elm, null, element);
 									currentElement = elm;
 
+									// Each time we attach this node to a message we get a new id that we can match
+									// when we are destroying the node later.
+									var $$attachId = currentElement.$$attachId = ngMessagesCtrl.getAttachId();
+
 									// in the event that the parent element is destroyed
 									// by any other structural directive then it's time
 									// to deregister the message from the controller
 									currentElement.on('$destroy', function() {
-										if (currentElement) {
+										if (currentElement && currentElement.$$attachId === $$attachId) {
 											ngMessagesCtrl.deregister(commentNode);
 											messageCtrl.detach();
 										}
@@ -668,8 +675,8 @@
 		function contains(collection, key) {
 			if (collection) {
 				return isArray(collection)
-					? collection.indexOf(key) >= 0
-					: collection.hasOwnProperty(key);
+						? collection.indexOf(key) >= 0
+						: collection.hasOwnProperty(key);
 			}
 		}
 	}
