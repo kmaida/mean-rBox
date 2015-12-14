@@ -1,6 +1,6 @@
 {
   "name": "mean-rbox",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Kim Maida",
   "description": "MEAN recipe box application",
   "main": "server.js",
