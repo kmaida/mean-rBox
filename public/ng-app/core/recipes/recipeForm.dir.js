@@ -72,11 +72,13 @@
 
 				model.push(_newItem);
 
+				// focus new item
+				// TODO: element not highlighting after being added
 				$timeout(function() {
 					var _newestInput = angular.element($event.target).parent('p').prev('.last').find('input').eq(0);
 					_newestInput.click();
-					_newestInput.focus();   // TODO: focus isn't highlighting properly
-				});
+					_newestInput.focus();
+				}, 100);
 			}
 
 			/**
