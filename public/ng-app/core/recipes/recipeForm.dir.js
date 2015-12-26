@@ -32,13 +32,11 @@
 		 */
 		function recipeFormLink($scope, $element, $attrs, rf) {
 			// set up $scope object for namespacing
-			$scope.rfl = {};
-
-			$scope.rfl.addItem = addItem;
-			$scope.rfl.removeItem = removeItem;
-			$scope.rfl.moveItem = moveItem;
-			$scope.rfl.moveIngredients = false;
-			$scope.rfl.moveDirections = false;
+			rf.addItem = addItem;
+			rf.removeItem = removeItem;
+			rf.moveItem = moveItem;
+			rf.moveIngredients = false;
+			rf.moveDirections = false;
 
 			_init();
 
@@ -98,7 +96,7 @@
 			 * @private
 			 */
 			function _enterMobile() {
-				$scope.rfl.isLargeView = false;
+				rf.isLargeView = false;
 			}
 
 			/**
@@ -107,7 +105,7 @@
 			 * @private
 			 */
 			function _exitMobile() {
-				$scope.rfl.isLargeView = true;
+				rf.isLargeView = true;
 			}
 
 			/**

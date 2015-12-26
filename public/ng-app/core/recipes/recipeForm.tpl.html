@@ -69,7 +69,7 @@
 		</div>
 
 		<ul class="recipeForm-ingredients-list"
-			ng-class="{'showMoveControls': rfl.moveIngredients}">
+			ng-class="{'showMoveControls': rf.moveIngredients}">
 
 			<li class="form-inline recipeForm-ingredients-item"
 				ng-repeat="ing in rf.recipeData.ingredients"
@@ -78,14 +78,14 @@
 
 				<!-- MOVE -->
 				<span class="btn-group move-item"
-					  ng-class="{'btn-group-vertical': rfl.moveIngredients && !rfl.isLargeView}">
+					  ng-class="{'btn-group-vertical': rf.moveIngredients && !rf.isLargeView}">
 					<a class="btn btn-warning"
-					   ng-click="rfl.moveItem($event, rf.recipeData.ingredients, $index, $index - 1)"
+					   ng-click="rf.moveItem($event, rf.recipeData.ingredients, $index, $index - 1)"
 					   ng-disabled="$first">
 						<i class="fa fa-arrow-up"></i>
 					</a>
 					<a class="btn btn-warning"
-					   ng-click="rfl.moveItem($event, rf.recipeData.ingredients, $index, $index + 1)"
+					   ng-click="rf.moveItem($event, rf.recipeData.ingredients, $index, $index + 1)"
 					   ng-disabled="$last">
 						<i class="fa fa-arrow-down"></i>
 					</a>
@@ -117,7 +117,7 @@
 							   ng-focus="rf.clearChar()">
 						<div class="input-group-btn">
 							<button class="btn btn-danger"
-									ng-click="rfl.removeItem(rf.recipeData.ingredients, $index)"
+									ng-click="rf.removeItem(rf.recipeData.ingredients, $index)"
 									ng-disabled="rf.recipeData.ingredients.length === 1">
 								<i class="fa fa-times"></i>
 							</button>
@@ -135,7 +135,7 @@
 							   ng-focus="rf.clearChar()">
 						<div class="input-group-btn">
 							<button class="btn btn-danger"
-									ng-click="rfl.removeItem(rf.recipeData.ingredients, $index)"
+									ng-click="rf.removeItem(rf.recipeData.ingredients, $index)"
 									ng-disabled="rf.recipeData.ingredients.length === 1">
 								<i class="fa fa-times"></i>
 							</button>
@@ -149,23 +149,23 @@
 		<p class="rearrange-items-toggle">
 			<button class="btn btn-default"
 					blur-on-end
-					ng-click="rfl.moveIngredients = !rfl.moveIngredients">
+					ng-click="rf.moveIngredients = !rf.moveIngredients">
 				<i class="fa"
-				   ng-class="{'fa-eye': !rfl.moveIngredients, 'fa-eye-slash': rfl.moveIngredients}"></i>
-				{{!rfl.moveIngredients ? 'Show' : 'Hide'}} Move Controls
+				   ng-class="{'fa-eye': !rf.moveIngredients, 'fa-eye-slash': rf.moveIngredients}"></i>
+				{{!rf.moveIngredients ? 'Show' : 'Hide'}} Move Controls
 			</button>
 		</p>
 
 		<p>
 			<button class="btn btn-info"
 					blur-on-end
-					ng-click="rfl.addItem($event, rf.recipeData.ingredients, 'ing')">
+					ng-click="rf.addItem($event, rf.recipeData.ingredients, 'ing')">
 				<i class="fa fa-plus"></i> Add Ingredient
 			</button>
 
 			<button class="btn btn-info"
 					blur-on-end
-					ng-click="rfl.addItem($event, rf.recipeData.ingredients, 'ing', true)">
+					ng-click="rf.addItem($event, rf.recipeData.ingredients, 'ing', true)">
 				<i class="fa fa-plus"></i> Add Heading
 			</button>
 		</p>
@@ -177,7 +177,7 @@
 	<div class="form-group recipeForm-directions">
 		<label>Directions<span class="req">*</span></label>
 
-		<ul class="recipeForm-directions-list" ng-class="{'showMoveControls': rfl.moveDirections}">
+		<ul class="recipeForm-directions-list" ng-class="{'showMoveControls': rf.moveDirections}">
 
 			<li class="recipeForm-directions-step"
 				ng-repeat="step in rf.recipeData.directions"
@@ -185,14 +185,14 @@
 
 				<!-- MOVE -->
 				<span class="btn-group move-item"
-					  ng-class="{'btn-group-vertical': rfl.moveDirections && !rfl.isLargeView}">
+					  ng-class="{'btn-group-vertical': rf.moveDirections && !rf.isLargeView}">
 					<a class="btn btn-warning"
-					   ng-click="rfl.moveItem($event, rf.recipeData.directions, $index, $index - 1)"
+					   ng-click="rf.moveItem($event, rf.recipeData.directions, $index, $index - 1)"
 					   ng-disabled="$first">
 						<i class="fa fa-arrow-up"></i>
 					</a>
 					<a class="btn btn-warning"
-					   ng-click="rfl.moveItem($event, rf.recipeData.directions, $index, $index + 1)"
+					   ng-click="rf.moveItem($event, rf.recipeData.directions, $index, $index + 1)"
 					   ng-disabled="$last">
 						<i class="fa fa-arrow-down"></i>
 					</a>
@@ -210,7 +210,7 @@
 							   ng-focus="rf.clearChar()"></textarea>
 						<div class="input-group-btn">
 							<button class="btn btn-danger"
-									ng-click="rfl.removeItem(rf.recipeData.directions, $index)"
+									ng-click="rf.removeItem(rf.recipeData.directions, $index)"
 									ng-disabled="rf.recipeData.directions.length === 1">
 								<i class="fa fa-times"></i>
 							</button>
@@ -224,17 +224,17 @@
 		<p class="rearrange-items-toggle">
 			<button class="btn btn-default"
 					blur-on-end
-					ng-click="rfl.moveDirections = !rfl.moveDirections">
+					ng-click="rf.moveDirections = !rf.moveDirections">
 				<i class="fa"
-				   ng-class="{'fa-eye': !rfl.moveDirections, 'fa-eye-slash': rfl.moveDirections}"></i>
-				{{!rfl.moveDirections ? 'Show' : 'Hide'}} Move Controls
+				   ng-class="{'fa-eye': !rf.moveDirections, 'fa-eye-slash': rf.moveDirections}"></i>
+				{{!rf.moveDirections ? 'Show' : 'Hide'}} Move Controls
 			</button>
 		</p>
 
 		<p>
 			<button class="btn btn-info"
 					blur-on-end
-					ng-click="rfl.addItem($event, rf.recipeData.directions, 'step')">
+					ng-click="rf.addItem($event, rf.recipeData.directions, 'step')">
 				<i class="fa fa-plus"></i> Add Step
 			</button>
 		</p>
