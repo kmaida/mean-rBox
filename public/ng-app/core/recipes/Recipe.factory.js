@@ -30,6 +30,7 @@
 		'alcohol',
 		'baked',
 		'beef',
+		'confection',
 		'fast',
 		'fish',
 		'low-calorie',
