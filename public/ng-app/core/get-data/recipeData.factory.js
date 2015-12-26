@@ -62,12 +62,12 @@
 		/**
 		 * Delete a recipe (DELETE)
 		 *
-		 * @param id {string} recipe ID
+		 * @param recipeId {string} recipe ID
 		 * @returns {promise}
 		 */
-		function deleteRecipe(id) {
+		function deleteRecipe(recipeId) {
 			return $http
-				.delete('/api/recipe/' + id);
+				.delete('/api/recipe/' + recipeId);
 		}
 
 		/**
