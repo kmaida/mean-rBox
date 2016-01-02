@@ -374,8 +374,8 @@
 		 *
 		 * @private
 		 */
-		function _goToNewSlug() {
-			var _path = !_isEdit ? recipe.slug : rf.recipeData.slug + '/edit';
+		function _goToNewSlug(recipe) {
+			var _path = !_isEdit ? rf.recipeData.slug : rf.recipeData.slug + '/edit';
 
 			$location.path('/recipe/' + _path);
 		}
