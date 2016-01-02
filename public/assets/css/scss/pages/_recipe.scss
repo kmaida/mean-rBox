@@ -26,7 +26,7 @@
 		padding-left: 0;
 
 		@include mq($mq-large) {
-			padding-left: 20px;
+			padding-left: 10px;
 		}
 	}
 	li {
@@ -35,6 +35,9 @@
 		&.heading {
 			cursor: default;
 		}
+		i {
+			margin-right: 6px;
+		}
 	}
 	&-heading {
 		font-size: 18px;
@@ -42,7 +45,7 @@
 }
 .recipe-directions {
 	ol {
-		padding-left: 40px;
+		padding-left: 48px;
 
 		@include mq($mq-large) {
 			padding-left: 62px;
@@ -55,8 +58,12 @@
 
 		i {
 			position: absolute;
-				left: -42px;
+				left: -48px;
 				top: 9px;
+
+			@include mq($mq-large) {
+				left: -50px;
+			}
 		}
 		span {
 			font-weight: normal;
