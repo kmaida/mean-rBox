@@ -16,6 +16,7 @@ MEAN stack Recipe box application. Create, file, and view recipes.
 
 ## Changelog
 
+* **01/01/16:** Bugfixes. Release `v0.1.2`.
 * **12/13/15:** Upgraded to Angular 1.4.8. Bugfixes and validation updates. Update build process.
-* **12/7/15:** Changes merged for `upgrade-reStart` - John Papa styleguide updates, sweeping optimizations
-* **12/4/15:** Add ESLint for JS linting and opinionated styles
+* **12/7/15:** Changes merged for `upgrade-reStart` - John Papa styleguide updates, sweeping optimizations.
+* **12/4/15:** Added ESLint for JS linting and opinionated styles.
