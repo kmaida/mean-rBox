@@ -7,8 +7,8 @@
 			   ng-class="{open: rl.showSearchFilter}"></i>{{!rl.showSearchFilter ?
 			'Show' : 'Hide'}} Search / Filters
 			<span class="badge"
-				  ng-if="rl.query || rl.filterPredicates.cat || rl.filterPredicates.tag || rl.filterPredicates.diet">
-				{{rl.activeSearchFilters(rl.query, rl.filterPredicates)}}</span>
+				  ng-if="rl.query || rl.filterPredicates.cat || rl.filterPredicates.tag || rl.filterPredicates.diet"
+				  ng-bind="rl.activeSearchFilters(rl.query, rl.filterPredicates)"></span>
 		</button>
 	</p>
 
@@ -23,7 +23,9 @@
 					   ng-model="rl.query"
 					   placeholder="Search {{::rl.customLabels}}" />
 				<span class="input-group-btn">
-					<button class="btn btn-default" ng-disabled="!rl.query" ng-click="rl.query=''"><i class="fa fa-times"></i></button>
+					<button class="btn btn-default"
+							ng-disabled="!rl.query"
+							ng-click="rl.query=''"><i class="fa fa-times"></i></button>
 				</span>
 			</div>
 		</div>
@@ -142,20 +144,25 @@
 		<li ng-repeat="recipe in rl.filtered = (rl.recipes | filter:rl.query | filter:rl.filterPredicates.cat | filter:rl.filterPredicates.tag | filter:rl.filterPredicates.diet) | filter:rl.query | filter:rl.filterPredicates.cat | filter:rl.filterPredicates.tag | filter:rl.filterPredicates.diet | orderBy:rl.sortPredicate:rl.reverse | limitTo:rl.nResultsShowing"
 			class="recipesList-list-item clearfix" ng-init="rl.listLen = rl.filtered.length">
 
-			<a ng-if="recipe.photo"ng-href="/recipe/{{::recipe.slug}}">
-				<img class="recipesList-list-item-photo"
+			<a ng-href="/recipe/{{::recipe.slug}}">
+				<img ng-if="recipe.photo"
+					 class="recipesList-list-item-photo"
 					 ng-src="{{::'/uploads/images/' + recipe.photo}}">
+				<span ng-if="!recipe.photo"
+					  class="recipesList-list-item-photo photo-placeholder">
+					<i class="fa fa-cutlery"></i>
+				</span>
 			</a>
 			<div class="recipesList-list-item-info">
-				<h4 class="recipesList-list-item-name"><a ng-href="/recipe/{{::recipe.slug}}">{{::recipe.name}}</a></h4>
+				<h4 class="recipesList-list-item-name"><a ng-href="/recipe/{{::recipe.slug}}" ng-bind="::recipe.name"></a></h4>
 
 				<span class="recipesList-list-item-category">
 					<i class="fa fa-fw fa-cutlery"></i>
-					<a ng-href="/recipes/category/{{::recipe.category | lowercase}}">{{::recipe.category}}</a>
+					<a ng-href="/recipes/category/{{::recipe.category | lowercase}}" ng-bind="::recipe.category"></a>
 				</span>
 				<span ng-if="recipe.tags.length" class="recipesList-list-item-tags">
 					<i class="fa fa-fw fa-tags"></i>
-					<span ng-repeat="tag in recipe.tags"><a ng-href="/recipes/tag/{{::tag}}">{{::tag}}</a>{{!$last ? ', ' : ''}}</span>
+					<span ng-repeat="tag in recipe.tags"><a ng-href="/recipes/tag/{{::tag}}" ng-bind="::tag"></a>{{!$last ?	', ' : ''}}</span>
 				</span>
 				<span ng-if="recipe.prepTime || recipe.cookTime" class="recipesList-list-item-time">
 					<i class="fa fa-fw fa-clock-o"></i>{{::(recipe.prepTime + recipe.cookTime) | minToH}}
@@ -169,7 +176,7 @@
 
 	<p ng-if="rl.filtered.length"
 	   class="recipesList-recipes-displayedResults text-center">
-		Showing <strong>{{rll.displayedResults}}</strong> of <strong>{{rl.filtered.length}}</strong>
+		Showing <strong ng-bind="rll.displayedResults"></strong> of <strong ng-bind="rl.filtered.length"></strong>
 	</p>
 
 	<p ng-if="rl.filtered.length > rl.nResultsShowing"

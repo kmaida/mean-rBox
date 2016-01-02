@@ -63,6 +63,19 @@
 				float: left;
 				margin: 10px 10px 10px 0;
 				width: 100px;
+
+				&.photo-placeholder {
+					background: $color-placeholder-bg;
+					height: 64px;
+					opacity: .75;
+					text-align: center;
+
+					i {
+						color: $color-placeholder;
+						font-size: 30px;
+						margin-top: 16px;
+					}
+				}
 			}
 			&-name {
 				font-size: 16px;
