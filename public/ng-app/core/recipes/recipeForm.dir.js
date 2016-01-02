@@ -206,7 +206,7 @@
 		 * @private
 		 */
 		function _setSelectionRange(input, selectionStart, selectionEnd) {
-			var range = input.createTextRange();
+			var range = input.createTextRange;
 
 			if (input.setSelectionRange) {
 				input.click();
