@@ -31,7 +31,6 @@
 		 * @param rf {controllerAs}
 		 */
 		function recipeFormLink($scope, $element, $attrs, rf) {
-			// set up $scope object for namespacing
 			rf.addItem = addItem;
 			rf.removeItem = removeItem;
 			rf.moveItem = moveItem;
@@ -73,9 +72,9 @@
 				model.push(_newItem);
 
 				// focus new item
-				// TODO: element not highlighting after being added
 				$timeout(function() {
-					var _newestInput = angular.element($event.target).parent('p').prev('.last').find('input').eq(0);
+					var _newestInput = angular.element($event.target).parent('p').prevAll('ul').find('li.last').find('input, textarea').eq(0);
+
 					_newestInput.click();
 					_newestInput.focus();
 				}, 100);
