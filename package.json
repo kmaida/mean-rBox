@@ -11,14 +11,14 @@
   "keywords": [
     "angular"
   ],
-  "license": "Restricted",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/kmaida/mean-rBox/issues"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "http://rbox.kmaida.io",
+  "homepage": "http://rbox.kmaida.net",
   "dependencies": {
     "async": "^0.9.0",
     "bcryptjs": "^2.1.0",
