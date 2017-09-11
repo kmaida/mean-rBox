@@ -30,7 +30,7 @@ var config = require('./app/config');
  |--------------------------------------------------------------------------
  */
 
-mongoose.connect(config.MONGO_URI);
+mongoose.openUri(config.MONGO_URI);
 var monDb = mongoose.connection;
 
 monDb.on('error', function() {
