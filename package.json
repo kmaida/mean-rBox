@@ -16,7 +16,9 @@
     "url": "https://github.com/kmaida/mean-rBox/issues"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "homepage": "http://rbox.kmaida.net",
   "dependencies": {
@@ -36,7 +38,8 @@
     "multiparty": "^4.1.2",
     "uuid": "^2.0.1",
     "fs": "0.0.2",
-    "imagemin": "^3.2.0"
+    "imagemin": "^3.2.0",
+    "snyk": "^1.316.1"
   },
   "devDependencies": {
     "eslint-config-angular": "^0.4.0",
@@ -51,5 +54,6 @@
     "gulp-sourcemaps": "^1.5.1",
     "gulp-uglify": "^1.1.0",
     "gulp-util": "^3.0.4"
-  }
+  },
+  "snyk": true
 }
